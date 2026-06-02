@@ -2,25 +2,54 @@
 
 ![StoryVista 横幅](assets/github-hero.png)
 
-**StoryVista｜文景** 是一套 Codex skill，用来把小说、剧本、影视剧本、长篇文字、世界观设定和复杂故事笔记，转换成可浏览、可点击、可分享的交互式视觉档案。
+**StoryVista｜文景** 帮助人们让文字世界看得见。
 
-它不是只服务某一本小说的工具，而是面向所有想把“文字内容具象化”的人：读者、作者、编剧、学生、研究者、世界观创作者和内容团队。
+把小说、剧本、长篇文字和世界观设定，转换成人物关系、场景地图、时间线、概念卡片与 3D 世界图谱。
 
 英文标语：**Make Text Worlds Visible**  
 中文标语：**让文字世界看得见**
 
 > 草稿状态：这个仓库目前只用于内部确认。未经确认前，不公开发布、不创建正式 release、不作为公开项目宣传。
 
-## 为什么需要 StoryVista
+## 读一个故事，不应该像丢了一张地图
 
-很多小说、剧本和长篇文字的问题不是“读不懂一句话”，而是“装不下整个世界”：
+长篇小说和剧本常常把结构藏在人名、地点、场景和伏笔里。StoryVista 把这些隐藏结构变成可以看的图谱。
 
-- 人物太多，关系变化复杂。
-- 场景跳转频繁，地点之间的关系不清楚。
-- 时间线、伏笔、重要物件和设定分散在不同章节。
-- 剧本里一句台词背后可能藏着完整的人物关系和世界结构。
+![阅读痛点总览](assets/pain-points-overview.png)
 
-StoryVista 的目标，就是把这些隐藏在文字里的结构做成可以看的东西：人物关系、场景关系、时间线、概念卡片、地点网络和 3D 世界图。
+## 四种常见阅读痛点
+
+|  |  |
+| --- | --- |
+| ![人物名字混乱](assets/pain-name-overload.png)<br><br>**人物名字混乱**<br>人物、别名、译名、头衔和昵称太多，读到后面很容易分不清谁是谁。<br><br>**Name Overload**<br>Too many characters, aliases, translations, titles, and nicknames make it hard to remember who is who. | ![人物关系混乱](assets/pain-relationship-confusion.png)<br><br>**人物关系混乱**<br>同盟、敌对、亲属、导师、竞争者和隐藏身份不断变化，关系线越读越乱。<br><br>**Relationship Confusion**<br>Allies, enemies, families, mentors, rivals, and hidden identities shift across the story. |
+| ![地点描述混乱](assets/pain-place-disorientation.png)<br><br>**地点描述混乱**<br>故事在城市、房间、星球、王国或时代之间跳转，读者还没形成地图，场景已经切走。<br><br>**Place Disorientation**<br>Scenes move between cities, rooms, planets, kingdoms, or timelines before the reader forms a mental map. | ![空间关系混乱](assets/pain-spatial-uncertainty.png)<br><br>**空间关系混乱**<br>路线、距离、世界、飞船、战场或幻想地理只存在于文字里，很难形成直观空间感。<br><br>**Spatial Uncertainty**<br>Routes, distances, worlds, ships, battlefields, or fantasy realms are described in text but hard to visualize. |
+
+## 从文字到可探索的故事图谱
+
+StoryVista 将叙事材料变成可浏览、可点击、可回看的结构，帮助读者和创作者快速重新进入故事。
+
+- **Character Graphs｜人物关系图**  
+  梳理人物姓名、别名、身份、派系与不断变化的关系。
+
+- **Scene & Location Maps｜场景与地点地图**  
+  连接房间、城市、星球、王国、路线和反复出现的地点。
+
+- **Timelines & Concepts｜时间线与概念卡片**  
+  跟踪剧情事件、科技、能力、母题、物件和伏笔。
+
+- **3D World Maps｜3D 世界图谱**  
+  当距离、地理、移动和空间关系重要时，建立可交互的 3D 视图。
+
+![StoryVista 工作流](assets/storyvista-workflow.png)
+
+## 为所有需要理解故事结构的人而做
+
+- 想理清复杂故事的读者
+- 想检查故事结构的作者
+- 管理人物和场景的编剧
+- 分析文学作品的学生和老师
+- 管理地点、派系和设定的世界观创作者
+- 将叙事材料转成知识图谱的研究者
 
 ## 它能帮助你做什么
 
@@ -33,15 +62,6 @@ StoryVista 的目标，就是把这些隐藏在文字里的结构做成可以看
 - 制作适合手机浏览的交互档案页面
 - 将 Obsidian 本地页面同步为公开可分享的静态网页
 - 为有空间关系的故事制作实时 3D 地图
-
-## 适合谁使用
-
-- 想理清复杂人物关系的小说读者
-- 想检查故事结构是否清晰的作者
-- 管理人物、场景和地点的编剧或制片团队
-- 分析文学作品的学生和老师
-- 管理派系、地点、路线和设定的世界观创作者
-- 想把长篇叙事资料变成可导航知识库的研究者
 
 ## 本地安装
 
@@ -65,7 +85,13 @@ cp -R skill "$HOME/.codex/skills/story-vista"
 ├── README.md
 ├── README.zh-CN.md
 ├── assets/
-│   └── github-hero.png
+│   ├── github-hero.png
+│   ├── pain-points-overview.png
+│   ├── pain-name-overload.png
+│   ├── pain-relationship-confusion.png
+│   ├── pain-place-disorientation.png
+│   ├── pain-spatial-uncertainty.png
+│   └── storyvista-workflow.png
 └── skill/
     ├── SKILL.md
     ├── agents/
@@ -96,14 +122,14 @@ cp -R skill "$HOME/.codex/skills/story-vista"
 
 ## 内部确认清单
 
-- [ ] StoryVista / 文景 这个名字清楚、好记、适合传播。
-- [ ] 英文 README 面向通用人群，不绑定某一本小说。
+- [ ] 痛点区对不同文化背景的用户都清楚。
+- [ ] 英文 README 首屏能说明这个 skill 的用途。
 - [ ] 中文 README 面向读者、作者、编剧和世界观创作者。
-- [ ] GitHub 横幅配图符合项目气质。
+- [ ] 新图片适合 GitHub 详情页。
 - [ ] `skill/SKILL.md` 的触发条件清楚。
 - [ ] `skill/references/implementation-notes.md` 记录的是可复用流程。
 - [ ] skill 能通过 `quick_validate.py` 校验。
-- [ ] 未经确认前，仓库保持私有或草稿状态。
+- [ ] 未经确认前，不推送 GitHub。
 
 ## 许可证
 
