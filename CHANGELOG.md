@@ -16,5 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Known limitations
 
-- No finalized public license yet.
 - Demo atlas examples are planned but not included.
+
+### License
+
+- MIT License.

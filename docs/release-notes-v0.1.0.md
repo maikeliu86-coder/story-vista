@@ -34,7 +34,7 @@ Use $story-vista to turn this novel, script, or long-form text into an interacti
 - Long works may need chunking.
 - Generated visuals require user review.
 - Complex aliases and nonlinear narratives may need manual correction.
-- No public license has been finalized yet.
+- The project is released under the MIT License.
 
 ## Next steps
 

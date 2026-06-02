@@ -169,6 +169,10 @@ cp -R skill "$HOME/.codex/skills/story-vista"
 
 不要在公开 issue 中粘贴未发表剧本、私人手稿、NDA 材料、API key、敏感个人信息或本地文件路径。详见 [SECURITY.md](SECURITY.md)。
 
+## 开源许可证
+
+本项目使用 MIT License。详见 [LICENSE](LICENSE)。
+
 ## Star StoryVista
 
 如果 StoryVista｜文景 帮你理解或可视化了一个复杂故事世界，可以考虑给仓库点一个 Star，方便以后找到，也帮助更多人发现它。

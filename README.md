@@ -218,7 +218,7 @@ Do not paste private manuscripts, unpublished scripts, NDA materials, API keys, 
 
 ## License
 
-License not yet finalized. The owner should choose a license before broad public distribution. MIT is a good fit for a lightweight open-source skill, but no license is applied until explicitly chosen.
+MIT License. See [LICENSE](LICENSE).
 
 ## Star StoryVista
 
