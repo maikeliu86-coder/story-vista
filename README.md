@@ -1,34 +1,47 @@
-# Story Interactive Archive
+# StoryVista
 
-![Story Interactive Archive hero](assets/github-hero.png)
+![StoryVista hero](assets/github-hero.png)
 
-**Story Interactive Archive** is a Codex skill for turning novels, scripts, screenplays, and worldbuilding notes into durable interactive archive pages.
+**StoryVista** helps people make text worlds visible.
 
-It grew out of a completed workflow for an Obsidian-based science-fiction archive: character relationship trees, character indexes, technology timelines, image-to-entity matching, mobile interaction, public static hosting, and real-time 3D space maps.
+It is a Codex skill for turning novels, scripts, screenplays, long-form prose, roleplaying worlds, and dense story notes into interactive visual atlases. It is designed for readers, writers, screenwriters, students, researchers, and creative teams who need to understand complicated characters, scenes, timelines, concepts, and world relationships at a glance.
+
+Chinese name: **文景**  
+Tagline: **Make Text Worlds Visible** / **让文字世界看得见**
 
 > Draft status: this repository is prepared for internal review. Do not publish, release, or make public until the owner confirms the content and presentation.
 
+## Why StoryVista Exists
+
+Long stories are hard to hold in your head. Characters change sides, scenes jump across places, important objects appear before their meaning is clear, and a screenplay can hide a large world behind short lines of dialogue.
+
+StoryVista turns that text into an explorable interface:
+
+- Who is connected to whom?
+- Where does each scene happen?
+- What events happen in what order?
+- Which places, objects, powers, technologies, symbols, or factions matter?
+- How can a reader or creative team quickly revisit the structure of the work?
+
 ## What It Helps Build
 
-- Obsidian-ready single-page interactive archives
-- Character relationship trees with click-to-detail panels
-- Character grids with bilingual names and portrait binding
-- Technology and special-ability timelines
-- Location, ship, planet, and route maps
-- Real-time 3D space graphs with compressed story/world scale
-- Image2 / GPT-Image generated assets matched one-to-one to story entities
-- Public static pages that can be shared on mobile
+- Interactive character relationship trees
+- Character or role indexes with portraits and summaries
+- Scene, location, object, faction, and world maps
+- Plot, technology, power, or motif timelines
+- Image2 / GPT-Image visual assets matched one-to-one to story entities
+- Mobile-friendly archive pages for readers and collaborators
+- Obsidian-ready local pages plus optional public static sharing
+- Real-time 3D maps for spatial stories, journeys, planets, cities, rooms, or worlds
 
-## When To Use This Skill
+## Who It Is For
 
-Use this skill when a user asks to:
-
-- turn a script or novel into an interactive archive
-- organize story characters, places, technologies, and timelines
-- generate and bind images for each story entity
-- build a relationship tree or world map for a screenplay
-- sync a local Obsidian HTML page with a public static website
-- convert a flat story map into a true 3D spatial interface
+- Novel readers who want to understand complex relationships
+- Writers who want to see whether a story structure is coherent
+- Screenwriters and producers tracking characters, scenes, and locations
+- Students and teachers analyzing narrative works
+- Worldbuilders managing factions, places, routes, and lore
+- Researchers turning long narrative material into navigable knowledge
 
 ## Install Locally
 
@@ -36,13 +49,13 @@ Copy the skill folder into your Codex skills directory:
 
 ```bash
 mkdir -p "$HOME/.codex/skills"
-cp -R skill "$HOME/.codex/skills/story-interactive-archive"
+cp -R skill "$HOME/.codex/skills/story-vista"
 ```
 
 Then invoke it in a new Codex session:
 
 ```text
-Use $story-interactive-archive to turn this new script into an Obsidian-ready interactive character, technology, and 3D space archive.
+Use $story-vista to turn this novel, script, or long-form text into an interactive visual atlas for characters, scenes, timelines, concepts, and world maps.
 ```
 
 ## Repository Layout
@@ -61,35 +74,36 @@ Use $story-interactive-archive to turn this new script into an Obsidian-ready in
         └── implementation-notes.md
 ```
 
-## Workflow Summary
+## Core Workflow
 
-1. Locate source text, Obsidian files, public HTML copies, and source records.
-2. Read the story before classifying characters, ships, places, and technologies.
-3. Build sections for character graphs, indexes, technology timelines, and space maps.
+1. Locate the source text, notes, Obsidian files, public HTML copies, and source records.
+2. Read the text before classifying characters, locations, objects, technologies, or factions.
+3. Build sections around reader questions: people, places, time, concepts, and world structure.
 4. Generate or bind images one-to-one to the correct story entities.
 5. Make interactions work on desktop and mobile.
-6. Use real-time 3D geometry for spatial maps instead of flat image cards.
+6. Use real-time 3D geometry for spatial maps when depth matters.
 7. Verify local rendering, mobile behavior, and click-to-detail interactions.
-8. Sync Obsidian, public copy, source record, and static hosting.
+8. Sync Obsidian, public copies, source records, and static hosting when requested.
 
 ## Design Principles
 
-- Preserve story evidence over visual convenience.
-- Do not classify ships or places as characters.
-- Do not paste 2D images as fake 3D cards when a 3D space map is requested.
-- Prefer compressed story/world scale to equal spacing.
-- Keep public sharing links distinct from local `file://` Obsidian paths.
-- Verify every visual and interactive claim before final delivery.
+- Preserve textual evidence over decorative assumptions.
+- Do not misclassify ships, cities, objects, or organizations as characters.
+- Do not use fake 3D image cards when the user asks for a real spatial map.
+- Use compressed story/world scale when true distances are too large.
+- Keep public sharing links distinct from local `file://` paths.
+- Verify every visual and interactive claim before delivery.
 
 ## Internal Review Checklist
 
-- [ ] The English README is accurate.
-- [ ] The Chinese README is accurate.
+- [ ] The name StoryVista / 文景 feels clear and memorable.
+- [ ] The English README speaks to a broad audience, not one specific novel.
+- [ ] The Chinese README speaks to readers, writers, screenwriters, and worldbuilders.
 - [ ] The hero image fits the GitHub details page.
-- [ ] `skill/SKILL.md` describes the trigger conditions clearly.
-- [ ] `skill/references/implementation-notes.md` captures the accepted workflow without overfitting to one book.
+- [ ] `skill/SKILL.md` describes trigger conditions clearly.
+- [ ] `skill/references/implementation-notes.md` captures reusable workflow details.
 - [ ] The skill validates with `quick_validate.py`.
-- [ ] The repository should remain private or draft until the owner approves publication.
+- [ ] The repository remains private or draft until the owner approves publication.
 
 ## License
 

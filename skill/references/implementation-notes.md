@@ -1,8 +1,8 @@
 # Implementation Notes
 
-## Lessons From The Accepted Archive
+## Purpose
 
-The accepted pattern came from an Obsidian plus CloudBase static HTML archive for a science-fiction novel. These are reusable decisions for future scripts.
+StoryVista is for turning text-heavy stories into visual, interactive understanding tools. It should work for novels, scripts, screenplays, essays with narrative structure, roleplaying worlds, research fiction notes, and production bibles. The reusable decisions below came from a completed interactive archive project, but they should be applied generically rather than tied to any single title.
 
 ## File Surfaces To Maintain
 
@@ -30,7 +30,7 @@ Create data records with stable ids. Use separate collections for:
 
 Do not mix category types. Proper names can be misleading: a named ship belongs in ships/places/space maps, not in the character tree.
 
-For each character, include:
+For each character or person-like role, include:
 
 - Chinese display name
 - English or transliterated name when known
@@ -40,9 +40,9 @@ For each character, include:
 - relationships with specific labels
 - image assignment
 
-For technologies and special abilities, preserve story order. Include the chapter/scene, what it does, who uses it, and why it matters.
+For technologies, powers, objects, symbols, motifs, or special abilities, preserve story order. Include the chapter/scene, what it does, who uses it, and why it matters.
 
-For places and ships, include:
+For places, scenes, ships, rooms, worlds, or recurring settings, include:
 
 - type
 - chapter/scene span

@@ -4,17 +4,19 @@ This repository is a draft package for internal confirmation.
 
 ## Current Status
 
+- Public-facing name changed to `StoryVista` / `文景`.
+- Positioning changed from a specific novel archive workflow to a general text-world visualization skill.
 - GitHub hero image generated with Image2 and stored at `assets/github-hero.png`.
 - English and Chinese README files are prepared.
-- The installable skill is stored under `skill/`.
+- The installable skill is stored under `skill/` and uses the trigger name `$story-vista`.
 - No public release should be created until the owner confirms.
 
 ## Recommended GitHub Flow
 
-1. Create a private GitHub repository named `story-interactive-archive`.
+1. Create a private GitHub repository named `story-vista`.
 2. Push this draft to a branch named `draft/internal-review`.
 3. Open a draft pull request into `main`.
-4. Review README text, hero image, and skill behavior.
+4. Review README text, hero image, naming, and skill behavior.
 5. Only after approval, merge and optionally make the repository public.
 
 ## Validation
