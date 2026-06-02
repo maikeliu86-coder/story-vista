@@ -1,0 +1,4 @@
+interface:
+  display_name: "Story Interactive Archive"
+  short_description: "Build interactive story archive pages"
+  default_prompt: "Use $story-interactive-archive to turn this new script into an Obsidian-ready interactive character, technology, and 3D space archive."
