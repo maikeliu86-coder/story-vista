@@ -66,6 +66,7 @@ The current StoryVista skill is designed around interactive archives that work a
 - **Template inheritance**: when a strong previous atlas exists, StoryVista should inherit its successful layout and interaction logic, then replace the content with the new source material.
 - **Cleaner character views**: character overviews use independent portrait cards, relationship trees are grouped by faction or story function when possible, and selected characters highlight their related people and edges.
 - **True 3D spatial maps**: planets, ships, cities, bases, stations, routes, and worlds should become miniature 3D models or holographic landmarks, not flat photo cards pasted into a 3D scene.
+- **Cross-device 3D gestures**: 3D maps should rotate around the map/grid center, preserve pointer-centered zoom, allow mobile vertical page scrolling, and only intercept intentional horizontal drags or two-finger map gestures.
 
 ## Who it is for
 
@@ -175,6 +176,7 @@ More prompts: [docs/prompts.md](docs/prompts.md).
 - Character graphs keep relationship labels readable and highlight related nodes on click.
 - Timelines explain technologies, powers, weapons, devices, objects, and concepts in story order or first-comprehension order.
 - 3D space maps use real model volume, animation, pointer-centered zoom, and clickable model bodies.
+- 3D space-map rotation uses the grid/map center instead of an arbitrary node; mobile vertical scroll is not trapped by the map.
 - Desktop, tablet, and mobile views are checked before publishing.
 
 ## Limitations

@@ -4,6 +4,19 @@ All notable changes to StoryVista will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.1.2] - 2026-06-03
+
+### Changed
+
+- Added 3D map rotation guidance: trackpad or touch rotation should use the map/grid center instead of an arbitrary node origin.
+- Expanded mobile and tablet gesture rules for StoryVista 3D maps.
+- Clarified that vertical one-finger swipes through a 3D map should preserve normal page scrolling.
+
+### Added
+
+- Gesture intent rules for mobile 3D maps: intercept only clear horizontal one-finger drags or two-finger map gestures.
+- Verification guidance for map-centered rotation, pointer-centered zoom, horizontal map pan, two-finger pinch/rotate, and non-blocking mobile page scroll.
+
 ## [0.1.1] - 2026-06-03
 
 ### Changed

@@ -1,6 +1,6 @@
 ---
 name: story-vista
-description: Use when turning novels, scripts, screenplays, lore bibles, long-form fiction, or other narrative text into reader-facing interactive visual atlases: character graphs, character indexes, scene/location maps, timelines, concept cards, and 3D world or space maps.
+description: "用于在 Codex 中使用 Story Vista 技能处理相关任务。功能：根据该技能的既有工作流，辅助完成对应的查询、整理、生成或自动化操作。"
 ---
 
 # StoryVista | 文景
@@ -115,9 +115,10 @@ Default implementation:
 Gesture defaults:
 
 - Desktop mouse press-drag: pan in the 2D screen plane.
-- Trackpad two-finger scroll: change the 3D view direction.
+- Trackpad two-finger scroll: rotate/change the 3D view direction around the map/grid center, not around an arbitrary selected node.
 - Pinch or `Ctrl`/`Meta` + wheel: zoom centered on the pointer location.
-- Mobile/tablet: one-finger page scroll should work outside intentional interaction gestures; inside the 3D area, support two-finger pinch/rotate and tap-to-detail.
+- Mobile/tablet: vertical one-finger swipes through the 3D area must keep normal page scrolling. Only clear horizontal one-finger drags should pan the map; two-finger gestures should handle pinch zoom, center movement, and view rotation.
+- Mobile/tablet touch handling should delay `preventDefault()` until intent is clear: use a small movement threshold, treat mostly vertical movement as page scroll, and only intercept horizontal map drags or two-finger map gestures.
 
 ## Visual Design Direction
 
@@ -136,7 +137,9 @@ Before calling a StoryVista output complete, verify:
 - Relationship-tree clicks highlight the selected character's relevant people and edges.
 - Technology and ability timelines use the intended order and have explanations.
 - 3D canvas/WebGL is nonblank, models have visible volume, and node bodies are clickable.
+- 3D rotation centers on the map/grid center rather than an individual node.
 - Zoom centers on the pointer where required.
+- Mobile/tablet vertical page scroll is not blocked by the 3D map; horizontal drag and two-finger gestures still control the map.
 - Desktop, tablet, and mobile screenshots show readable text and no major overlap.
 - Image paths resolve and thumbnails are not stretched.
 - Script syntax checks pass for generated HTML/JS.

@@ -131,9 +131,10 @@ Compress scale for readability. Preserve relative near/far relationships, hierar
 ### Interaction Defaults
 
 - Desktop mouse press-drag: 2D plane pan.
-- Trackpad two-finger scroll: rotate/change 3D view direction.
+- Trackpad two-finger scroll: rotate/change 3D view direction around the map/grid center, not around whichever node happens to be near the origin.
 - Pinch or `Ctrl`/`Meta` + wheel: zoom centered on the current pointer position.
-- Mobile/tablet: allow normal page scroll outside intentional gestures; inside the 3D region, support two-finger pinch/rotate and tap selection.
+- Mobile/tablet: allow normal page scroll outside intentional gestures. In the 3D region, vertical one-finger swipes should continue scrolling the page; clear horizontal one-finger drags should pan the map; two-finger gestures should support pinch zoom, center movement, and view rotation.
+- Touch handlers should not call `preventDefault()` on first contact. Intercept only after a small threshold confirms horizontal map drag, or immediately for two-finger gestures.
 - Both the 3D model body and its label must show pointer affordance and open/update detail content.
 
 ### Visual Target
@@ -154,7 +155,7 @@ Responsive rules:
 - Do not scale font purely by viewport width.
 - Keep text readable and complete where the user requested full names.
 - Keep click targets large enough for touch.
-- Do not let graph or 3D interactions prevent basic page scrolling on mobile.
+- Do not let graph or 3D interactions prevent basic page scrolling on mobile. Use `touch-action: pan-y` or equivalent mobile CSS where appropriate, then let JavaScript intercept only intentional map gestures.
 - Use detail panels that collapse into drawers or stacked sections on small screens.
 
 ## Image2 And Thumbnail Binding
@@ -186,7 +187,9 @@ For generated HTML, run or perform:
 - Canvas/WebGL nonblank check for 3D maps.
 - Check that 3D nodes have volume and do not behave like flat image cards.
 - Check that node model bodies, not only labels, are clickable.
+- Check map/grid-centered 3D rotation where required.
 - Check pointer-centered zoom where required.
+- Check that vertical mobile scroll through a 3D section is not trapped, while horizontal drag and two-finger gestures still control the map.
 - Check that relationship labels are not hidden by avatars or model icons.
 
 ## Deployment And Sync Pattern
