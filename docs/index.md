@@ -12,6 +12,7 @@ StoryVista turns complex text worlds into interactive visual story atlases.
 ## Project planning
 
 - [Roadmap](roadmap.md)
+- [Release Notes v0.1.1](release-notes-v0.1.1.md)
 - [Release Notes v0.1.0](release-notes-v0.1.0.md)
 - [Visual Assets Needed](assets-needed.md)
 - [Keyword Coverage](keywords.md)

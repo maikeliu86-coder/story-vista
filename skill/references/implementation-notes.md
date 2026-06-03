@@ -1,200 +1,208 @@
-# Implementation Notes
+# StoryVista Implementation Notes
+
+These notes capture durable implementation rules for StoryVista HTML atlases. They are project-agnostic and should be applied to novels, scripts, screenplays, lore bibles, and other narrative text.
 
 ## Purpose
 
-StoryVista is for turning text-heavy stories into visual, interactive understanding tools. It should work for novels, scripts, screenplays, essays with narrative structure, roleplaying worlds, research fiction notes, and production bibles. The reusable decisions below came from a completed interactive archive project, but they should be applied generically rather than tied to any single title.
+StoryVista outputs should help readers, writers, students, screenwriters, researchers, and worldbuilders see the hidden structure of a text: people, aliases, relationships, places, movement, concepts, technologies, plot phases, and world geometry.
 
-## File Surfaces To Maintain
+The target is an interactive visual archive, not a decorative summary page.
 
-- Canonical Obsidian HTML page: the page the user opens inside the vault.
-- Public copy: the static HTML deployed to a public host.
-- Source record note: a Markdown note that links source material, local HTML, and public sharing URL.
-- Asset inputs: user-provided grids or Image2 outputs for characters, technologies, locations, ships, and concepts.
+## Confirmed Page Structure
 
-Always search for all relevant copies before editing:
+A full archive should normally use this structure:
 
-```bash
-rg -n "public-url-fragment|story-title|spacePos3D|source record" <vault-or-project>
-```
+1. Hero with title, subtitle, and short framing.
+2. Anchor navigation.
+3. Character thumbnail overview.
+4. Character relationship tree.
+5. Character index and profiles.
+6. Technology and ability timeline.
+7. Plot phase or event timeline.
+8. 3D space relationship map for places, ships, planets, routes, or worlds.
+9. Detail panel updated by clicks from cards, graph nodes, timeline items, and 3D nodes.
+
+Keep the first screen useful. Do not turn the page into a marketing landing page unless explicitly requested.
+
+## File Surfaces
+
+Typical outputs:
+
+- `index.html` or a named single-file HTML atlas.
+- `data/*.json` only when the page architecture benefits from structured separation.
+- `assets/` for generated or cropped images.
+- `README` or notes only as supporting material, not the main deliverable when the user requested an interactive page.
 
 ## Character And Entity Extraction
 
-Create data records with stable ids. Use separate collections for:
+Read the source before visual design. Extract and classify separately:
 
-- `characters`
-- `technologies`
-- `places`
-- `ships`
-- `relationships`
-- `spaceLinks`
+- Characters: names, aliases, translations, roles, relationships, factions, arc notes.
+- Locations: rooms, cities, planets, bases, stations, routes, geographic areas, recurring places.
+- Ships and vehicles: model separately from people; ships must not appear in character trees.
+- Technologies and abilities: powers, weapons, procedures, devices, systems, scientific ideas.
+- Organizations: factions, crews, governments, companies, families, armies, institutions.
+- Objects and clues: artifacts, tools, secrets, documents, symbols, motifs.
 
-Do not mix category types. Proper names can be misleading: a named ship belongs in ships/places/space maps, not in the character tree.
+Use text evidence to decide ambiguous entities. If an item is a ship, facility, organization, or AI system, do not force it into the people model just because it has a name.
 
-For each character or person-like role, include:
+## Character Thumbnail Overview
 
-- Chinese display name
-- English or transliterated name when known
-- role/faction
-- first appearance or timeline position
-- concise introduction
-- relationships with specific labels
-- image assignment
+Confirmed rule: use only independent character cards in the overview grid.
 
-For technologies, powers, objects, symbols, motifs, or special abilities, preserve story order. Include the chapter/scene, what it does, who uses it, and why it matters.
+Do:
 
-For places, scenes, ships, rooms, worlds, or recurring settings, include:
+- Show one portrait per person.
+- Preserve aspect ratio with `object-fit: cover` or equivalent.
+- Place English and Chinese full names in a lower-safe area, below the face, or in a responsive caption block.
+- Make each card clickable/tappable.
+- Let the grid reflow for desktop, tablet, and mobile.
 
-- type
-- chapter/scene span
-- description
-- events
-- routes or links
-- image or 3D model mapping
+Do not:
 
-## Image2 And Thumbnail Binding
+- Keep a large left-side composite collage plus repeated right-side cards.
+- Stretch, squash, or distort portraits to fill a fixed box.
+- Truncate names on mobile when full names are required.
+- Place name blocks over faces.
 
-When the user provides composite image grids:
+## Character Relationship Tree
 
-1. Inspect the grid dimensions and cell order.
-2. Slice or CSS-crop cells consistently.
-3. Match each cell by story evidence and visual clues.
-4. Bind every thumbnail and detail image to the corresponding data record.
-5. Search for duplicates and category mistakes.
+Prefer structured clarity over dense web complexity.
 
-The user expects "generate and place", not a mood board. A generated picture is incomplete until it is bound into the HTML slot that uses it.
+Recommended layout logic:
 
-## Interaction Patterns That Worked
+- Group by faction, institution, family, function, or story arc when possible.
+- Put the protagonist or central viewpoint near the top or a clear anchor position when the story calls for it, but do not automatically force the protagonist to the exact center.
+- Spread related clusters with enough spacing for relationship labels.
+- Keep avatars away from edge labels; relationship text must remain readable.
+- Make avatars and labels clickable, not just labels.
+- On click/tap, update the detail panel and highlight related people, edges, and relationship descriptions.
 
-Character overview:
+Relationship descriptions should be specific enough to be useful, such as `mentor / betrays in act two / shares secret route`, rather than generic `related` labels.
 
-- Use a grid of portraits.
-- Put the English and Chinese names near the lower-left or bottom area.
-- On mobile, show full names without covering faces. Use a gradient label strip under or near the lower edge, not over eyes or central face details.
+## Technology, Ability, And Concept Timeline
 
-Character relationship tree:
+Technology-like entities include powers, weapons, procedures, devices, systems, artifacts, drugs, special skills, scientific concepts, and recurring mechanisms.
 
-- Clicking a person updates a right-side detail panel.
-- Layout can be scattered rather than a dense net. Main character may sit above center or upper region, with others spread around.
-- Relationship labels need collision handling or offset logic so avatars/nodes do not cover them.
+Recommended order:
 
-Technology timeline:
+1. Story chronology when clear.
+2. First appearance order when chronology is not the main reader problem.
+3. Reader-comprehension order when the concept is introduced before it is explained.
 
-- Use chronological cards or bands.
-- Each technology/ability should have a thumbnail, story context, and significance.
+Each timeline item should include:
 
-Space map:
-
-- Use a real-time 3D canvas when the user asks for spatial depth.
-- Click or tap a planet/place/ship node to update details.
-- Include a short HUD explaining gestures.
+- Name.
+- Category.
+- First appearance or relevant phase.
+- Plain explanation.
+- Story function.
+- Related characters, places, or conflicts.
+- Thumbnail or concept image when available.
 
 ## 3D Space Map Rules
 
-Avoid fake 3D:
+The 3D map exists to show spatial relationships that text alone makes hard to imagine.
 
-- no rectangular image cards
-- no rounded photo frames
-- no 2D image wall
-- no screenshot pasted into the scene
+### Forbidden
 
-Model each node as geometry:
+- 2D image paste-ins.
+- Rounded photo cards.
+- Album walls.
+- Flat screenshot panels in 3D space.
+- Nodes that always face the camera as billboards.
+- Static tokens with no model behavior.
+- Text-only clickable nodes.
 
-- planets: spheres, orbit rings, moons, atmosphere glow
-- cities: base plate, tower clusters, domes, light columns
-- stations: torus rings, hubs, spokes, docking pads, antennas
-- asteroid fields: irregular rocks, facilities, debris, orbit lines
-- ships: bodies, noses, fins, engine glow, route trails
-- hospitals/factories: shafts, pods, robotic arms, underground rings
+### Required Direction
 
-For "true proportion" requests, use compressed scale:
+Use Three.js or an equivalent real-time 3D engine. Build each spatial entity as a miniature scene or holographic landmark:
 
-- Keep relative story order and distance hierarchy.
-- Cluster near-ground or near-planet scenes around their parent planet.
-- Put moon/near orbit beyond the planet cluster.
-- Place Mars/intermediate regions farther away.
-- Place asteroid belt/ship wrecks between Mars and Jupiter.
-- Place Jupiter and its moons at the farthest layer.
-- Add different `x`, `y`, and `z` values so rotation reveals depth.
-- Add faint scale rings, coordinate grids, vertical depth guides, and curved route lines.
+- Planets: spheres with rotation, atmosphere or rim light, and optional orbit rings.
+- Moons/satellites: smaller orbiting bodies with visible paths.
+- Ships: simplified 3D hulls with engines, drift, route movement, or light trails.
+- Stations/bases: ring systems, platforms, antennae, docks, light arrays.
+- Cities/facilities: layered blocks, towers, domes, roads, shafts, or platforms.
+- Asteroids/ruins: irregular rock bodies with embedded structures and depth.
+- Routes: curved HUD lines or orbital paths that avoid cutting through major models where possible.
 
-Example coordinate strategy:
+Compress scale for readability. Preserve relative near/far relationships, hierarchy, and spatial direction, but do not require literal astronomical distance values.
 
-```js
-const spacePos3D = {
-  earth: [0, 35, 0],
-  outerOrbit: [8, 210, -126],
-  moon: [-178, 82, 48],
-  earthCityA: [82, -54, 112],
-  earthCityB: [-96, -42, -98],
-  mars: [430, 142, -362],
-  asteroidBelt: [740, 12, -204],
-  shipWreck: [825, -44, -72],
-  jupiter: [1195, 118, 252],
-  outerMoonRoute: [1370, 16, 392]
-};
-```
+### Interaction Defaults
 
-Tune camera target to the center of the compressed system, not to Earth only.
+- Desktop mouse press-drag: 2D plane pan.
+- Trackpad two-finger scroll: rotate/change 3D view direction.
+- Pinch or `Ctrl`/`Meta` + wheel: zoom centered on the current pointer position.
+- Mobile/tablet: allow normal page scroll outside intentional gestures; inside the 3D region, support two-finger pinch/rotate and tap selection.
+- Both the 3D model body and its label must show pointer affordance and open/update detail content.
+
+### Visual Target
+
+A good 3D map feels like a sci-fi strategy map, holographic world atlas, or miniature star-system navigation table. It should show real depth, not a 2D collage.
+
+## Responsive Behavior
+
+Verify three viewport families:
+
+- Desktop: about 1365 x 900 or wider.
+- Tablet: about 768 x 1024.
+- Mobile: about 390 x 844.
+
+Responsive rules:
+
+- Use adaptive grids with `minmax`, `clamp`, or measured breakpoints.
+- Do not scale font purely by viewport width.
+- Keep text readable and complete where the user requested full names.
+- Keep click targets large enough for touch.
+- Do not let graph or 3D interactions prevent basic page scrolling on mobile.
+- Use detail panels that collapse into drawers or stacked sections on small screens.
+
+## Image2 And Thumbnail Binding
+
+When the user requests generated images:
+
+- Treat it as one-to-one object binding when they ask for every person, concept, place, or node to have an image.
+- Match images to the extracted data slots, not to vague visual resemblance.
+- If using a contact sheet, crop individual tiles into separate assets before binding.
+- Verify that no two unrelated entities accidentally share the same thumbnail unless the story explicitly requires it.
+- Keep image paths local and stable for the HTML page.
+
+## Template Inheritance
+
+If a user provides a previous successful page, use it as a design and interaction reference:
+
+- Preserve the successful section rhythm, information density, interaction patterns, and visual temperament.
+- Replace the content with newly extracted data.
+- Apply current StoryVista corrections even if the old page had now-rejected behavior.
 
 ## Verification Pattern
 
-For single-file HTML:
+For generated HTML, run or perform:
 
-```bash
-node <<'NODE'
-const fs = require('fs'), vm = require('vm');
-const html = fs.readFileSync('index.html', 'utf8');
-for (const [i, m] of [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].entries()) {
-  new vm.Script(m[1], { filename: `index.html:script${i}` });
-}
-console.log('script ok');
-NODE
-```
-
-Then serve locally:
-
-```bash
-python3 -m http.server 8765
-```
-
-Validate:
-
-- page identity and title
-- canvas exists for 3D maps
-- no stale static image layer if real-time 3D is expected
-- labels render
-- click a character and a place/ship node
-- inspect desktop and mobile screenshots
-
-Stop the local server after testing:
-
-```bash
-lsof -ti tcp:8765 | xargs -r kill
-```
+- Script syntax check.
+- Missing asset/path check.
+- Browser click checks for character cards, character graph nodes, timeline items, and space-map nodes.
+- Desktop, tablet, and mobile screenshots.
+- Canvas/WebGL nonblank check for 3D maps.
+- Check that 3D nodes have volume and do not behave like flat image cards.
+- Check that node model bodies, not only labels, are clickable.
+- Check pointer-centered zoom where required.
+- Check that relationship labels are not hidden by avatars or model icons.
 
 ## Deployment And Sync Pattern
 
-For CloudBase-style static hosting:
+When a StoryVista page is meant to be shared:
 
-```bash
-npx tcb hosting deploy '<public-copy>/index.html' index.html -e <environment-id>
-npx tcb hosting list index.html -e <environment-id>
-```
-
-Use cache-busting URLs after deploy:
-
-```text
-https://example.tcloudbaseapp.com/index.html?v=<short-version>#space
-```
-
-Update the Obsidian source record with the current public URL. This matters because friends opening old links may see CDN cache.
+- Keep a local source copy.
+- Sync to the user's requested target such as Obsidian, a static host, or a public repository.
+- Prefer static, dependency-light output when the audience will open on mobile browsers.
+- If using public hosting, verify the deployed URL on mobile dimensions after upload.
 
 ## Final Response Shape
 
-When done, report:
+When completing work, report:
 
-- what was changed
-- which local files were updated
-- which public URL was deployed
-- what was verified
-- any cache note or remaining limitation
+- Main file path or URL.
+- Sections or rules updated.
+- Verification performed.
+- Any known limitations or next required user action.

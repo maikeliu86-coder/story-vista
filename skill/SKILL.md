@@ -1,101 +1,146 @@
 ---
 name: story-vista
-description: Build or update an interactive visual knowledge atlas for novels, scripts, screenplays, long-form prose, roleplaying worlds, or any text-heavy story material. Use when the user wants to make written content easier to understand through character relationship maps, scene/location networks, timelines, concept/technology cards, Image2/GPT-Image visual assets, mobile-friendly interaction, Obsidian integration, public static sharing, or real-time 3D world/space maps.
+description: Use when turning novels, scripts, screenplays, lore bibles, long-form fiction, or other narrative text into reader-facing interactive visual atlases: character graphs, character indexes, scene/location maps, timelines, concept cards, and 3D world or space maps.
 ---
 
-# StoryVista
+# StoryVista | 文景
+
+StoryVista turns text worlds into visible, explorable archives. Use it when the user wants to understand a novel, screenplay, script, lore document, or story world through interactive visual structure rather than plain summary.
 
 ## Operating Posture
 
-Treat the archive as a reader-facing visual atlas for a text world, not as a private engineering artifact.
+- Treat the default deliverable as a reader-facing interactive archive, not a Markdown-only report.
+- Read the source text before designing visuals. Entity classification must come from the text, not from guessed aesthetics.
+- Keep the skill general. Do not bind the workflow to any single source work; project examples are patterns, not templates with fixed content.
+- Prefer a polished single-page HTML atlas when the user asks for something they can open, share, or explore.
+- Preserve the user's requested output location and sync target when given.
 
-Use this skill for people who want to understand, teach, discuss, adapt, or remember complex written material: readers, writers, screenwriters, students, researchers, worldbuilders, and production teams. The goal is to turn abstract text into a clear interactive structure: who matters, how they relate, where events happen, what changes over time, and how scenes or places connect.
+## Default Atlas Sections
 
-Use [references/implementation-notes.md](references/implementation-notes.md) when building or changing a full visual atlas, generating one-to-one images, syncing Obsidian and public hosting, or implementing 3D scene/space maps.
+A complete StoryVista archive should normally include these sections unless the source or user request makes one irrelevant:
 
-## Product Positioning
+1. Hero and concise project framing.
+2. Anchor navigation for major views.
+3. Character thumbnail overview.
+4. Character relationship tree.
+5. Character index with detailed profiles.
+6. Technology, power, weapon, device, object, and concept timeline.
+7. Plot phase or event timeline.
+8. Scene, location, planet, ship, route, or world-space map.
+9. Interactive detail panel for selected people, places, concepts, and nodes.
 
-Name: **StoryVista**
+## Text-First Entity Modeling
 
-Chinese name: **文景**
+Build separate data models before visualizing:
 
-Taglines:
+- Characters: people, aliases, titles, roles, factions, relationship changes, and profile summaries.
+- Places: rooms, cities, planets, kingdoms, facilities, routes, battlefields, stations, and recurring locations.
+- Ships and vehicles: never place ships in the character relationship tree.
+- Technologies and abilities: weapons, powers, devices, procedures, systems, and scientific concepts.
+- Organizations and factions: institutions, crews, governments, families, cults, armies, companies, and alliances.
+- Objects and clues: artifacts, documents, tools, motifs, secrets, evidence, and plot-critical items.
 
-- English: **Make Text Worlds Visible**
-- Chinese: **让文字世界看得见**
+If a source item could fit multiple categories, record the ambiguity in data, then choose the visual surface that best matches its story function.
 
-Explain it simply: StoryVista turns novels, scripts, notes, and long text into interactive visual archives for characters, scenes, timelines, concepts, and world maps.
+## Template Inheritance
 
-## Workflow
+When the user provides an existing page that they say is good, inherit its successful layout temperament and interaction logic before inventing a new design.
 
-1. Locate the source materials and target files.
-   - Prefer the user's Obsidian vault path when provided.
-   - Find existing HTML/Markdown/public copies with `rg`.
-   - Identify the canonical local page, public deploy copy, source record, and asset folders before editing.
+- Reuse the proven page rhythm, section order, visual density, controls, and interaction expectations.
+- Replace all project-specific data with newly extracted source data.
+- Do not copy obsolete mistakes from the old page. Apply the corrected rules in this skill first.
 
-2. Read the text before classifying entities.
-   - Extract characters, groups, settings, scenes, props, technologies, special abilities, locations, vehicles, timelines, routes, and spatial relationships.
-   - Correct false entity types. For example, a ship, city, object, or organization is not a character even if it has a proper name.
-   - Treat uncertain matches as provisional and mark them for review rather than inventing precision.
+## Responsive-First Requirement
 
-3. Build the atlas around reader questions.
-   - Who are the people and how do they relate?
-   - Where do scenes happen and how do places connect?
-   - What events happen in what order?
-   - What concepts, powers, technologies, symbols, or objects matter?
-   - Which images help readers recognize each person, place, or concept?
+All HTML or web outputs must be designed for desktop, tablet, and mobile from the start.
 
-4. Create useful sections.
-   - Character overview grid with full names.
-   - Interactive character relationship tree with click-to-detail side panel.
-   - Character index with portraits and summaries.
-   - Timeline for plot events, technologies, abilities, or scene progression.
-   - Scene/location/ship/world relationship map with click-to-detail side panel.
-   - Source record links for Obsidian and public sharing.
+Verify and adapt at these viewport classes:
 
-5. Bind generated or provided images one-to-one.
-   - Match thumbnails to specific characters, concepts, scenes, locations, ships, and objects by reading the text and visible image content.
-   - Avoid duplicate image assignments unless the story genuinely reuses a concept.
-   - For Image2 work, generate per-object assets, then bind them into the exact slots in the HTML. Do not leave placeholder mood-board images.
+- Desktop: about 1365 x 900 or wider.
+- Tablet: about 768 x 1024.
+- Mobile: about 390 x 844.
 
-6. Make interactions work on desktop and mobile.
-   - Desktop: pointer drag rotates or pans as appropriate; trackpad pinch/wheel zoom is centered and natural.
-   - Mobile: touch scrolling outside interactive canvases should not feel trapped; pinch zoom should work inside interaction surfaces.
-   - Click or tap on names, thumbnails, relationship nodes, scene nodes, place nodes, and object nodes must update the side/detail panel.
+Mobile and tablet requirements:
 
-7. For 3D maps, prefer real-time models over fake depth.
-   - Do not use flat photo cards, image walls, rounded image boards, or 2D screenshots pasted into 3D space.
-   - Model places as miniature landmarks, rooms, planets, cities, stations, ships, route lines, or holographic nodes.
-   - Use compressed story/world scale when true distances are too large. Preserve relative order and spatial hierarchy rather than equal spacing.
+- Full English and Chinese names must be readable without covering faces.
+- Cards, controls, labels, and graph nodes need touch-sized click targets.
+- Page scrolling must not be trapped by graph or 3D interaction areas.
+- Thumbnail grids must reflow naturally and preserve image aspect ratio.
+- Use `object-fit: cover` or equivalent cropping; never stretch or squash images.
 
-8. Verify before finalizing.
-   - Syntax-check embedded scripts by extracting `<script>` content into a JS parser.
-   - Serve locally and verify the rendered page with Browser when available.
-   - Check at least one desktop and one mobile viewport for nonblank render, no console-breaking errors, readable labels, and click-to-detail behavior.
-   - Deploy only after local verification when public hosting is part of the task.
+Desktop requirements:
 
-9. Sync all surfaces.
-   - Update the Obsidian HTML file.
-   - Update any public/static copy.
-   - Update the Obsidian source record or index note with the current public URL and cache-busting parameter if needed.
-   - Deploy to the selected static host and verify the hosted file.
+- Dual-column or side-detail panels must remain readable.
+- Graphs and maps must support zoom, pan, click, and reset controls.
+- Relationship labels must not be hidden underneath avatars, icons, or nodes.
 
-## Implementation Rules
+## Character Visual Rules
 
-- Keep changes surgical. Do not refactor unrelated sections.
-- Use `apply_patch` for manual edits; use small mechanical scripts only when editing a large generated HTML safely.
-- Use existing page style, data structures, and helper functions before inventing new frameworks.
-- When the page is a single static HTML, keep it self-contained unless the deployment target supports and needs external assets.
-- Avoid copyright-heavy copying. Source records may link to sources and contain limited lawful excerpts, but should not mirror an entire copyrighted book, script, or article.
-- If using public sharing, remind the user that friends need a public URL, not a `file://` Obsidian path.
+- Character overview should use independent character cards, not a left-side composite image plus repeated cards.
+- Each card should show a character portrait, English name, Chinese name, and a role/faction cue when useful.
+- Names must remain complete on mobile. Prefer placing name bands below or in a lower-safe area instead of over faces.
+- Clicking a character card should scroll or update to that character's profile.
+- Relationship trees should prefer faction, function, or story-role grouping over chaotic all-to-all webs.
+- Character nodes should be avatars when assets exist; both avatar and label must be clickable.
+- Clicking a character should update a detail panel and highlight related characters and relationship edges.
 
-## Acceptance Checklist
+## Technology And Timeline Rules
 
-- Obsidian page opens locally.
-- Public page opens with a shareable URL when requested.
-- Character and scene/place nodes are clickable.
-- Mobile layout does not hide full names or trap normal scrolling.
-- Relationship labels do not sit under nodes or avatars.
-- Images match the correct entities and duplicates have been checked.
-- 3D maps show actual depth through coordinates, camera rotation, height/depth offsets, and scale guides.
-- Obsidian source record points to the current public version when public sharing is involved.
+- Technologies, powers, weapons, devices, procedures, and special abilities should be ordered by story timeline or first reader-comprehension order.
+- Each item should have a thumbnail or concept image when available, a concise definition, story function, first appearance, and related characters/places.
+- Do not merge technologies with characters or locations just because one image resembles a person or place.
+
+## 3D Space Map Rules
+
+Use Three.js or an equivalent real-time 3D engine when the user asks for spatial relationships, planets, ships, facilities, routes, battlefields, or world maps.
+
+Forbidden patterns:
+
+- 2D image stickers in 3D space.
+- Rounded photo cards, album-wall layouts, or floating screenshot panels.
+- Fake 3D canvas that only moves flat icons.
+- Nodes that always face the camera like billboards.
+- Static nodes pretending to be 3D models.
+- Only making text labels clickable while the model body cannot be clicked.
+
+Default implementation:
+
+- Build every location, planet, ship, city, base, prison, factory, ruin, station, and route as an independent 3D miniature model or holographic landmark.
+- Models need volume, top/side surfaces, depth, shadow, rim light, and spatial occlusion.
+- Planets rotate; moons orbit; ships drift, fly, or pulse along route lines; stations, cities, factories, and bases use animated lights or scanning effects.
+- Use compressed universe scale: preserve relative distance, hierarchy, and spatial direction without copying real astronomical values literally.
+- Node model bodies and labels must both support hover/click/tap and update the detail panel.
+- Labels should be floating HUD text below or near the model, never pasted across the model body.
+
+Gesture defaults:
+
+- Desktop mouse press-drag: pan in the 2D screen plane.
+- Trackpad two-finger scroll: change the 3D view direction.
+- Pinch or `Ctrl`/`Meta` + wheel: zoom centered on the pointer location.
+- Mobile/tablet: one-finger page scroll should work outside intentional interaction gestures; inside the 3D area, support two-finger pinch/rotate and tap-to-detail.
+
+## Visual Design Direction
+
+- Match the story domain rather than using a generic landing page.
+- Keep operational atlas pages dense but readable: restrained color, clear hierarchy, and direct access to information.
+- Use visual assets for characters, concepts, places, and spatial nodes when the user asks for an immersive archive.
+- Avoid decorative clutter that competes with the story structure.
+
+## Verification Checklist
+
+Before calling a StoryVista output complete, verify:
+
+- Source entities are separated into characters, places, ships, technologies, organizations, and objects.
+- Ships or places are not accidentally included in the character relationship tree.
+- Character cards click through or update details correctly.
+- Relationship-tree clicks highlight the selected character's relevant people and edges.
+- Technology and ability timelines use the intended order and have explanations.
+- 3D canvas/WebGL is nonblank, models have visible volume, and node bodies are clickable.
+- Zoom centers on the pointer where required.
+- Desktop, tablet, and mobile screenshots show readable text and no major overlap.
+- Image paths resolve and thumbnails are not stretched.
+- Script syntax checks pass for generated HTML/JS.
+
+## Output Habit
+
+When producing files, provide the final file path, what was generated or changed, and what was verified. If verification was not possible, state the exact gap.

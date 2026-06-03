@@ -2,12 +2,13 @@
 
 ## v0.1.x
 
-- More example atlases
-- Better starter templates
+- Responsive starter atlas templates
+- Example atlases with desktop, tablet, and mobile screenshots
 - More bilingual documentation
 - Demo screenshots and short videos
 - Actor-preparation examples
 - Screenwriter workflow examples
+- True 3D space-map demo with clickable model bodies
 
 ## v0.2.x
 
@@ -16,6 +17,7 @@
 - More worldbuilding and RPG workflows
 - Reusable visual atlas templates
 - More guidance for Image2 asset matching
+- Validation scripts for entity classification, missing assets, and interaction checks
 
 ## Later ideas
 

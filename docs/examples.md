@@ -63,3 +63,19 @@
 - Suggested prompt: `Use $story-vista to prepare this story atlas for public static hosting, with mobile checks and safe source attribution.`
 - Expected output: static HTML, asset folder, public URL plan.
 - Review checklist: copyright, privacy, mobile layout, and public URL.
+
+## 9. Responsive interactive atlas workflow
+
+- User goal: create one archive that works on desktop, tablet, and mobile.
+- Input type: novel, screenplay, story bible, or long-form notes.
+- Suggested prompt: `Use $story-vista to build a responsive interactive visual atlas. Separate characters, places, ships, technologies, powers, organizations, objects, and clues before designing the page. Include clickable character cards, a grouped relationship tree, timelines, and mobile-safe layouts.`
+- Expected output: interactive HTML atlas with adaptive grids, clickable cards/nodes, readable labels, and device-specific interaction behavior.
+- Review checklist: desktop/tablet/mobile screenshots, full names on mobile, no stretched images, graph clicks, timeline clicks, and non-blocking page scroll.
+
+## 10. True 3D space-map workflow
+
+- User goal: understand spatial relationships between worlds, ships, facilities, cities, rooms, routes, or battlefields.
+- Input type: science-fiction, fantasy, adventure, war, or spatially complex story material.
+- Suggested prompt: `Use $story-vista to create a true 3D spatial map. Build planets, ships, bases, stations, cities, and routes as miniature 3D models with animation. Do not use flat image cards. Make model bodies and labels clickable.`
+- Expected output: WebGL/Three.js spatial view with rotating planets, orbiting satellites, animated ships or routes, clickable models, pointer-centered zoom, and a side detail panel.
+- Review checklist: canvas is nonblank, models have volume, nodes are not billboards, body click works, labels are readable, and mobile gestures do not trap normal scrolling.

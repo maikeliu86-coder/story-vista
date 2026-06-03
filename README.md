@@ -57,6 +57,16 @@ StoryVista turns those scattered clues into a map.
 
 ![StoryVista workflow: Text, Extract, Visualize, Interact, Share](assets/storyvista-workflow.png)
 
+## What is new in the revised skill
+
+The current StoryVista skill is designed around interactive archives that work across desktop, tablet, and mobile screens.
+
+- **Responsive-first output**: atlas pages should adapt to desktop, tablet, and mobile layouts, with readable names, touch-sized controls, and non-blocking mobile scroll behavior.
+- **Text-first entity modeling**: people, places, ships, technologies, powers, organizations, objects, and clues are classified separately before visualization. Ships and locations should not be placed in character graphs.
+- **Template inheritance**: when a strong previous atlas exists, StoryVista should inherit its successful layout and interaction logic, then replace the content with the new source material.
+- **Cleaner character views**: character overviews use independent portrait cards, relationship trees are grouped by faction or story function when possible, and selected characters highlight their related people and edges.
+- **True 3D spatial maps**: planets, ships, cities, bases, stations, routes, and worlds should become miniature 3D models or holographic landmarks, not flat photo cards pasted into a 3D scene.
+
 ## Who it is for
 
 - Readers who want to remember complex stories
@@ -154,6 +164,18 @@ More prompts: [docs/prompts.md](docs/prompts.md).
 - Keep public sharing links distinct from local file paths.
 - Verify visual and interactive claims before delivery.
 - Use compressed story/world scale when true distances are too large to visualize directly.
+- Design for desktop, tablet, and mobile from the beginning.
+- Make graph nodes, portraits, 3D model bodies, and labels clickable when they represent explorable entities.
+- Avoid fake 3D: do not use flat image stickers, rounded photo cards, or album-wall layouts for spatial maps.
+
+## Quality checklist
+
+- Entity categories are separated before the page is designed.
+- Character cards preserve image aspect ratio and do not cover faces with names.
+- Character graphs keep relationship labels readable and highlight related nodes on click.
+- Timelines explain technologies, powers, weapons, devices, objects, and concepts in story order or first-comprehension order.
+- 3D space maps use real model volume, animation, pointer-centered zoom, and clickable model bodies.
+- Desktop, tablet, and mobile views are checked before publishing.
 
 ## Limitations
 
