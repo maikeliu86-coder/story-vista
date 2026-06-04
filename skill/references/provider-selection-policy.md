@@ -101,6 +101,12 @@ No directly callable image provider was detected. StoryVista will use Auto Fallb
 
 Do not stop. Continue with `prompt-only` or `placeholder-svg`.
 
+## Detected But Unverified
+
+An API key, config file, or endpoint URL is a detection signal, not proof that image generation will work. When no safe verification call has run, StoryVista may still recommend the highest-scoring candidate, but the report must say `verified: false`, include `provider_configured_but_unverified` or `provider_unreachable` in `risk_reasons`, and explain that no test image call was made.
+
+If the selected provider is a prompt-only or manual workflow, report that mode plainly and continue through prompts, manifest entries, manual asset binding, or semantic placeholders.
+
 ## Secondary Confirmation
 
 Ask only for high-risk states:

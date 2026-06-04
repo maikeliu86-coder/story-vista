@@ -9,12 +9,14 @@
         "status": "detected",
         "verified": false,
         "safe_to_use": "unknown",
-        "score": 92,
+        "score": 88,
         "selection_reason": [
           "api_key_detected",
           "high_storyvista_fit"
         ],
-        "risk_reasons": [],
+        "risk_reasons": [
+          "provider_configured_but_unverified"
+        ],
         "notes": "API key detected but no test call was made."
       }
     ],
@@ -27,6 +29,9 @@
         "highest_scoring_detected_provider",
         "supports_character_portraits",
         "supports_location_keyart"
+      ],
+      "risk_reasons": [
+        "provider_configured_but_unverified"
       ],
       "manual_override_available": true
     },

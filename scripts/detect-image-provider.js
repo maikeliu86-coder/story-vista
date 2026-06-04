@@ -28,6 +28,8 @@ const PROVIDERS = [
 ];
 
 const MANUAL_ENV = ["STORYVISTA_IMAGE_ASSETS_DIR", "STORYVISTA_MANUAL_ASSETS_DIR", "STORYVISTA_IMAGE_MANIFEST_PATH"];
+const PROMPT_ONLY_PROVIDERS = new Set(["midjourney", "jimeng", "jianying"]);
+const PLACEHOLDER_PROVIDERS = new Set(["placeholder-svg"]);
 
 function parseArgs(argv) {
   const opts = { json: false, verify: false, noNetwork: false, config: "image-provider.config.yaml" };
@@ -76,13 +78,15 @@ function endpointReachable(url) {
   });
 }
 
-function scoreProvider(def, detectedSignals, verified) {
+function scoreProvider(def, detectedSignals, verified, status) {
   let score = def.base;
   const risk = [];
   const reasons = [...def.reasons];
   if (verified) {
     score += 8;
     reasons.unshift("verified_api_available");
+  } else if (status === "unreachable") {
+    risk.push("provider_unreachable");
   } else {
     risk.push("provider_configured_but_unverified");
   }
@@ -91,6 +95,28 @@ function scoreProvider(def, detectedSignals, verified) {
     reasons.push("multiple_config_signals_detected");
   }
   return { score: Math.max(0, Math.min(100, score)), selection_reason: reasons, risk_reasons: risk };
+}
+
+function modeForConfiguredProvider(provider, configuredMode) {
+  if (configuredMode) return configuredMode;
+  if (PROMPT_ONLY_PROVIDERS.has(provider)) return "prompt-only";
+  if (PLACEHOLDER_PROVIDERS.has(provider)) return "placeholder-svg";
+  if (provider === "manual-assets" || provider === "local-folder") return "manual-assets";
+  return "api";
+}
+
+function statusForMode(mode) {
+  if (mode === "prompt-only") return "prompt_only";
+  if (mode === "placeholder-svg") return "placeholder_only";
+  if (mode === "manual-assets") return "requires_manual_setup";
+  return "configured_but_unverified";
+}
+
+function riskForMode(mode) {
+  if (mode === "prompt-only") return ["prompt_only"];
+  if (mode === "placeholder-svg") return ["placeholder_only"];
+  if (mode === "manual-assets") return ["selected_provider_requires_manual_generation"];
+  return ["provider_configured_but_unverified"];
 }
 
 async function main() {
@@ -108,7 +134,7 @@ async function main() {
       verified = await endpointReachable(url);
       status = verified ? "reachable" : "unreachable";
     }
-    const scored = scoreProvider(def, signals, verified);
+    const scored = scoreProvider(def, signals, verified, status);
     detected.push({
       provider: def.provider,
       source: def.endpoint ? "local_endpoint" : "environment_variable",
@@ -151,18 +177,19 @@ async function main() {
       existing.score = Math.min(100, existing.score + 6);
       existing.selection_reason.unshift("explicit_user_config");
     } else {
+      const configuredMode = modeForConfiguredProvider(config.provider, config.mode);
       detected.push({
         provider: config.provider,
         source: "config_file",
         signals: [config.path],
         masked_signals: {},
-        status: "configured_but_unverified",
+        status: statusForMode(configuredMode),
         verified: false,
         safe_to_use: "unknown",
-        mode: config.mode || "api",
-        score: 58,
-        selection_reason: ["explicit_user_config"],
-        risk_reasons: ["provider_configured_but_unverified"],
+        mode: configuredMode,
+        score: configuredMode === "placeholder-svg" ? 40 : configuredMode === "prompt-only" ? 52 : 58,
+        selection_reason: ["explicit_user_config", `${configuredMode}_configured`],
+        risk_reasons: riskForMode(configuredMode),
         notes: "Provider was configured in image-provider config but no availability signal was detected."
       });
     }
@@ -183,6 +210,7 @@ async function main() {
     selected_mode: selected.mode,
     score: selected.score,
     selection_reason: ["highest_scoring_detected_provider", ...selected.selection_reason],
+    risk_reasons: selected.risk_reasons,
     manual_override_available: true
   } : {
     enabled: true,
@@ -190,10 +218,13 @@ async function main() {
     selected_mode: fallback.selected_mode,
     score: fallback.score,
     selection_reason: fallback.selection_reason,
+    risk_reasons: fallback.risk_reasons,
     manual_override_available: true
   };
 
-  const status = selected ? "provider_detected" : "no_provider_detected";
+  const status = selected
+    ? (selected.status === "configured_but_unverified" ? "provider_configured_but_unverified" : "provider_detected")
+    : "no_provider_detected";
   const report = {
     storyvista_image_provider_report: {
       status,

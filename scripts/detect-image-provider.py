@@ -3,8 +3,6 @@ import argparse
 import json
 import os
 from pathlib import Path
-from urllib.request import urlopen
-from urllib.error import URLError
 
 PROVIDERS = [
     ("openai", "api", ["OPENAI_API_KEY"], 88, ["api_key_detected", "high_storyvista_fit", "supports_character_portraits", "supports_location_keyart"], False),
@@ -28,6 +26,8 @@ PROVIDERS = [
 ]
 
 MANUAL_ENV = ["STORYVISTA_IMAGE_ASSETS_DIR", "STORYVISTA_MANUAL_ASSETS_DIR", "STORYVISTA_IMAGE_MANIFEST_PATH"]
+PROMPT_ONLY_PROVIDERS = {"midjourney", "jimeng", "jianying"}
+PLACEHOLDER_PROVIDERS = {"placeholder-svg"}
 
 
 def mask_secret(value):
@@ -53,6 +53,9 @@ def read_config(config_path):
 
 
 def endpoint_reachable(url):
+    from urllib.error import URLError
+    from urllib.request import urlopen
+
     try:
         with urlopen(url, timeout=2) as response:
             return response.status < 500
@@ -60,19 +63,53 @@ def endpoint_reachable(url):
         return False
 
 
-def score_provider(base, reasons, signal_count, verified):
+def score_provider(base, reasons, signal_count, verified, status):
     score = base
     risk = []
     selection = list(reasons)
     if verified:
         score += 8
         selection.insert(0, "verified_api_available")
+    elif status == "unreachable":
+        risk.append("provider_unreachable")
     else:
         risk.append("provider_configured_but_unverified")
     if signal_count > 1:
         score += 2
         selection.append("multiple_config_signals_detected")
     return min(100, max(0, score)), selection, risk
+
+
+def mode_for_configured_provider(provider, configured_mode):
+    if configured_mode:
+        return configured_mode
+    if provider in PROMPT_ONLY_PROVIDERS:
+        return "prompt-only"
+    if provider in PLACEHOLDER_PROVIDERS:
+        return "placeholder-svg"
+    if provider in {"manual-assets", "local-folder"}:
+        return "manual-assets"
+    return "api"
+
+
+def status_for_mode(mode):
+    if mode == "prompt-only":
+        return "prompt_only"
+    if mode == "placeholder-svg":
+        return "placeholder_only"
+    if mode == "manual-assets":
+        return "requires_manual_setup"
+    return "configured_but_unverified"
+
+
+def risk_for_mode(mode):
+    if mode == "prompt-only":
+        return ["prompt_only"]
+    if mode == "placeholder-svg":
+        return ["placeholder_only"]
+    if mode == "manual-assets":
+        return ["selected_provider_requires_manual_generation"]
+    return ["provider_configured_but_unverified"]
 
 
 def main():
@@ -95,7 +132,7 @@ def main():
         if is_endpoint and args.verify and not args.no_network:
             verified = endpoint_reachable(os.environ[signals[0]])
             status = "reachable" if verified else "unreachable"
-        score, selection_reason, risk_reasons = score_provider(base, reasons, len(signals), verified)
+        score, selection_reason, risk_reasons = score_provider(base, reasons, len(signals), verified, status)
         detected.append({
             "provider": provider,
             "source": "local_endpoint" if is_endpoint else "environment_variable",
@@ -137,18 +174,19 @@ def main():
             found["score"] = min(100, found["score"] + 6)
             found["selection_reason"].insert(0, "explicit_user_config")
         else:
+            configured_mode = mode_for_configured_provider(config["provider"], config.get("mode"))
             detected.append({
                 "provider": config["provider"],
                 "source": "config_file",
                 "signals": [config["path"]],
                 "masked_signals": {},
-                "status": "configured_but_unverified",
+                "status": status_for_mode(configured_mode),
                 "verified": False,
                 "safe_to_use": "unknown",
-                "mode": config.get("mode") or "api",
-                "score": 58,
-                "selection_reason": ["explicit_user_config"],
-                "risk_reasons": ["provider_configured_but_unverified"],
+                "mode": configured_mode,
+                "score": 40 if configured_mode == "placeholder-svg" else 52 if configured_mode == "prompt-only" else 58,
+                "selection_reason": ["explicit_user_config", f"{configured_mode}_configured"],
+                "risk_reasons": risk_for_mode(configured_mode),
                 "notes": "Provider was configured in image-provider config but no availability signal was detected."
             })
 
@@ -160,6 +198,7 @@ def main():
         "selected_mode": selected["mode"] if selected else "placeholder-svg",
         "score": selected["score"] if selected else 40,
         "selection_reason": ["highest_scoring_detected_provider"] + selected["selection_reason"] if selected else ["no_directly_callable_provider_detected", "auto_fallback"],
+        "risk_reasons": selected["risk_reasons"] if selected else ["no_provider_detected", "placeholder_only"],
         "manual_override_available": True
     }
 
@@ -169,7 +208,11 @@ def main():
 
     report = {
         "storyvista_image_provider_report": {
-            "status": "provider_detected" if selected else "no_provider_detected",
+            "status": (
+                "provider_configured_but_unverified"
+                if selected and selected["status"] == "configured_but_unverified"
+                else "provider_detected" if selected else "no_provider_detected"
+            ),
             "config_file": config,
             "detected_providers": detected,
             "auto_selection": auto_selection,

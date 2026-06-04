@@ -17,10 +17,14 @@
       "selected_mode": "api",
       "score": 92,
       "selection_reason": [
-        "verified_api_available",
+        "highest_scoring_detected_provider",
+        "api_key_detected",
         "high_storyvista_fit",
         "supports_character_portraits",
         "supports_location_keyart"
+      ],
+      "risk_reasons": [
+        "provider_configured_but_unverified"
       ],
       "alternatives": [
         {
@@ -36,8 +40,10 @@
       ],
       "manual_override_available": true
     },
-    "risk_level": "low",
-    "risk_reasons": [],
+    "risk_level": "medium",
+    "risk_reasons": [
+      "provider_configured_but_unverified"
+    ],
     "user_confirmed_current_provider": false,
     "recommendations_shown": true,
     "selected_next_step": "continue",

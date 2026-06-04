@@ -64,4 +64,12 @@ Never print full API keys. Mask values, for example `sk-***abcd`.
 
 ## Diagnosis Result
 
-Diagnosis should output an `image-provider-report` JSON object with detected providers, scores, risk reasons, selected provider, selected mode, and recommended next steps.
+Diagnosis should output an `image-provider-report` JSON object with detected providers, masked signals, scores, risk reasons, selected provider, selected mode, and recommended next steps.
+
+Environment-variable detection means configuration is present. It is not the same as a verified successful image generation call. Unless a safe verification step has actually run, mark the provider as `verified: false`, keep `safe_to_use: "unknown"`, and include `provider_configured_but_unverified` in `risk_reasons`.
+
+If the user or config selects a provider that the current agent cannot call directly, report the specific continuation mode instead of pretending it is a callable API:
+
+- Midjourney, Jimeng, or similar manual tools: `status: "prompt_only"` and `mode: "prompt-only"`.
+- Local folder workflows without verified files: `status: "requires_manual_setup"` and `mode: "manual-assets"`.
+- Semantic placeholders: `status: "placeholder_only"` and `mode: "placeholder-svg"`.

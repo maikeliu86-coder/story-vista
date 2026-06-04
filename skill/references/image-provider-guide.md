@@ -73,3 +73,5 @@ If a provider fails:
 Before visual asset generation, run or offer Image Provider Diagnosis. Detection may inspect config files, environment variables, local endpoints, manual asset folders, and existing manifests. Do not print full API keys. Do not make paid API calls by default.
 
 If no provider is detected, continue with full prompts, `image-manifest.json`, and semantic placeholders. This is a valid continuation mode, not a StoryVista failure.
+
+Detection and verification are separate. A masked API key or configured endpoint can make a provider a good recommendation candidate, but mark it unverified until a safe verification step succeeds. Keep StoryVista generation status separate from image provider status in reports and generated atlas notes.
