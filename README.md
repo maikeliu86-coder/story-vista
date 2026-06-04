@@ -1,6 +1,6 @@
 # StoryVista
 
-## Make Text Worlds Visible
+## Cross-Agent Story Visualization Skill
 
 ![StoryVista hero: manuscripts turning into character maps, timelines, scene maps, and world atlases](assets/github-hero.png)
 
@@ -9,78 +9,79 @@
 [![Last commit](https://img.shields.io/github/last-commit/maikeliu86-coder/story-vista)](https://github.com/maikeliu86-coder/story-vista/commits/main)
 [![Issues](https://img.shields.io/github/issues/maikeliu86-coder/story-vista)](https://github.com/maikeliu86-coder/story-vista/issues)
 
-**StoryVista** is a Codex skill for turning complex text worlds into interactive visual story atlases.
+**StoryVista** is a Codex-first, cross-agent compatible story visualization skill for turning novels, scripts, screenplays, lore documents, and long-form prose into interactive visual story atlases.
 
-Chinese name: **文景**
-
+Chinese name: **文景**  
 Chinese tagline: **让文字世界看得见**
 
-Status: **Public beta.** Ready for early users, feedback, examples, and documentation contributions.
-
-StoryVista helps readers, writers, screenwriters, actors, students, researchers, and creative teams transform novels, scripts, screenplays, long-form prose, roleplaying worlds, and dense story notes into visual systems: character maps, relationship trees, scene indexes, location maps, timelines, factions, objects, motifs, concepts, and world structures.
+StoryVista helps readers, writers, screenwriters, actors, students, researchers, worldbuilders, and creative teams turn dense narrative material into character maps, relationship graphs, location maps, timelines, concept indexes, character cards, visual asset libraries, and interactive story maps.
 
 [中文说明 / Chinese README](README.zh-CN.md)
 
-## What is StoryVista?
+## Positioning
 
-StoryVista is a reusable Codex skill for making narrative structure visible. It reads source material, identifies narrative entities, separates people from places and objects, and helps build interactive archive pages that a reader or creative team can revisit.
+StoryVista is not tied to one AI agent or one image model. Codex remains the first supported platform, but the core workflow is portable: a story visualization protocol, cross-agent adapters, and a pluggable image-provider system.
 
-It is not a replacement for literary judgment, script analysis, or human creative decisions. It is a workflow assistant for organizing story material into a clearer visual form.
+Different agents have different native extension formats. StoryVista therefore provides a portable core workflow and platform-specific adapters rather than pretending that every platform installs skills in exactly the same way.
 
-## Why StoryVista exists
+## What StoryVista Creates
 
-Long narratives are hard to hold in memory. Characters change names, scenes jump locations, objects become important later, factions shift, and timelines split. A screenplay can hide a whole world behind short stage directions and dialogue.
+- Character portraits, character cards, aliases, roles, arcs, and relationship maps
+- Location key art, location cards, routes, maps, and 3D spatial nodes
+- Faction and organization indexes with emblems
+- Object, clue, motif, technology, magic-system, and concept indexes
+- Event timelines, plot phase timelines, and event keyframes
+- `story-atlas.json`, `image-manifest.json`, and an optional interactive HTML atlas
+- Semantic SVG placeholders when no image model or user assets are available
 
-StoryVista turns those scattered clues into a map.
+## Supported Inputs
 
-![Common story-reading pain points: name overload, relationship confusion, place disorientation, and spatial uncertainty](assets/pain-points-overview.png)
+StoryVista works with novels, scripts, screenplays, RPG settings, worldbuilding notes, lore bibles, character sheets, location notes, timelines, research notes, long-form prose, and mixed Chinese/English source material.
 
-## Visual Pain Points
+## Supported Outputs
 
-|  |  |
-| --- | --- |
-| ![Name Overload](assets/pain-name-overload.png)<br><br>**Name Overload**<br>Too many characters, aliases, translations, titles, and nicknames make it hard to remember who is who.<br><br>**人物名字混乱**<br>人物、别名、译名、头衔和昵称太多，读到后面很容易分不清谁是谁。 | ![Relationship Confusion](assets/pain-relationship-confusion.png)<br><br>**Relationship Confusion**<br>Allies, enemies, families, mentors, rivals, and hidden identities shift across the story.<br><br>**人物关系混乱**<br>同盟、敌对、亲属、导师、竞争者和隐藏身份不断变化，关系线越读越乱。 |
-| ![Place Disorientation](assets/pain-place-disorientation.png)<br><br>**Place Disorientation**<br>Scenes move between cities, rooms, planets, kingdoms, or timelines before the reader forms a mental map.<br><br>**地点描述混乱**<br>故事在城市、房间、星球、王国或时代之间跳转，读者还没形成地图，场景已经切走。 | ![Spatial Uncertainty](assets/pain-spatial-uncertainty.png)<br><br>**Spatial Uncertainty**<br>Routes, distances, worlds, ships, battlefields, or fantasy realms are described in text but hard to visualize.<br><br>**空间关系混乱**<br>路线、距离、世界、飞船、战场或幻想地理只存在于文字里，很难形成直观空间感。 |
+- Interactive single-page story atlas
+- Obsidian-ready local archive
+- Static-site-ready HTML
+- Structured story model JSON
+- Visual asset plan JSON
+- Image manifest JSON
+- Provider-specific image prompts
+- Placeholder SVG asset set
+- Framework adapter payloads for agent pipelines
 
-## What it can build
+## Supported Agents And Integration Modes
 
-- Character relationship maps
-- Character indexes with aliases, roles, factions, and summaries
-- Scene atlases and scene-by-scene breakdowns
-- Location maps and route networks
-- Plot, technology, power, object, motif, and symbol timelines
-- Faction maps and worldbuilding maps
-- Actor preparation boards with character arcs and relationship tensions
-- Obsidian-ready local archives
-- Static site outputs when the project has a public sharing workflow
-- 3D spatial maps when distance, geography, rooms, planets, routes, or movement matter
+StoryVista can be used through several modes:
 
-![StoryVista workflow: Text, Extract, Visualize, Interact, Share](assets/storyvista-workflow.png)
+- **Core Skill Mode**: OpenAI Codex and agents that can install or read `skill/SKILL.md`.
+- **Project Instruction Mode**: Claude Code, Cursor, Windsurf, OpenCode, GitHub Copilot Agent Mode, Qwen Code, Baidu Comate, and generic coding agents that read repository instructions.
+- **AGENTS.md Mode**: Coding agents that automatically read project-level `AGENTS.md`.
+- **Prompt-Only Mode**: Chat agents that cannot install a skill but can follow a copied workflow prompt.
+- **Framework Adapter Mode**: Hugging Face smolagents, LlamaIndex, LangChain, CrewAI, AutoGen, Qwen-Agent, and custom Python pipelines.
+- **BYO Image Model Mode**: Users generate images outside the agent, then bind them through `image-manifest.json`.
+- **Manual Asset Binding Mode**: Users provide stills, screenshots, concept art, portraits, or folder-based assets.
+- **No-Image Mode**: StoryVista emits prompts, manifest entries, and semantic SVG placeholders.
 
-## What is new in the revised skill
+Platform notes are in [skill/references/cross-agent-compatibility.md](skill/references/cross-agent-compatibility.md) and [skill/agents/](skill/agents/).
 
-The current StoryVista skill is designed around interactive archives that work across desktop, tablet, and mobile screens.
+## Image Provider System
 
-- **Responsive-first output**: atlas pages should adapt to desktop, tablet, and mobile layouts, with readable names, touch-sized controls, and non-blocking mobile scroll behavior.
-- **Text-first entity modeling**: people, places, ships, technologies, powers, organizations, objects, and clues are classified separately before visualization. Ships and locations should not be placed in character graphs.
-- **Template inheritance**: when a strong previous atlas exists, StoryVista should inherit its successful layout and interaction logic, then replace the content with the new source material.
-- **Cleaner character views**: character overviews use independent portrait cards, relationship trees are grouped by faction or story function when possible, and selected characters highlight their related people and edges.
-- **True 3D spatial maps**: planets, ships, cities, bases, stations, routes, and worlds should become miniature 3D models or holographic landmarks, not flat photo cards pasted into a 3D scene.
-- **Cross-device 3D gestures**: 3D maps should rotate around the map/grid center, preserve pointer-centered zoom, allow mobile vertical page scrolling, and only intercept intentional horizontal drags or two-finger map gestures.
+StoryVista defines what images are needed; it does not force where they are generated. The core skill is image-provider neutral and supports bring your own image model workflows.
 
-## Who it is for
+Supported provider modes include `openai`, `chatgpt-image`, `midjourney`, `stable-diffusion`, `flux`, `comfyui`, `minimax-image`, `qwen-image`, `tencent-hunyuan-image`, `baidu-wenxin-image`, `ideogram`, `leonardo`, `local-folder`, `manual-assets`, `placeholder-svg`, and `custom-api`.
 
-- Readers who want to remember complex stories
-- Novelists who want to test story structure
-- Screenwriters tracking scenes, characters, and locations
-- Actors preparing roles, objectives, obstacles, and emotional beats
-- Directors and producers coordinating story maps for a team
-- RPG and tabletop creators managing lore, factions, maps, and quests
-- Teachers and students analyzing literature
-- Researchers turning long narrative material into navigable knowledge
-- AI workflow builders creating story-visualization pipelines
+If no provider is available, StoryVista still creates a complete visual asset plan, image prompts, an `image-manifest.json`, and semantic placeholders. Users can later generate images with Midjourney, Flux, Stable Diffusion, ComfyUI, MiniMax, Jimeng, Qwen Image / 通义万相, Tencent Hunyuan Image / 腾讯混元生图, Baidu Wenxin Image / 文心一格, OpenAI image models, or any custom tool.
 
-## Quick Start
+See [skill/references/image-provider-guide.md](skill/references/image-provider-guide.md).
+
+## No Initials-Only Avatar Policy
+
+StoryVista must not use initials-only avatars as the default visual output. Every major character needs a planned `character_portrait` asset, and every key location needs a planned `location_keyart` asset. Images are bound through `image-manifest.json`.
+
+Initials-only avatars are allowed only as a last-resort fallback when `allow_initials_avatar: true` is explicitly set. The default is `allow_initials_avatar: false`.
+
+## Installation For Codex
 
 Copy the skill folder into your Codex skills directory:
 
@@ -89,161 +90,109 @@ mkdir -p "$HOME/.codex/skills"
 cp -R skill "$HOME/.codex/skills/story-vista"
 ```
 
-Then invoke it in a new Codex session:
+Then invoke it:
 
 ```text
-Use $story-vista to turn this novel, script, or long-form text into an interactive visual atlas for characters, relationships, scenes, locations, timelines, and worldbuilding concepts.
+Use $story-vista to turn this novel, script, or long-form text into an interactive visual atlas with a visual asset plan and image manifest.
 ```
 
-For more details, see [docs/quickstart.md](docs/quickstart.md).
+## Use With Claude Code
 
-## Example prompts
+Claude Code may not install `SKILL.md` as a native skill in every environment. Use Project Instruction Mode:
 
-```text
-Use $story-vista to turn this screenplay into an interactive character relationship atlas.
-```
+1. Keep this repository in the project.
+2. Ask Claude Code to read `AGENTS.md` and `skill/SKILL.md`.
+3. Use `skill/agents/claude-code.md` as the adapter prompt.
+4. Require `visual-asset-plan.json` and `image-manifest.json` before HTML generation.
 
-```text
-Use $story-vista to build a visual map of factions, locations, objects, and timelines from this fantasy novel.
-```
+## Use With Qwen Code And Chinese Agents
 
-```text
-Use $story-vista to analyze this script for actor preparation. Build character relationships, scene objectives, emotional beats, hidden conflicts, and the protagonist's arc.
-```
+For Qwen Code, Qwen-Agent, MiniMax, Tencent Hunyuan, Tencent Cloud Agent Development Platform, Baidu Wenxin AgentBuilder, Baidu Comate, GLM, DeepSeek-based local agents, OpenHands, and other Chinese coding agents, use AGENTS.md Mode, Project Instruction Mode, Prompt-Only Mode, or Framework Adapter Mode. Chinese platform notes are in the adapter files under `skill/agents/`.
 
-```text
-Use $story-vista to convert these worldbuilding notes into a navigable lore atlas.
-```
+## Use With MiniMax
 
-```text
-Use $story-vista to create an Obsidian-ready story archive from these notes.
-```
+Use MiniMax through Project Instruction Mode, Prompt-Only Mode, or BYO Image Model Mode. Ask the agent to follow `skill/agents/minimax.md`, generate `visual-asset-plan.json`, and register any MiniMax-generated images with `provider: "minimax-image"` in `image-manifest.json`.
 
-```text
-Use $story-vista to map every recurring object, motif, symbol, and clue in this mystery novel.
-```
+## Use With Generic Agents
 
-```text
-Use $story-vista to turn this RPG campaign setting into factions, locations, routes, characters, and timeline views.
-```
+If an agent cannot install skills, paste the required workflow from `skill/SKILL.md`, attach the source text, and ask for:
 
-```text
-Use $story-vista to build a 3D spatial map for the places, ships, routes, and worlds in this science-fiction story.
-```
+1. Entity extraction
+2. Importance classification
+3. Story data model
+4. Visual asset plan
+5. Image prompts or images
+6. Image manifest
+7. Final atlas
+8. Verification checklist
 
-More prompts: [docs/prompts.md](docs/prompts.md).
+## Use With Frameworks
 
-## How it works
+For Hugging Face smolagents, LlamaIndex, LangChain, CrewAI, and AutoGen, treat StoryVista as a workflow spec plus schemas. Use the schemas in `skill/templates/` as tool input/output contracts, then bind the final artifacts into your pipeline.
 
-1. Reads source material.
-2. Identifies narrative entities.
-3. Separates people, places, objects, factions, timelines, motifs, and concepts.
-4. Builds structured atlas sections.
-5. Generates or connects visual assets where appropriate.
-6. Validates navigation, image matching, entity consistency, and public sharing links.
+## Bring Your Own Image Model
+
+Configure a provider using [skill/templates/image-provider.config.example.yaml](skill/templates/image-provider.config.example.yaml), or keep provider output manual. StoryVista can produce model-neutral prompts first, then optional provider-specific prompt variants.
+
+## Bring Your Own Images
+
+Place user-provided images in a stable folder such as `assets/images/`, add them to `image-manifest.json` with `status: "user_provided"`, and bind each asset to character cards, relationship graph nodes, location cards, timelines, and 3D map nodes.
+
+## Placeholder Mode
+
+When no image tool is available, StoryVista creates semantic SVG placeholders that include full entity name, entity type, asset type, and visual category. These placeholders are tracked in `image-manifest.json`; they are not silent initials avatars.
+
+## Example Workflows
+
+- Minimal novel demo: [skill/examples/minimal-novel-demo](skill/examples/minimal-novel-demo)
+- Screenplay workflow placeholder: [skill/examples/screenplay-demo](skill/examples/screenplay-demo)
+- Bring-your-own-images workflow placeholder: [skill/examples/bring-your-own-images-demo](skill/examples/bring-your-own-images-demo)
 
 ## Repository Layout
 
 ```text
-.
+story-vista/
 ├── README.md
 ├── README.zh-CN.md
-├── assets/
+├── AGENTS.md
+├── llms.txt
+├── skill/
+│   ├── SKILL.md
+│   ├── agents/
+│   ├── references/
+│   ├── templates/
+│   └── examples/
 ├── docs/
-└── skill/
-    ├── SKILL.md
-    ├── agents/
-    │   └── openai.yaml
-    └── references/
-        └── implementation-notes.md
+└── assets/
 ```
-
-## Design Principles
-
-- Preserve textual evidence over decorative assumptions.
-- Do not misclassify cities, ships, objects, organizations, or factions as characters.
-- Keep public sharing links distinct from local file paths.
-- Verify visual and interactive claims before delivery.
-- Use compressed story/world scale when true distances are too large to visualize directly.
-- Design for desktop, tablet, and mobile from the beginning.
-- Make graph nodes, portraits, 3D model bodies, and labels clickable when they represent explorable entities.
-- Avoid fake 3D: do not use flat image stickers, rounded photo cards, or album-wall layouts for spatial maps.
-
-## Quality checklist
-
-- Entity categories are separated before the page is designed.
-- Character cards preserve image aspect ratio and do not cover faces with names.
-- Character graphs keep relationship labels readable and highlight related nodes on click.
-- Timelines explain technologies, powers, weapons, devices, objects, and concepts in story order or first-comprehension order.
-- 3D space maps use real model volume, animation, pointer-centered zoom, and clickable model bodies.
-- 3D space-map rotation uses the grid/map center instead of an arbitrary node; mobile vertical scroll is not trapped by the map.
-- Desktop, tablet, and mobile views are checked before publishing.
-
-## Limitations
-
-- Output quality depends on the clarity and completeness of the source material.
-- Long works may need chunking and iterative review.
-- Visual generation requires user review, especially for character and location matching.
-- Entity extraction may need correction in complex stories with aliases, unreliable narration, or nonlinear timelines.
-- StoryVista does not replace literary judgment, script analysis, acting choices, or human creative decisions.
-
-## FAQ
-
-**Is StoryVista only for novels?**
-
-No. It can be used with novels, screenplays, scripts, RPG settings, worldbuilding notes, long-form prose, and dense story notes.
-
-**Can it handle screenplays?**
-
-Yes. It can help map characters, scene objectives, locations, emotional beats, and production-facing story structure.
-
-**Can actors use it for role preparation?**
-
-Yes. StoryVista can help turn a script into a role-preparation atlas: relationships, scene objectives, obstacles, actions, emotional beats, and character arcs.
-
-**Does it generate images?**
-
-It can work with Image2 / GPT-Image workflows when visual assets are requested, but generated images should always be reviewed by the user.
-
-**Does it work with Obsidian?**
-
-Yes. The workflow supports Obsidian-ready local HTML archives and source-record notes.
-
-**Can I publish the output?**
-
-Yes, if you have the rights to the source material and choose a static hosting workflow. Be careful with unpublished, copyrighted, private, or NDA-protected manuscripts.
-
-**Does it work with Chinese texts?**
-
-Yes. StoryVista includes bilingual documentation and can be used for Chinese novels, scripts, and notes.
-
-**How do I contribute?**
-
-Open an issue or pull request with bug reports, templates, documentation improvements, example workflows, or use cases.
 
 ## Roadmap
 
-- More example atlases
-- Better templates
-- More bilingual documentation
-- Demo projects
-- Optional static site publishing workflow
-- More actor, screenwriter, director, and worldbuilder workflows
+- More complete framework adapters and runnable Python examples
+- Provider-specific prompt translators
+- HTML atlas starter templates
+- More demos for screenplays, RPG settings, and bilingual novels
+- Validation helpers for `story-atlas.json` and `image-manifest.json`
+- Better manual asset review workflows
 
 See [docs/roadmap.md](docs/roadmap.md).
 
+## Limitations
+
+- Long works may need chunking and iterative review.
+- Entity extraction can be difficult with aliases, unreliable narration, nonlinear timelines, and ambiguous places.
+- Generated images require human review before publication.
+- StoryVista does not grant rights to copyrighted source material or generated images.
+- Different platforms expose different agent, file, and image APIs; adapters describe integration patterns, not guaranteed one-click installation.
+
 ## Contributing
 
-Contributions are welcome: example texts, templates, bug reports, documentation improvements, and new use cases. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributions are welcome: adapters, examples, schemas, docs, prompts, provider guides, bug reports, and real use cases. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Security and privacy
+## Security And Privacy
 
 Do not paste private manuscripts, unpublished scripts, NDA materials, API keys, sensitive personal data, or local file paths into public issues. See [SECURITY.md](SECURITY.md).
 
 ## License
 
 MIT License. See [LICENSE](LICENSE).
-
-## Star StoryVista
-
-If StoryVista helps you understand or visualize a complex story world, consider starring the repository so you can find it again and help others discover it.

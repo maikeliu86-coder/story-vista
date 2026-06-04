@@ -16,7 +16,7 @@
 - Example Obsidian vault outputs
 - More worldbuilding and RPG workflows
 - Reusable visual atlas templates
-- More guidance for Image2 asset matching
+- More guidance for image-provider neutral asset matching
 - Validation scripts for entity classification, missing assets, and interaction checks
 
 ## Later ideas

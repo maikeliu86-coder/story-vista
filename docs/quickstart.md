@@ -4,7 +4,7 @@
 
 - Codex with local skills support
 - A novel, script, screenplay, RPG setting, story bible, or long-form narrative notes
-- Optional: Obsidian, Image2 / GPT-Image, and a static hosting target
+- Optional: Obsidian, an image provider or bring your own image model workflow, and a static hosting target
 
 ## Install
 

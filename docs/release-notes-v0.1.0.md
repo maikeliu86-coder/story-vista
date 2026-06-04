@@ -2,7 +2,7 @@
 
 ## What is StoryVista?
 
-StoryVista is a Codex skill for turning novels, scripts, screenplays, roleplaying worlds, long-form prose, and dense story notes into interactive visual story atlases.
+StoryVista is a Codex-first, cross-agent compatible skill for turning novels, scripts, screenplays, roleplaying worlds, long-form prose, and dense story notes into interactive visual story atlases.
 
 ## What is included
 

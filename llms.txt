@@ -1,0 +1,49 @@
+# StoryVista
+
+One-line summary: StoryVista is a Codex-first, cross-agent compatible story visualization skill for turning novels, scripts, lore documents, and long-form prose into interactive visual story atlases.
+
+Main use cases:
+- Build character maps, relationship graphs, character cards, and aliases.
+- Build location maps, route maps, 3D spatial maps, and location cards.
+- Build timelines, object indexes, organization maps, concept indexes, and visual asset libraries.
+- Generate image prompts, image manifests, semantic placeholders, and optional interactive HTML atlases.
+
+Core files:
+- README.md
+- README.zh-CN.md
+- AGENTS.md
+- skill/SKILL.md
+- skill/references/cross-agent-compatibility.md
+- skill/references/image-provider-guide.md
+- skill/references/visual-asset-generation.md
+- skill/references/fallback-rules.md
+- skill/templates/story-atlas.schema.json
+- skill/templates/image-manifest.schema.json
+- skill/templates/image-provider.config.example.yaml
+
+Installation modes:
+- Core Skill Mode for agents that read SKILL.md.
+- Project Instruction Mode for agents that read repository instructions.
+- AGENTS.md Mode for coding agents.
+- Prompt-Only Mode for web chat agents.
+- Framework Adapter Mode for Hugging Face smolagents, LlamaIndex, LangChain, CrewAI, AutoGen, Qwen-Agent, and custom Python agents.
+- BYO Image Model Mode and Manual Asset Binding Mode.
+
+Image provider support:
+- openai, chatgpt-image, midjourney, stable-diffusion, flux, comfyui, minimax-image, qwen-image, tencent-hunyuan-image, baidu-wenxin-image, ideogram, leonardo, local-folder, manual-assets, placeholder-svg, custom-api.
+
+Cross-agent support:
+- OpenAI Codex, Claude Code, GitHub Copilot Agent Mode, Cursor, Windsurf, OpenCode, generic coding agents, Hugging Face smolagents, LlamaIndex, LangChain, CrewAI, AutoGen, Qwen Code, Qwen-Agent, MiniMax, Tencent Hunyuan, Tencent Cloud Agent Development Platform, Baidu Wenxin AgentBuilder, Baidu Comate, GLM, DeepSeek-based local agents, OpenHands, and generic prompt-only agents.
+
+Safety and limitation notes:
+- Do not paste private manuscripts, NDA material, API keys, or sensitive personal data into public issues.
+- StoryVista does not grant rights to copyrighted source material or generated images.
+- Image generation is optional; if unavailable, generate prompts, image-manifest.json, and semantic SVG placeholders.
+- Initials-only avatars are disabled by default.
+
+Links:
+- README: README.md
+- Chinese README: README.zh-CN.md
+- Skill: skill/SKILL.md
+- Image provider guide: skill/references/image-provider-guide.md
+- Cross-agent compatibility guide: skill/references/cross-agent-compatibility.md

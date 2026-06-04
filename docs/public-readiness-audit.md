@@ -9,7 +9,7 @@ documentation pass.
 - The core tagline was strong: `Make Text Worlds Visible / 让文字世界看得见`.
 - The repository already included bilingual README files.
 - The repository already had visual assets for the hero, pain points, and workflow.
-- The `skill/` folder was already structured as an installable Codex skill.
+- The `skill/` folder was already structured as an installable Codex-first skill and is now being expanded for cross-agent compatibility.
 
 ## What was confusing
 

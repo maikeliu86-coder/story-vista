@@ -14,7 +14,7 @@ Yes. StoryVista can help build a role-preparation atlas: relationships, objectiv
 
 ## Does it generate images?
 
-It can use Image2 / GPT-Image workflows when requested. Generated images should be reviewed and corrected before public use.
+It can use configured image providers, bring your own image model workflows, manual assets, or semantic placeholder SVGs. Generated images should be reviewed and corrected before public use.
 
 ## Does it work with Obsidian?
 

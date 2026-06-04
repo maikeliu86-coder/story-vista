@@ -5,11 +5,11 @@ and easy to maintain.
 
 ## Final repository description
 
-`Codex skill for turning novels, scripts, and story worlds into interactive visual atlases.`
+`Portable cross-agent skill for turning novels, scripts, and story worlds into interactive visual atlases.`
 
 Why this version:
 
-- It starts with `Codex skill`, which matches how the project is installed and used.
+- It starts with `portable cross-agent skill`, which matches how the project is positioned and reused.
 - It includes high-intent terms: `novels`, `scripts`, `story worlds`, `interactive`, `visual atlases`.
 - It stays factual and avoids hype words such as best, ultimate, guaranteed, or magical.
 
@@ -17,21 +17,21 @@ Why this version:
 
 | Version | Text | Notes |
 | --- | --- | --- |
-| Current | `Make text worlds visible: a Codex skill for interactive visual story atlases.` | Clear brand phrase, but less searchable for novels and scripts. |
-| Recommended | `Codex skill for turning novels, scripts, and story worlds into interactive visual atlases.` | More direct for GitHub search and first-time visitors. |
+| Current | `Make text worlds visible: a portable cross-agent skill for interactive visual story atlases.` | Clear brand phrase, but less searchable for novels and scripts. |
+| Recommended | `Portable cross-agent skill for turning novels, scripts, and story worlds into interactive visual atlases.` | More direct for GitHub search and first-time visitors. |
 
 ## Alternative description options
 
-1. `Codex skill for visualizing novels, scripts, characters, scenes, timelines, and story worlds.`
+1. `Portable cross-agent skill for visualizing novels, scripts, characters, scenes, timelines, and story worlds.`
 2. `Turn novels, scripts, and worldbuilding notes into interactive story atlases with Codex.`
-3. `A Codex skill for character maps, scene atlases, timelines, and story-world visualization.`
+3. `A cross-agent skill for character maps, scene atlases, timelines, and story-world visualization.`
 4. `Visualize complex narratives with Codex: characters, places, timelines, lore, and worlds.`
-5. `Codex skill for transforming long-form story material into navigable visual knowledge.`
+5. `Image-provider neutral skill for transforming long-form story material into navigable visual knowledge.`
 6. `Interactive narrative atlas skill for novels, screenplays, RPG worlds, and story notes.`
 7. `Codex workflow for mapping characters, relationships, scenes, locations, and timelines.`
 8. `Make text worlds visible with Codex-powered story visualization and narrative maps.`
 9. `Story visualization skill for writers, readers, actors, worldbuilders, and researchers.`
-10. `Codex skill for building visual story atlases from novels, scripts, and dense notes.`
+10. `Cross-agent workflow for building visual story atlases from novels, scripts, and dense notes.`
 
 ## Topic strategy
 

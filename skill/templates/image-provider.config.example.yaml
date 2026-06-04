@@ -1,0 +1,13 @@
+image_provider:
+  mode: "bring_your_own"
+  provider: "openai | chatgpt-image | midjourney | stable-diffusion | flux | comfyui | minimax-image | qwen-image | tencent-hunyuan-image | baidu-wenxin-image | ideogram | leonardo | local-folder | manual-assets | placeholder-svg | custom-api"
+  model: "user-defined"
+  output_folder: "assets/images"
+  prompt_language: "auto | en | zh-CN"
+  aspect_ratios:
+    character_portrait: "3:4"
+    location_keyart: "16:9"
+    object_icon: "1:1"
+    event_keyframe: "16:9"
+  fallback: "placeholder-svg"
+  allow_initials_avatar: false

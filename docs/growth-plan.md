@@ -44,7 +44,7 @@
 ## English social posts
 
 1. StoryVista turns novels and scripts into interactive visual atlases for characters, scenes, timelines, and story worlds. Feedback welcome.
-2. I built StoryVista, a Codex skill for making complex text worlds easier to understand.
+2. I built StoryVista, a Codex-first, cross-agent compatible skill for making complex text worlds easier to understand.
 3. Writers and screenwriters: StoryVista helps turn drafts into character maps, scene maps, and timeline views.
 4. Actors can use StoryVista to turn a script into a role-preparation atlas.
 5. Worldbuilders can use StoryVista to map factions, places, lore, routes, and timelines.
@@ -61,19 +61,19 @@
 
 1. Long stories are hard to hold in memory.
 2. Character names, places, objects, factions, and timelines get scattered.
-3. StoryVista is a Codex skill that turns that material into a visual story atlas.
+3. StoryVista is a portable cross-agent skill that turns that material into a visual story atlas.
 4. It supports character maps, scene maps, timelines, worldbuilding maps, and actor-preparation boards.
 5. Public beta: feedback and examples welcome.
 
 ## Reddit post draft
 
-Title: I built a Codex skill for turning novels and scripts into interactive story atlases
+Title: I built a cross-agent skill for turning novels and scripts into interactive story atlases
 
-Body: I built StoryVista, a public-beta Codex skill for visualizing complex narrative material. It helps map characters, relationships, scenes, locations, timelines, objects, motifs, factions, and worldbuilding notes. I am looking for feedback from readers, writers, screenwriters, actors, and worldbuilders. No hype, just a small tool that tries to make text worlds easier to understand.
+Body: I built StoryVista, a public-beta cross-agent skill for visualizing complex narrative material. It helps map characters, relationships, scenes, locations, timelines, objects, motifs, factions, and worldbuilding notes. I am looking for feedback from readers, writers, screenwriters, actors, and worldbuilders. No hype, just a small tool that tries to make text worlds easier to understand.
 
 ## Product Hunt draft
 
-StoryVista is a Codex skill that turns novels, scripts, screenplays, RPG settings, and worldbuilding notes into interactive visual story atlases: character maps, scene maps, timelines, concept cards, and world structures.
+StoryVista is a Codex-first, cross-agent compatible skill that turns novels, scripts, screenplays, RPG settings, and worldbuilding notes into interactive visual story atlases: character maps, scene maps, timelines, concept cards, and world structures.
 
 ## GitHub Discussion topics
 

@@ -11,7 +11,7 @@ Pin `maikeliu86-coder/story-vista` on the GitHub profile.
 
 I build AI-assisted creative tools for story visualization, acting preparation, worldbuilding, and knowledge workflows.
 
-My current project is [StoryVista](https://github.com/maikeliu86-coder/story-vista), a Codex skill that turns novels, scripts, screenplays, RPG settings, and long-form narrative notes into interactive visual story atlases.
+My current project is [StoryVista](https://github.com/maikeliu86-coder/story-vista), a Codex-first, cross-agent compatible skill that turns novels, scripts, screenplays, RPG settings, and long-form narrative notes into interactive visual story atlases.
 ```
 
 ## Cross-links

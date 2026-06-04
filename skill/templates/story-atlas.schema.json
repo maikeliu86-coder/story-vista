@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyvista.dev/schemas/story-atlas.schema.json",
+  "title": "StoryVista Story Atlas",
+  "type": "object",
+  "required": [
+    "metadata",
+    "source_documents",
+    "characters",
+    "locations",
+    "organizations",
+    "objects",
+    "concepts",
+    "events",
+    "relationships",
+    "timelines",
+    "maps",
+    "image_assets",
+    "image_manifest_path",
+    "generation_settings",
+    "verification_status"
+  ],
+  "properties": {
+    "metadata": { "type": "object", "additionalProperties": true },
+    "source_documents": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["entity_id", "canonical_name", "importance", "image_asset_id"],
+        "properties": {
+          "entity_id": { "type": "string" },
+          "canonical_name": { "type": "string", "minLength": 1 },
+          "aliases": { "type": "array", "items": { "type": "string" } },
+          "importance": { "type": "string", "enum": ["major", "supporting", "minor"] },
+          "role_in_story": { "type": "string" },
+          "image_asset_id": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": true
+      }
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["entity_id", "canonical_name", "importance", "image_asset_id"],
+        "properties": {
+          "entity_id": { "type": "string" },
+          "canonical_name": { "type": "string", "minLength": 1 },
+          "importance": { "type": "string", "enum": ["key", "supporting", "minor"] },
+          "location_type": { "type": "string" },
+          "image_asset_id": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": true
+      }
+    },
+    "organizations": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "objects": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "concepts": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "events": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "relationships": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "timelines": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "maps": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "image_assets": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "image_manifest_path": { "type": "string", "minLength": 1 },
+    "generation_settings": {
+      "type": "object",
+      "required": ["allow_initials_avatar"],
+      "properties": {
+        "allow_initials_avatar": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": true
+    },
+    "verification_status": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

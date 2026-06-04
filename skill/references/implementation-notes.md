@@ -158,15 +158,17 @@ Responsive rules:
 - Do not let graph or 3D interactions prevent basic page scrolling on mobile. Use `touch-action: pan-y` or equivalent mobile CSS where appropriate, then let JavaScript intercept only intentional map gestures.
 - Use detail panels that collapse into drawers or stacked sections on small screens.
 
-## Image2 And Thumbnail Binding
+## Image Provider Neutral Thumbnail Binding
 
-When the user requests generated images:
+When the user requests generated images or supplied visual assets:
 
 - Treat it as one-to-one object binding when they ask for every person, concept, place, or node to have an image.
 - Match images to the extracted data slots, not to vague visual resemblance.
 - If using a contact sheet, crop individual tiles into separate assets before binding.
 - Verify that no two unrelated entities accidentally share the same thumbnail unless the story explicitly requires it.
 - Keep image paths local and stable for the HTML page.
+- Do not require any single image provider. Use `image-manifest.json` for generated, prompt-ready, user-provided, placeholder, missing, or failed assets.
+- Do not default to initials-only avatars. Use semantic placeholders with full entity names and types when images are unavailable.
 
 ## Template Inheritance
 

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyvista.dev/schemas/agent-adapter.schema.json",
+  "title": "StoryVista Agent Adapter",
+  "type": "object",
+  "required": ["adapter_id", "platform", "mode", "instructions"],
+  "properties": {
+    "adapter_id": { "type": "string" },
+    "platform": { "type": "string" },
+    "mode": {
+      "type": "string",
+      "enum": ["core-skill", "project-instruction", "agents-md", "prompt-only", "framework-adapter", "byo-image-model", "manual-asset-binding", "no-image"]
+    },
+    "instructions": { "type": "string" },
+    "required_files": { "type": "array", "items": { "type": "string" } },
+    "image_provider_notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

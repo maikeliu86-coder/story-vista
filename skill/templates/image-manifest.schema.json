@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyvista.dev/schemas/image-manifest.schema.json",
+  "title": "StoryVista Image Manifest",
+  "type": "object",
+  "required": ["schema_version", "assets", "settings"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "settings": {
+      "type": "object",
+      "required": ["allow_initials_avatar", "fallback"],
+      "properties": {
+        "allow_initials_avatar": { "type": "boolean", "default": false },
+        "fallback": { "type": "string", "const": "placeholder-svg" }
+      },
+      "additionalProperties": true
+    },
+    "assets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/image_asset" }
+    }
+  },
+  "$defs": {
+    "image_asset": {
+      "type": "object",
+      "required": [
+        "asset_id",
+        "entity_id",
+        "entity_type",
+        "asset_type",
+        "canonical_name",
+        "display_name",
+        "aliases",
+        "provider",
+        "model",
+        "prompt",
+        "negative_prompt",
+        "aspect_ratio",
+        "filename",
+        "status",
+        "binding_targets",
+        "fallback_asset",
+        "notes"
+      ],
+      "properties": {
+        "asset_id": { "type": "string", "minLength": 1 },
+        "entity_id": { "type": "string", "minLength": 1 },
+        "entity_type": {
+          "type": "string",
+          "enum": ["character", "location", "organization", "object", "concept", "event", "relationship", "map", "placeholder"]
+        },
+        "asset_type": {
+          "type": "string",
+          "enum": [
+            "character_portrait",
+            "character_full_body",
+            "location_keyart",
+            "organization_emblem",
+            "object_icon",
+            "concept_art",
+            "event_keyframe",
+            "timeline_thumbnail",
+            "relationship_node",
+            "map_node",
+            "placeholder"
+          ]
+        },
+        "canonical_name": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "provider": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "chatgpt-image",
+            "midjourney",
+            "stable-diffusion",
+            "flux",
+            "comfyui",
+            "minimax-image",
+            "qwen-image",
+            "tencent-hunyuan-image",
+            "baidu-wenxin-image",
+            "ideogram",
+            "leonardo",
+            "local-folder",
+            "manual-assets",
+            "placeholder-svg",
+            "custom-api"
+          ]
+        },
+        "model": { "type": "string" },
+        "prompt": { "type": "string" },
+        "negative_prompt": { "type": "string" },
+        "aspect_ratio": { "type": "string", "pattern": "^[0-9]+:[0-9]+$" },
+        "filename": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "prompt_ready", "generated", "user_provided", "placeholder", "missing", "failed"]
+        },
+        "binding_targets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["character-card", "relationship-graph", "timeline", "3d-map", "location-card", "concept-card", "detail-panel"]
+          }
+        },
+        "fallback_asset": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

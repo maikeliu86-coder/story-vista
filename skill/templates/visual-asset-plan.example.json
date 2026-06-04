@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.2.0",
+  "source_id": "example-story",
+  "settings": {
+    "allow_initials_avatar": false,
+    "default_provider": "placeholder-svg"
+  },
+  "character_assets": [
+    {
+      "entity_id": "char_001",
+      "canonical_name": "Mara Vale",
+      "aliases": ["The Cartographer"],
+      "role_in_story": "protagonist and mapmaker",
+      "age_range": "late 20s",
+      "gender_presentation": "woman",
+      "appearance_summary": "observant traveler with wind-tossed dark hair and ink-stained fingers",
+      "clothing_style": "weathered travel coat, brass map case, layered practical clothing",
+      "era_or_genre_context": "gaslamp fantasy archipelago",
+      "personality_visual_cues": "focused, wary, quietly brave",
+      "expression_default": "alert and thoughtful",
+      "pose_default": "holding a folded star map near her chest",
+      "color_palette": ["deep teal", "brass", "storm gray"],
+      "image_prompt": "Portrait of Mara Vale, late-20s cartographer in a gaslamp fantasy archipelago, wind-tossed dark hair, ink-stained fingers, weathered travel coat, brass map case, alert thoughtful expression, holding a folded star map, deep teal brass storm gray palette, detailed story illustration, clear face, no text.",
+      "negative_prompt": "initials avatar, text, watermark, cropped face, generic modern clothing",
+      "aspect_ratio": "3:4",
+      "filename": "assets/images/characters/char_001_mara_vale.png",
+      "binding_targets": ["character-card", "relationship-graph", "detail-panel"]
+    }
+  ],
+  "location_assets": [
+    {
+      "entity_id": "loc_001",
+      "canonical_name": "The Lantern Causeway",
+      "location_type": "tidal bridge",
+      "geography": "stone road exposed at low tide between black-water islands",
+      "architecture": "ancient pylons with hanging storm lanterns",
+      "time_period": "gaslamp fantasy",
+      "atmosphere": "misty, dangerous, luminous",
+      "narrative_function": "threshold between safe harbor and forbidden archive",
+      "lighting": "blue dawn mist with warm lantern points",
+      "color_palette": ["blue gray", "amber", "wet stone"],
+      "image_prompt": "Wide key art of The Lantern Causeway, a tidal stone bridge exposed at low tide between black-water islands, ancient pylons with hanging storm lanterns, blue dawn mist, warm amber lights, wet stone, gaslamp fantasy atmosphere, cinematic story location art, no text.",
+      "negative_prompt": "modern cars, text, watermark, initials avatar, empty white background",
+      "aspect_ratio": "16:9",
+      "filename": "assets/images/locations/loc_001_lantern_causeway.png",
+      "binding_targets": ["location-card", "timeline", "3d-map", "detail-panel"]
+    }
+  ]
+}
