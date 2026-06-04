@@ -1,0 +1,46 @@
+{
+  "storyvista_image_provider_report": {
+    "status": "provider_detected",
+    "detected_providers": [
+      {
+        "provider": "openai",
+        "source": "environment_variable",
+        "signals": ["OPENAI_API_KEY"],
+        "status": "detected",
+        "verified": false,
+        "safe_to_use": "unknown",
+        "score": 92,
+        "selection_reason": [
+          "api_key_detected",
+          "high_storyvista_fit"
+        ],
+        "risk_reasons": [],
+        "notes": "API key detected but no test call was made."
+      }
+    ],
+    "auto_selection": {
+      "enabled": true,
+      "selected_provider": "openai",
+      "selected_mode": "api",
+      "score": 92,
+      "selection_reason": [
+        "highest_scoring_detected_provider",
+        "supports_character_portraits",
+        "supports_location_keyart"
+      ],
+      "manual_override_available": true
+    },
+    "missing_recommended_providers": [
+      "DASHSCOPE_API_KEY",
+      "STABILITY_API_KEY",
+      "REPLICATE_API_TOKEN"
+    ],
+    "selected_mode": "api",
+    "recommended_next_steps": [
+      "Continue with the recommended image provider.",
+      "Or configure another image provider in image-provider.config.yaml.",
+      "Or continue with prompt-only mode and generate images externally."
+    ],
+    "user_facing_message": "StoryVista has generated the story data model and visual asset plan. The selected image provider is openai."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "storyvista_preflight_check": {
+    "preflight_check_enabled": true,
+    "user_was_asked": true,
+    "user_selected": "auto_mode",
+    "diagnosis_status": "completed",
+    "detected_provider": {
+      "provider": "openai",
+      "source": "environment_variable",
+      "mode": "api",
+      "verified": false,
+      "status": "detected"
+    },
+    "auto_selection": {
+      "enabled": true,
+      "selected_provider": "openai",
+      "selected_mode": "api",
+      "score": 92,
+      "selection_reason": [
+        "verified_api_available",
+        "high_storyvista_fit",
+        "supports_character_portraits",
+        "supports_location_keyart"
+      ],
+      "alternatives": [
+        {
+          "provider": "comfyui",
+          "score": 76,
+          "reason": "local workflow detected but not verified"
+        },
+        {
+          "provider": "midjourney",
+          "score": 62,
+          "reason": "prompt-only workflow"
+        }
+      ],
+      "manual_override_available": true
+    },
+    "risk_level": "low",
+    "risk_reasons": [],
+    "user_confirmed_current_provider": false,
+    "recommendations_shown": true,
+    "selected_next_step": "continue",
+    "user_facing_message": "StoryVista has completed the story data model and visual asset plan. The selected image provider is openai."
+  }
+}

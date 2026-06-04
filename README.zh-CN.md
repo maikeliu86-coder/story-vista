@@ -65,6 +65,108 @@ StoryVista 只定义“需要哪些图”和“这些图绑定到哪里”，不
 
 没有生图工具也可以工作：StoryVista 会先输出完整 `visual-asset-plan.json`、图片提示词、`image-manifest.json` 和语义 SVG placeholder。用户之后可以用任意生图工具生成图片，再替换 manifest 里的文件路径。
 
+## 生成前生图环境预检
+
+在正式生成故事视觉页面前，StoryVista 会运行或提供 Preflight Image Provider Check。这个预检不是报错，也不是责怪用户配置不对，而是帮助用户知道：当前人物图、地点图、关键事件图会由哪个 image provider 生成、规划或占位。
+
+StoryVista 不是某一个生图模型本身。它负责故事解析、视觉资产规划、提示词生成、图片绑定和页面生成；具体图片质量取决于用户当前配置或 Auto Mode 自动选择的 image provider。
+
+## Auto Mode：小白用户默认自动选择
+
+StoryVista 默认使用 Auto Mode。小白用户不用手动从一长串 provider 里选择。
+
+- 如果用户显式配置了 provider，优先使用用户配置。
+- 如果用户之前选过 provider，并且现在仍可用，优先使用上次选择。
+- 如果检测到一个 verified provider，自动使用它。
+- 如果检测到多个 provider，StoryVista 会自动推荐一个最适合当前环境和故事视觉化需求的 provider，并说明理由。
+- 如果没有检测到 provider，不中断，继续生成完整提示词、`image-manifest.json` 和语义占位图。
+- 高级用户可以随时手动切换。
+
+## 为什么要检查生图模型
+
+StoryVista 的核心能力是故事可视化工作流，不是把用户锁死到某一个生图引擎。预检可以避免用户误以为“StoryVista 生图失败”。更准确的说法通常是：当前环境没有可直接调用的 image provider，StoryVista 会继续生成 prompt-only 或 placeholder-svg 结果。
+
+## 当前 provider 检测
+
+StoryVista 可以检查配置文件、环境变量、本地 ComfyUI / SD WebUI 地址、手动素材目录和已有 manifest。检测报告只显示 `detected`、`not_found`、`configured_but_unverified`、`reachable`、`unreachable` 等状态，不输出完整 API Key。
+
+```bash
+node scripts/detect-image-provider.js --json --no-network
+python3 scripts/detect-image-provider.py --json --no-network
+```
+
+## 检测到多个 Provider 时
+
+StoryVista 不会直接把一大堆选项丢给新手。它会为候选 provider 打分，自动推荐一个，并说明原因。用户可以继续使用推荐 provider，也可以查看并切换其他 provider。
+
+## 国内推荐 Provider
+
+国内用户优先考虑：
+
+- 通义万相 / Qwen Image / DashScope / 阿里云百炼
+- 腾讯混元生图
+- MiniMax Image / 海螺相关能力
+- 百度文心 / 文心一格 / 百度智能云 AI 作画
+- 即梦 / 剪映生态，通常作为 prompt-only 或 manual workflow
+- LiblibAI / ComfyUI 中文生态
+- 本地 Stable Diffusion / FLUX / ComfyUI
+
+这不是绝对质量排名，而是默认选择偏好。实际选择仍取决于是否检测到、是否可调用、是否验证、是否适合当前任务。
+
+## 海外 / 可访问海外服务用户推荐 Provider
+
+可考虑：
+
+- OpenAI GPT Image / ChatGPT Images
+- Google Gemini Image / Imagen
+- Stability AI / Stable Diffusion
+- Black Forest Labs FLUX
+- Midjourney，常作为 prompt-only 或 manual workflow
+- Leonardo AI
+- Ideogram
+- Replicate
+- fal.ai / Together / RunPod / Modal
+
+如果某些服务在中国大陆访问受限，建议选择国内 provider 或手动导入图片。
+
+## 如何切换生图引擎
+
+通过 `image-provider.config.yaml`：
+
+```yaml
+image_provider:
+  mode: "api"
+  provider: "qwen-image"
+  model: "user-defined"
+  output_folder: "assets/images"
+  fallback: "placeholder-svg"
+  allow_initials_avatar: false
+```
+
+也可以通过环境变量切换，例如 `OPENAI_API_KEY`、`DASHSCOPE_API_KEY`、`BFL_API_KEY`、`STABILITY_API_KEY` 等。高级用户还可以使用 manual-assets、prompt-only 或 placeholder-svg 模式。
+
+## 为什么会看到占位图
+
+Placeholder mode 不是失败。它表示 StoryVista 已经完成故事模型、视觉资产规划、提示词和 manifest，只是当前环境没有可直接调用的生图引擎，或者用户选择了 prompt-only / manual 工作流。
+
+语义占位图必须包含完整实体名称和实体类型，不再默认生成简称头像。
+
+## 切换 Provider 后重新生成视觉资产
+
+切换 provider 后，保持 `entity_id` 和 `asset_id` 稳定，更新或重新生成 `image-manifest.json`，再重新绑定页面。这样不会破坏人物卡、地点卡、关系图、时间线和 3D 地图的图片引用。
+
+## Prompt-Only / Manual Assets / Placeholder Mode
+
+Prompt-only 适合 Midjourney、即梦等当前 Agent 不能直接调用的工具。Manual assets 适合用户已有剧照、截图、概念图或人物图。Placeholder mode 用于没有任何可用 provider 的情况，并且是有效继续模式。
+
+## 页面图片来源说明
+
+生成页面应包含低干扰说明，而不是红色报错：
+
+> 图片资产由当前配置的 image provider 生成或规划。你可以随时切换生图引擎并重新生成视觉资产。
+
+如果是 prompt-only 或 placeholder-svg，则使用更完整说明。这个 attribution note 不是甩锅，而是告诉用户当前图片来源和可替换性。
+
 ## 不再默认生成简称头像
 
 StoryVista must not use initials-only avatars as the default visual output.
@@ -126,12 +228,17 @@ cp -R skill "$HOME/.codex/skills/story-vista"
 2. Extract entities
 3. Classify entities by importance
 4. Build story data model
-5. Create visual asset plan
-6. Generate image prompts and/or images
-7. Create image manifest
-8. Bind image assets to character cards, location cards, relationship graph, timeline, and 3D map
-9. Generate final interactive atlas
-10. Run verification checklist
+5. Show Preflight Image Provider Check
+6. Run or offer Image Provider Diagnosis
+7. Apply Auto Mode provider selection
+8. Select api / manual-assets / prompt-only / placeholder-svg mode
+9. Create visual asset plan
+10. Generate image prompts and/or images
+11. Create image manifest
+12. Bind image assets to character cards, location cards, relationship graph, timeline, and 3D map
+13. Generate final interactive atlas
+14. Add subtle provider attribution note
+15. Run verification checklist
 
 ## Roadmap
 

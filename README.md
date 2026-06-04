@@ -75,6 +75,106 @@ If no provider is available, StoryVista still creates a complete visual asset pl
 
 See [skill/references/image-provider-guide.md](skill/references/image-provider-guide.md).
 
+## Preflight Image Provider Check
+
+Before visual asset generation, StoryVista runs or offers a Preflight Image Provider Check. This is not an error and not a blame message. It simply tells the user which image provider will generate, plan, or placeholder character portraits, location key art, and event visuals.
+
+Preflight does not block story parsing. If no callable provider is found, StoryVista continues with full prompts, `image-manifest.json`, and semantic placeholders.
+
+## Auto Mode: Automatic Image Provider Selection
+
+StoryVista defaults to Auto Mode:
+
+- explicit user config wins
+- the last user-selected provider is preferred when still available
+- one verified provider is selected automatically
+- multiple candidates are scored and the best fit is recommended
+- no provider falls back to `prompt-only` or `placeholder-svg`
+- manual override is always available
+
+Beginners are not forced to choose from a long provider list.
+
+## Why StoryVista Asks You To Check Your Image Provider
+
+StoryVista is not itself a single image model. It handles story parsing, visual asset planning, prompt generation, image binding, and atlas generation. Actual image quality depends on the selected or configured image provider.
+
+## Current Provider Detection
+
+StoryVista can inspect config files, environment variables, local endpoints, manual asset folders, and existing manifests. It never prints full API keys; secrets are masked.
+
+Use:
+
+```bash
+node scripts/detect-image-provider.js --json --no-network
+python3 scripts/detect-image-provider.py --json --no-network
+```
+
+## What Happens When Multiple Providers Are Detected
+
+StoryVista scores candidates and recommends one provider based on the current environment and story visualization needs. It explains the selection reason, then lets the user continue or switch manually. `ask_when_multiple_verified` defaults to `false`.
+
+## Recommended Providers By Region
+
+Mainland China friendly providers include Qwen Image / 通义万相 / DashScope, Tencent Hunyuan Image, MiniMax Image, Baidu Wenxin Image, Jimeng / Jianying manual workflows, LiblibAI / ComfyUI, and local Stable Diffusion / FLUX.
+
+Global or VPN-friendly providers include OpenAI GPT Image / ChatGPT Images, Google Gemini Image / Imagen, Stability AI / Stable Diffusion, Black Forest Labs FLUX, Midjourney prompt-only workflows, Leonardo AI, Ideogram, Replicate, fal.ai, Together, RunPod, and Modal.
+
+These are default selection preferences, not universal quality rankings. See [skill/references/image-provider-recommendations.md](skill/references/image-provider-recommendations.md).
+
+## How To Switch Image Providers
+
+Edit `image-provider.config.yaml`:
+
+```yaml
+image_provider:
+  mode: "api"
+  provider: "openai"
+  model: "gpt-image-2"
+  output_folder: "assets/images"
+  fallback: "placeholder-svg"
+  allow_initials_avatar: false
+```
+
+Or use a China-friendly provider:
+
+```yaml
+image_provider:
+  mode: "api"
+  provider: "qwen-image"
+  model: "user-defined"
+  output_folder: "assets/images"
+  fallback: "placeholder-svg"
+  allow_initials_avatar: false
+```
+
+See [skill/references/image-provider-switching.md](skill/references/image-provider-switching.md).
+
+## Why Am I Seeing Placeholders?
+
+Placeholder mode is not a failure. It means StoryVista completed the story and asset planning work, but the current environment has no directly callable image provider or the user selected a prompt-only/manual workflow.
+
+Semantic placeholders include full entity names and entity types. Initials-only avatars remain disabled by default.
+
+## Regenerating Visual Assets After Switching Providers
+
+After switching providers, keep stable `entity_id` and `asset_id` values, update or regenerate `image-manifest.json`, and rerun atlas binding. This preserves character cards, location cards, relationship graph nodes, timelines, and 3D map references.
+
+## Prompt-Only Mode
+
+Prompt-only mode is useful for Midjourney, Jimeng, or any provider that the current agent cannot call directly. StoryVista creates a prompt pack and manifest entries, then the user generates images externally.
+
+## Manual Assets Mode
+
+Manual assets mode uses user-provided portraits, stills, screenshots, concept art, or location images. Each file is registered in `image-manifest.json` with `status: "user_provided"`.
+
+## Provider Attribution Note
+
+Generated atlas pages should include a subtle footer or settings-panel note:
+
+> Image assets are generated or planned with the currently configured image provider. You can switch providers and regenerate visual assets at any time.
+
+For prompt-only or placeholder mode, the longer note explains that assets were generated, planned, or represented with placeholders. It is informational, not a warning.
+
 ## No Initials-Only Avatar Policy
 
 StoryVista must not use initials-only avatars as the default visual output. Every major character needs a planned `character_portrait` asset, and every key location needs a planned `location_keyart` asset. Images are bound through `image-manifest.json`.

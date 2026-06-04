@@ -7,6 +7,7 @@ Main use cases:
 - Build location maps, route maps, 3D spatial maps, and location cards.
 - Build timelines, object indexes, organization maps, concept indexes, and visual asset libraries.
 - Generate image prompts, image manifests, semantic placeholders, and optional interactive HTML atlases.
+- Run preflight image provider checks, diagnose provider availability, and select an image provider with Auto Mode.
 
 Core files:
 - README.md
@@ -15,11 +16,20 @@ Core files:
 - skill/SKILL.md
 - skill/references/cross-agent-compatibility.md
 - skill/references/image-provider-guide.md
+- skill/references/preflight-image-provider-check.md
+- skill/references/image-provider-diagnosis.md
+- skill/references/provider-selection-policy.md
+- skill/references/image-provider-recommendations.md
+- skill/references/image-provider-switching.md
 - skill/references/visual-asset-generation.md
 - skill/references/fallback-rules.md
 - skill/templates/story-atlas.schema.json
 - skill/templates/image-manifest.schema.json
 - skill/templates/image-provider.config.example.yaml
+- skill/templates/preflight-check-report.example.json
+- skill/templates/image-provider-report.example.json
+- scripts/detect-image-provider.js
+- scripts/detect-image-provider.py
 
 Installation modes:
 - Core Skill Mode for agents that read SKILL.md.
@@ -30,7 +40,15 @@ Installation modes:
 - BYO Image Model Mode and Manual Asset Binding Mode.
 
 Image provider support:
-- openai, chatgpt-image, midjourney, stable-diffusion, flux, comfyui, minimax-image, qwen-image, tencent-hunyuan-image, baidu-wenxin-image, ideogram, leonardo, local-folder, manual-assets, placeholder-svg, custom-api.
+- openai, chatgpt-image, google, gemini-image, imagen, midjourney, stable-diffusion, stability, flux, comfyui, automatic1111, minimax-image, qwen-image, tencent-hunyuan-image, baidu-wenxin-image, zhipu-image, volcengine-seedream, ideogram, leonardo, replicate, fal, together, local-folder, manual-assets, placeholder-svg, custom-api.
+
+Preflight and Auto Mode:
+- StoryVista defaults to Auto Mode.
+- It checks config files, environment variables, local endpoints, manual asset folders, and existing manifests.
+- It scores detected providers and recommends one when possible.
+- Multiple providers do not force a beginner choice; the user can manually override.
+- Missing provider is not fatal; prompt-only and placeholder-svg are valid continuation modes.
+- Detection reports must mask secrets and never print full API keys.
 
 Cross-agent support:
 - OpenAI Codex, Claude Code, GitHub Copilot Agent Mode, Cursor, Windsurf, OpenCode, generic coding agents, Hugging Face smolagents, LlamaIndex, LangChain, CrewAI, AutoGen, Qwen Code, Qwen-Agent, MiniMax, Tencent Hunyuan, Tencent Cloud Agent Development Platform, Baidu Wenxin AgentBuilder, Baidu Comate, GLM, DeepSeek-based local agents, OpenHands, and generic prompt-only agents.
@@ -40,6 +58,7 @@ Safety and limitation notes:
 - StoryVista does not grant rights to copyrighted source material or generated images.
 - Image generation is optional; if unavailable, generate prompts, image-manifest.json, and semantic SVG placeholders.
 - Initials-only avatars are disabled by default.
+- Generated pages should include a subtle image provider attribution note.
 
 Links:
 - README: README.md

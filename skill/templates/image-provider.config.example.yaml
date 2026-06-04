@@ -1,13 +1,61 @@
 image_provider:
-  mode: "bring_your_own"
-  provider: "openai | chatgpt-image | midjourney | stable-diffusion | flux | comfyui | minimax-image | qwen-image | tencent-hunyuan-image | baidu-wenxin-image | ideogram | leonardo | local-folder | manual-assets | placeholder-svg | custom-api"
+  mode: "auto"
+  provider: "auto"
+
+  preflight_check: true
+  ask_before_generation: true
+
+  diagnosis:
+    enabled: true
+    verify_with_test_call: false
+    no_network: true
+    mask_secrets: true
+
+  auto_select:
+    enabled: true
+    explain_selection: true
+    ask_when_multiple_verified: false
+    ask_when_high_risk: true
+    allow_manual_override: true
+    prefer_last_user_choice: true
+    save_user_choice: false
+    max_recommendations_shown: 3
+
+  scoring:
+    enabled: true
+    region_hint: "auto"
+    task_hint: "story-atlas"
+    prefer_callable_api: true
+    prefer_verified: true
+    prefer_character_consistency: true
+    prefer_location_keyart_quality: true
+    prefer_batch_generation: true
+
   model: "user-defined"
   output_folder: "assets/images"
-  prompt_language: "auto | en | zh-CN"
+  prompt_language: "auto"
+
   aspect_ratios:
     character_portrait: "3:4"
+    character_full_body: "2:3"
     location_keyart: "16:9"
     object_icon: "1:1"
     event_keyframe: "16:9"
+
   fallback: "placeholder-svg"
   allow_initials_avatar: false
+
+  attribution_note:
+    enabled: true
+    placement: "footer"
+    tone: "subtle"
+
+  recommendations:
+    enabled: true
+    region_hint: "auto"
+    show_when:
+      - no_provider_detected
+      - provider_configured_but_unverified
+      - placeholder_only
+      - prompt_only
+      - user_requests_better_quality

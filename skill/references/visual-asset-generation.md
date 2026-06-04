@@ -46,6 +46,8 @@ Then create provider-specific variants only when the selected provider requires 
 
 Every planned, generated, user-provided, missing, placeholder, or failed asset must be represented in `image-manifest.json`. Use stable ids and filenames.
 
+Before creating the visual asset plan, run or offer the Preflight Image Provider Check and apply Auto Mode provider selection. The selected provider affects prompt variants, output folders, generation mode, and attribution text, but it must not change the requirement that every major character and key location receives an asset entry.
+
 ## Binding Targets
 
 Bind assets to:
@@ -63,3 +65,5 @@ Relationship graph nodes and 3D map nodes should point to asset ids, not embedde
 ## Avoid Initials-Only Avatars
 
 Default fallback is semantic SVG placeholder with full entity name, entity type, and asset category. Initials-only placeholder is last resort and requires explicit permission.
+
+If no provider is available, mark assets as `prompt_ready` or `placeholder` rather than removing them from the plan.

@@ -6,16 +6,26 @@ StoryVista is image-provider neutral. It defines required visual assets and bind
 
 - `openai`
 - `chatgpt-image`
+- `google`
+- `gemini-image`
+- `imagen`
 - `midjourney`
 - `stable-diffusion`
+- `stability`
 - `flux`
 - `comfyui`
+- `automatic1111`
 - `minimax-image`
 - `qwen-image`
 - `tencent-hunyuan-image`
 - `baidu-wenxin-image`
+- `zhipu-image`
+- `volcengine-seedream`
 - `ideogram`
 - `leonardo`
+- `replicate`
+- `fal`
+- `together`
 - `local-folder`
 - `manual-assets`
 - `placeholder-svg`
@@ -24,6 +34,8 @@ StoryVista is image-provider neutral. It defines required visual assets and bind
 ## Core Rule
 
 The core skill should create model-neutral asset requirements first. Provider-specific syntax belongs in adapters, configuration, or downstream scripts.
+
+StoryVista defaults to Auto Mode. The system should detect configuration signals, score candidates, select a recommended provider when possible, and explain the selection in plain language. Beginners should not be forced to pick from a long provider list.
 
 ## Required Outputs
 
@@ -55,3 +67,9 @@ If a provider fails:
 2. Preserve the prompt and negative prompt.
 3. Create or reference a semantic placeholder.
 4. Report the failure in the final asset status summary.
+
+## Preflight And Diagnosis
+
+Before visual asset generation, run or offer Image Provider Diagnosis. Detection may inspect config files, environment variables, local endpoints, manual asset folders, and existing manifests. Do not print full API keys. Do not make paid API calls by default.
+
+If no provider is detected, continue with full prompts, `image-manifest.json`, and semantic placeholders. This is a valid continuation mode, not a StoryVista failure.

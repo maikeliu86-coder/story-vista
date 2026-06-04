@@ -19,17 +19,26 @@ StoryVista is a portable cross-agent skill for making story worlds visible. Use 
 Run these phases in order unless the user explicitly narrows the task:
 
 1. Parse source text.
-2. Extract entities.
-3. Classify entities by importance.
+2. Extract story entities.
+3. Classify entities by narrative importance.
 4. Build story data model.
-5. Create visual asset plan.
-6. Generate image prompts and/or images.
-7. Create image manifest.
-8. Bind image assets to character cards, location cards, relationship graph, timeline, 3D map, concept cards, and detail panels.
-9. Generate final interactive atlas.
-10. Run verification checklist.
+5. Show Preflight Image Provider Check.
+6. Run or offer Image Provider Diagnosis.
+7. Detect available image providers, config files, environment variables, local endpoints, manual asset folders, and existing manifests.
+8. Apply Default Image Provider Selection Policy.
+9. Select image mode: `api`, `manual-assets`, `prompt-only`, or `placeholder-svg`.
+10. If provider state is high risk, ask for secondary confirmation when the agent environment supports it.
+11. Create visual asset plan.
+12. Generate image prompts and/or images.
+13. Create or update image manifest.
+14. Bind generated images, manual assets, prompts, or semantic placeholders to atlas UI.
+15. Generate final interactive atlas.
+16. Add image provider attribution note to generated page.
+17. Run verification checklist.
+18. Report StoryVista generation status, image provider status, selected provider, selection reason, visual asset status, placeholder status, and recommended next steps.
 
 StoryVista must generate a visual asset plan before building the final atlas.
+Preflight check does not block story parsing. Image provider diagnosis does not block final atlas generation.
 
 ## Operating Posture
 
@@ -94,6 +103,124 @@ StoryVista defines what images are needed, not where they are generated.
 - Put provider-specific syntax in provider adapters or configuration, not in the core workflow.
 
 Supported provider modes: `openai`, `chatgpt-image`, `midjourney`, `stable-diffusion`, `flux`, `comfyui`, `minimax-image`, `qwen-image`, `tencent-hunyuan-image`, `baidu-wenxin-image`, `ideogram`, `leonardo`, `local-folder`, `manual-assets`, `placeholder-svg`, and `custom-api`.
+
+## Preflight Image Provider Check
+
+StoryVista must run or offer a Preflight Image Provider Check before visual asset generation.
+
+- Preflight is a helpful status check, not an error and not blame.
+- It should say "current environment has no directly callable image provider" when applicable.
+- If the agent environment supports interactive confirmation, ask only when useful.
+- If the environment does not support interactive confirmation, use auto diagnosis and auto selection when possible.
+- If the user is unsure, keep Auto Mode enabled.
+- Missing image provider is not a fatal error; continue with `prompt-only` or `placeholder-svg`.
+
+Chinese message:
+
+> 在开始生成故事视觉页面前，建议先检查当前配置的生图引擎。StoryVista 会根据你的当前 image provider 生成人物、地点和关键事件的视觉资产。如果当前没有可调用的生图引擎，StoryVista 仍会生成完整提示词、图片清单和语义占位图，方便你后续补图或切换模型后重新生成。
+>
+> 如果你不确定该选哪个生图引擎，可以直接使用 Auto Mode。StoryVista 会根据当前环境自动选择一个推荐 image provider。
+
+English message:
+
+> Before generating the visual story atlas, StoryVista recommends checking your current image provider. Character portraits, location key art, and event visuals will be generated or planned based on the selected provider. If no callable image provider is available, StoryVista will still create full image prompts, an image manifest, and semantic placeholders for later replacement or regeneration.
+>
+> If you are not sure which image provider to use, keep Auto Mode enabled. StoryVista will select a recommended provider based on the current environment.
+
+## Image Provider Diagnosis
+
+Diagnosis checks config files, environment variables, local endpoints, manual asset folders, and existing manifests. It must not print complete API keys.
+
+Allowed provider status values:
+
+- `detected`
+- `not_found`
+- `configured_but_unverified`
+- `reachable`
+- `unreachable`
+- `requires_manual_setup`
+- `prompt_only`
+- `placeholder_only`
+
+Default diagnosis behavior:
+
+- Do not make real paid API calls by default.
+- `--verify` may check local endpoints or safe availability where supported.
+- `--no-network` must prevent network checks.
+- Mask secrets, for example `OPENAI_API_KEY: detected, masked as sk-***abcd`.
+
+## Default Image Provider Selection Policy
+
+StoryVista defaults to Auto Mode for image provider selection.
+
+- Beginners should not be forced to choose from a long provider list.
+- Explicit user configuration always wins.
+- If the user previously selected a provider, prefer it when still available.
+- If exactly one verified provider is detected, select it automatically.
+- If multiple providers are detected, select the best recommended provider and explain why.
+- If no provider is detected, continue with `prompt-only` or `placeholder-svg`.
+- Provider recommendations are shown only when useful, not spammed.
+- User can always override the selected provider.
+- Never silently fall back to initials-only avatars.
+
+Selection priority:
+
+1. Explicit user config in `image-provider.config.yaml`.
+2. User selection from current session.
+3. Previously saved user preference if available.
+4. Verified provider with highest StoryVista fit score.
+5. Detected but unverified provider with highest score.
+6. Prompt-only provider.
+7. Manual assets mode.
+8. Semantic `placeholder-svg` mode.
+9. Initials-only avatar only if explicitly allowed.
+
+Each detected provider should get `score`, `selection_reason`, and `risk_reasons`. Scoring should consider callable API, verified status, StoryVista fit, character consistency, location key art quality, Chinese prompt support, global accessibility, mainland China accessibility, cost predictability, speed, image-to-image support, batch generation, manual workflow support, user region fit, and config clarity.
+
+## Secondary Confirmation Rules
+
+Secondary confirmation is only required for high-risk image provider states:
+
+- `no_provider_detected`
+- `provider_configured_but_unverified`
+- `provider_unreachable`
+- `placeholder_only`
+- `prompt_only`
+- `allow_initials_avatar` is true
+- user selected a provider with unknown capability
+- image generation is disabled
+- current provider does not support image generation
+- selected provider requires manual generation outside the agent
+
+Chinese:
+
+> 当前配置可能无法直接生成完整图片资产，StoryVista 将使用 prompt-only 或 semantic placeholder 模式继续。是否继续使用当前设置？
+
+English:
+
+> The current configuration may not be able to generate complete image assets directly. StoryVista will continue in prompt-only or semantic placeholder mode. Continue with the current settings?
+
+If the user continues, record `user_confirmed_current_provider: true`.
+
+## Provider Attribution Note
+
+The final atlas must include a subtle image provider attribution note. The note must be neutral and must not blame the user.
+
+Use short attribution when images were generated:
+
+- 中文：图片资产由当前配置的 image provider 生成或规划。你可以随时切换生图引擎并重新生成视觉资产。
+- English: Image assets are generated or planned with the currently configured image provider. You can switch providers and regenerate visual assets at any time.
+
+Use long attribution for `prompt-only` or `placeholder-svg`:
+
+- 中文：本页面的图片资产由当前配置的生图引擎生成、规划或占位呈现。若希望获得不同风格、更高细节或更稳定的人物一致性，可切换 image provider 后重新生成视觉资产。
+- English: The image assets in this atlas were generated, planned, or represented with placeholders based on the currently configured image provider. To get a different style, higher detail, or stronger character consistency, switch image providers and regenerate visual assets.
+
+For `manual-assets`:
+
+- 中文：图片资产来自用户提供素材，并通过 image-manifest.json 绑定到 StoryVista 页面。
+
+Use subtle footer, info note, or settings panel placement. Do not use red warning styling unless a real error occurred.
 
 ## Character Image Requirements
 
@@ -239,10 +366,14 @@ Build every spatial entity as an independent 3D miniature model or holographic l
 Before calling StoryVista output complete, verify:
 
 - Source entities are separated into characters, places, ships, technologies, organizations, objects, and concepts.
+- Preflight Image Provider Check was run or offered.
+- Auto Mode selection policy was applied unless the user explicitly configured a provider.
 - Every major character has a planned or bound `character_portrait` asset.
 - Every key location has a planned or bound `location_keyart` asset.
 - `visual-asset-plan.json` exists before final atlas generation.
 - `image-manifest.json` exists and covers generated, planned, missing, placeholder, and user-provided assets.
+- Image provider status, selected provider, selected mode, score, selection reason, and risk reasons are reported.
+- The final atlas includes a subtle image provider attribution note.
 - Initials-only avatars are not used as primary portraits.
 - Missing images use semantic placeholders or manifest-tracked fallback.
 - Image paths resolve and thumbnails are not stretched.
@@ -256,6 +387,10 @@ Before calling StoryVista output complete, verify:
 When producing files, report:
 
 - What story model was extracted.
+- StoryVista generation status.
+- Image provider status.
+- Selected provider and selection reason.
 - Which assets are generated, planned, missing, placeholder, or user-provided.
+- Placeholder status and recommended next steps.
 - Where `visual-asset-plan.json`, `image-manifest.json`, and final atlas files are located.
 - What verification was performed and what remains unverified.
