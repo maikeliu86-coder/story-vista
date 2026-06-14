@@ -12,7 +12,7 @@ Move StoryVista from a documentation-heavy concept to a runnable minimal Story A
 - Evidence records with explicit/inferred/ambiguous/contradictory/unresolved states
 - Visual asset plan, image manifest, and semantic SVG placeholders
 - Dependency-free interactive Cinematic Bible atlas
-- Fictional Chinese demo, JSON Schemas, and six regression tests
+- Fictional Chinese demo, JSON Schemas, and seven regression tests
 - Consolidated provider documentation and shorter executable Skill instructions
 - README-first run path, design docs, rights guidance, media plan, and release roadmap
 
