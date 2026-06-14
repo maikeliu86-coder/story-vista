@@ -6,7 +6,7 @@ Verified command:
 
 python scripts/storyvista.py build skill/examples/reader-visual-codex-demo/input.txt --out output/reader-visual-codex-demo --ui-language auto
 
-Core v0.3 outputs:
+Core v0.4 outputs:
 
 - source-index.json and chunks.json
 - language-profile.json
@@ -16,12 +16,13 @@ Core v0.3 outputs:
 - object-lore-codex.json and visual-evidence.json
 - visual-asset-plan.json and image-manifest.json
 - spoiler-state.json, provider-choice-state.json, theme-profile.json
-- semantic placeholder SVG assets
+- prompt-pack.md, provider-specific prompt files, and manual-generation-instructions.md
+- semantic placeholder SVG display fallbacks
 - atlas.html and verification-report.md
 
 Supported UI: English and Simplified Chinese.
 Experimental UI structures: Traditional Chinese, Japanese, Korean, French, Spanish, German, Russian.
-Image providers are optional. Missing providers fall back to local semantic SVG.
+Image providers are optional. Missing direct providers produce a prompt-ready external generation workflow; local semantic SVG is the final display fallback.
 Actor, writer, and director modes are future extensions, not core workflow.
 
 Primary references:
@@ -32,6 +33,9 @@ Primary references:
 - docs/i18n.md
 - docs/reader-sync-panel.md
 - docs/visual-provider-preflight.md
+- docs/image-provider-registry.md
+- docs/external-image-generation.md
+- docs/manual-image-binding.md
 - docs/theme-engine.md
 - docs/agent-compatibility.md
-- docs/upgrade-report-reader-visual-codex.md
+- docs/upgrade-report-v0.4.md

@@ -4,7 +4,7 @@
 
 它把复杂小说中的人物、别名、关系、地点、地图、武器、科技、魔法、药剂和世界观设定整理成防剧透的游戏图鉴，并把小说原文放在同一页面的 Reader Sync Panel 中。
 
-[English](README.md) · [Skill](skill/SKILL.md) · [完整演示](skill/examples/reader-visual-codex-demo) · [升级报告](docs/upgrade-report-reader-visual-codex.md)
+[English](README.md) · [Skill](skill/SKILL.md) · [完整演示](skill/examples/reader-visual-codex-demo) · [v0.4 生图工作流](docs/external-image-generation.md)
 
 ## 快速开始
 
@@ -13,7 +13,7 @@ python scripts/storyvista.py build skill/examples/reader-visual-codex-demo/input
 python scripts/storyvista.py validate output/reader-visual-codex-demo
 ```
 
-打开 `output/reader-visual-codex-demo/atlas.html`。默认流程完全本地运行，不需要 API Key、生图模型或额外运行时依赖。
+打开 `output/reader-visual-codex-demo/atlas.html`。默认流程完全本地运行，会先生成图鉴、提示词包和语义占位图；真实图片可以在外部模型生成后绑定回来。
 
 也可以让输入语言和 UI 语言不同：
 
@@ -54,7 +54,37 @@ python scripts/storyvista.py build chinese.txt --out output/en-ui --ui-language 
 
 ## 生图模型与 fallback
 
-StoryVista 会生成 `provider-choice-state.json`。没有经过验证的 provider 时，自动使用本地 `semantic placeholder SVG`，任务不会中断。第三方 provider 需要用户自行安装、配置并确认费用和隐私风险。
+StoryVista 会生成 `provider-choice-state.json`。没有可直接调用的 provider 时，它会推荐合适的生图选项并生成 `prompt-pack.md` 和各 provider 专用提示词；本地 `semantic placeholder SVG` 只是等待真实图片时的最终显示回退。第三方 provider 需要用户自行安装、配置并确认费用和隐私风险。
+
+### 为什么我看到的是占位图？
+
+这表示图鉴已经完成，但真实图片尚未绑定。点击页面中的“Copy prompt”，或打开 `prompt-pack.md`，在外部模型生成图片并按页面显示的文件名保存，然后执行：
+
+```bash
+python scripts/storyvista.py bind-images output/demo --assets output/demo/assets/generated
+```
+
+该命令会更新 `image-manifest.json` 并自动重建 `atlas.html`。
+
+### 使用即梦 / Jimeng
+
+```bash
+python scripts/storyvista.py export-prompts output/demo --provider jimeng
+```
+
+打开 `output/demo/prompts/jimeng-prompts.md`，把中文提示词复制到即梦，下载后按 `Expected filename` 命名，放入 `output/demo/assets/generated/`，再运行 `bind-images`。
+
+```bash
+python scripts/storyvista.py rebuild-atlas output/demo
+```
+
+### 使用 Seedream / SeeDream
+
+```bash
+python scripts/storyvista.py export-prompts output/demo --provider seedream
+```
+
+`seedream-prompts.md` 可用于 ByteDance Seedream 或火山引擎 Seedream。API 配置与手动网页生图是两个独立入口；StoryVista 不会自动注册账号、安装服务或发起付费调用。
 
 ## 开发验证
 

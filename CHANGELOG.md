@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased - Reader Visual Codex v0.3
+## Unreleased - Real Image Provider Layer v0.4
+
+- Added a provider-neutral registry with distinct Jimeng, Jianying Jimeng, ByteDance Seedream, and Volcengine Seedream entries.
+- Added provider-specific prompt export, prompt packs, manual generation instructions, expected filenames, external image binding, and atlas rebuilding.
+- Changed placeholder SVGs from the selected image workflow to the final display fallback while real generation is pending.
+- Added `creative-balanced`, `evidence-strict`, and `cinematic-free` prompt modes and richer manifest statuses.
+
+## Reader Visual Codex v0.3
 
 - Repositioned StoryVista as a multilingual visual reading companion for complex novels.
 - Added Reader Sync, entity highlighting and bidirectional jumps, spoiler locks, alias resolution, multilingual UI, theme profiles, provider preflight, and reader-focused codex outputs.

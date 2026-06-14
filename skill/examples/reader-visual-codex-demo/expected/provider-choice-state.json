@@ -1,11 +1,302 @@
 {
-  "schema_version": "0.3.0",
+  "schema_version": "0.4.0",
   "mode": "auto",
+  "status": "prompt-workflow-ready",
+  "available_providers": [
+    {
+      "provider_id": "local-folder",
+      "display_name": "Local Generated Folder",
+      "status": "manual-assets"
+    },
+    {
+      "provider_id": "manual-assets",
+      "display_name": "Manual Assets",
+      "status": "manual-assets"
+    },
+    {
+      "provider_id": "jimeng",
+      "display_name": "Jimeng / 即梦",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "jianying-jimeng",
+      "display_name": "Jianying Jimeng / 剪映即梦",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "liblibai",
+      "display_name": "LiblibAI",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "runninghub",
+      "display_name": "RunningHub",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "modelscope",
+      "display_name": "ModelScope",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "midjourney",
+      "display_name": "Midjourney",
+      "status": "prompt-only"
+    },
+    {
+      "provider_id": "ideogram",
+      "display_name": "Ideogram",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "leonardo",
+      "display_name": "Leonardo AI",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "canva",
+      "display_name": "Canva",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "adobe-firefly",
+      "display_name": "Adobe Firefly",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "krea",
+      "display_name": "Krea",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "playground",
+      "display_name": "Playground",
+      "status": "manual-web"
+    }
+  ],
   "detected_providers": [],
-  "selected_provider": "placeholder-svg",
+  "prompt_only_providers": [
+    {
+      "provider_id": "midjourney",
+      "display_name": "Midjourney",
+      "status": "prompt-only"
+    }
+  ],
+  "manual_web_providers": [
+    {
+      "provider_id": "jimeng",
+      "display_name": "Jimeng / 即梦",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "jianying-jimeng",
+      "display_name": "Jianying Jimeng / 剪映即梦",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "liblibai",
+      "display_name": "LiblibAI",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "runninghub",
+      "display_name": "RunningHub",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "modelscope",
+      "display_name": "ModelScope",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "ideogram",
+      "display_name": "Ideogram",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "leonardo",
+      "display_name": "Leonardo AI",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "canva",
+      "display_name": "Canva",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "adobe-firefly",
+      "display_name": "Adobe Firefly",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "krea",
+      "display_name": "Krea",
+      "status": "manual-web"
+    },
+    {
+      "provider_id": "playground",
+      "display_name": "Playground",
+      "status": "manual-web"
+    }
+  ],
+  "direct_api_providers": [
+    {
+      "provider_id": "openai-image",
+      "display_name": "OpenAI Image",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "chatgpt-image",
+      "display_name": "ChatGPT Image",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "dall-e",
+      "display_name": "DALL-E",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "google-imagen",
+      "display_name": "Google Imagen",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "gemini-image",
+      "display_name": "Gemini Image",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "stability-ai",
+      "display_name": "Stability AI",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "flux",
+      "display_name": "FLUX",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "black-forest-labs",
+      "display_name": "Black Forest Labs",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "replicate",
+      "display_name": "Replicate",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "fal-ai",
+      "display_name": "fal.ai",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "together-ai",
+      "display_name": "Together AI",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "runpod",
+      "display_name": "RunPod",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "modal",
+      "display_name": "Modal",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "custom-api",
+      "display_name": "Custom Image API",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "qwen-image",
+      "display_name": "Qwen Image",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "tongyi-wanxiang",
+      "display_name": "Tongyi Wanxiang / 通义万相",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "minimax-image",
+      "display_name": "MiniMax Image",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "tencent-hunyuan-image",
+      "display_name": "Tencent Hunyuan Image",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "baidu-wenxin-image",
+      "display_name": "Baidu Wenxin Image",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "volcengine-seedream",
+      "display_name": "Volcengine Seedream / 火山引擎 Seedream",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "bytedance-seedream",
+      "display_name": "ByteDance Seedream / SeeDream",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "siliconflow",
+      "display_name": "SiliconFlow",
+      "status": "unavailable"
+    }
+  ],
+  "local_api_providers": [
+    {
+      "provider_id": "stable-diffusion",
+      "display_name": "Stable Diffusion",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "comfyui",
+      "display_name": "ComfyUI",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "automatic1111",
+      "display_name": "AUTOMATIC1111",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "sd-webui",
+      "display_name": "SD WebUI",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "fooocus",
+      "display_name": "Fooocus",
+      "status": "unavailable"
+    },
+    {
+      "provider_id": "invokeai",
+      "display_name": "InvokeAI",
+      "status": "unavailable"
+    }
+  ],
+  "recommended_provider": "openai-image",
+  "selected_provider": "openai-image",
   "fallback_provider": "placeholder-svg",
-  "prompt_only": false,
-  "status": "fallback-selected",
-  "selection_reason": "No callable provider was verified; local semantic placeholders keep the build complete.",
+  "reason": "No verified direct image provider is available. Prompt packs and manual binding are ready; semantic SVG remains the display fallback.",
+  "warnings": [
+    "Configuration detection is not runtime verification.",
+    "No direct generation adapter was verified."
+  ],
+  "next_actions": [
+    "Review prompt-pack.md or export a provider-specific prompt file.",
+    "Generate images externally or configure a supported adapter.",
+    "Save files in assets/generated using the expected filenames.",
+    "Run storyvista.py bind-images, then rebuild-atlas."
+  ],
+  "prompt_only": true,
   "installation_policy": "recommend-only; never auto-install or create paid accounts"
 }

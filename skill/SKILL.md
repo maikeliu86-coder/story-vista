@@ -21,12 +21,15 @@ Turn complex novels into multilingual visual reading companions: characters, ali
 
 ```bash
 python scripts/storyvista.py build input.txt --out output/story --ui-language auto
+python scripts/storyvista.py export-prompts output/story --provider jimeng
+python scripts/storyvista.py bind-images output/story --assets output/story/assets/generated
+python scripts/storyvista.py rebuild-atlas output/story
 python scripts/storyvista.py validate output/story
 ```
 
 ## Required Outputs
 
-Create source/chunk indexes, language profile, reader text, entity links, character atlas, relationship web, location atlas, map plan, object/lore codex, visual evidence, visual asset plan, image manifest, spoiler state, provider state, theme profile, placeholders, `atlas.html`, and `verification-report.md`.
+Create source/chunk indexes, language profile, reader text, entity links, character atlas, relationship web, location atlas, map plan, object/lore codex, visual evidence, visual asset plan, image manifest, spoiler state, provider state, theme profile, provider prompt files, manual generation instructions, placeholders, `atlas.html`, and `verification-report.md`.
 
 ## Language And Locale Rules
 
@@ -55,9 +58,10 @@ Create source/chunk indexes, language profile, reader text, entity links, charac
 10. Build visual evidence with confirmed/contextual/inferred/unknown status.
 11. Build reader paragraphs and entity links.
 12. Create visual asset plan before image manifest or atlas rendering.
-13. Bind provider, manual, prompt-only, or semantic placeholder assets.
-14. Render localized `atlas.html` with Reader Sync and bidirectional jumps.
-15. Validate every contract and write the verification report.
+13. Export provider-specific prompts and expected filenames.
+14. Bind direct, externally generated, user-provided, or placeholder assets.
+15. Render localized `atlas.html` with generation status, prompt actions, Reader Sync, and bidirectional jumps.
+16. Validate every contract and write the verification report.
 
 ## Spoiler Rules
 
@@ -72,7 +76,9 @@ Create source/chunk indexes, language profile, reader text, entity links, charac
 - A configured key is not a verified callable provider.
 - Explicit user selection wins.
 - Never auto-install providers, create accounts, or make paid calls.
-- Fallback order: configured provider, manual assets, prompt-only, placeholder SVG.
+- Fallback order: configured direct/local provider, external manual generation, prompt pack, placeholder SVG.
+- Keep Jimeng, Jianying Jimeng, ByteDance Seedream, and Volcengine Seedream as distinct registry entries.
+- Default prompt style is `creative-balanced`; `evidence-strict` and `cinematic-free` remain available planning modes.
 
 ## Theme Engine
 
@@ -90,7 +96,7 @@ Create source/chunk indexes, language profile, reader text, entity links, charac
 
 ## Fallback Rules
 
-- Missing provider: continue with semantic SVG.
+- Missing provider: create an actionable prompt workflow and continue with semantic SVG as the display fallback.
 - Missing visual fact: use `unknown`, not invention.
 - Ambiguous alias: keep candidates and report ambiguity.
 - Missing geography: use interpretive map with a disclaimer.

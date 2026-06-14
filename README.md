@@ -8,7 +8,7 @@ StoryVista turns complex novels into spoiler-safe visual codexes: character port
 
 它把小说中的人物、人物关系、地点、地图、武器、科技、魔法、药剂、特殊物品和世界观设定整理成像游戏图鉴一样的可视化页面，帮助读者读得更清楚、记得更牢、不被剧透。
 
-[中文说明](README.zh-CN.md) · [Skill](skill/SKILL.md) · [Main demo](skill/examples/reader-visual-codex-demo) · [Upgrade report](docs/upgrade-report-reader-visual-codex.md)
+[中文说明](README.zh-CN.md) · [Skill](skill/SKILL.md) · [Main demo](skill/examples/reader-visual-codex-demo) · [v0.4 provider workflow](docs/external-image-generation.md)
 
 ## Why StoryVista
 
@@ -34,7 +34,7 @@ python scripts/storyvista.py build skill/examples/reader-visual-codex-demo/input
 python scripts/storyvista.py validate output/reader-visual-codex-demo
 ```
 
-Open `output/reader-visual-codex-demo/atlas.html`. The default path is offline, dependency-free, and does not require an API key or image provider.
+Open `output/reader-visual-codex-demo/atlas.html`. The default path is offline and dependency-free. It produces a usable atlas plus prompts and semantic display fallbacks; real images can be generated externally and bound later.
 
 ## 中文快速开始
 
@@ -43,7 +43,7 @@ python scripts/storyvista.py build skill/examples/reader-visual-codex-demo/input
 python scripts/storyvista.py validate output/reader-visual-codex-demo
 ```
 
-在浏览器中打开 `output/reader-visual-codex-demo/atlas.html`。默认流程完全本地运行，不需要安装依赖、API Key 或生图服务。
+在浏览器中打开 `output/reader-visual-codex-demo/atlas.html`。默认流程完全本地运行，并输出可复制的生图提示词；真实图片可在即梦、Seedream 或其他模型中生成后再绑定回来。
 
 Override the interface language independently from the source:
 
@@ -54,7 +54,7 @@ python scripts/storyvista.py build input.txt --out output/demo --ui-language zh-
 
 ## Generated Files
 
-The v0.3 build creates source and chunk indexes, language and spoiler profiles, Reader Sync text, entity links, character/relationship/location/object codex data, a map plan, visual evidence, provider and theme states, a visual asset plan, an image manifest, semantic SVG placeholders, `atlas.html`, and `verification-report.md`.
+The v0.4 build also creates a provider registry, `prompt-pack.md`, provider-specific prompt files, manual generation instructions, expected filenames, and binding-ready manifest records. Semantic SVGs remain display fallbacks while real images are pending.
 
 See the complete contract in [output-spec.md](skill/references/output-spec.md).
 
@@ -83,13 +83,43 @@ Canonical names remain in the source language. Localized labels may be added whe
 
 ## Visual Provider Preflight
 
-StoryVista checks configuration signals without printing secrets or making paid calls. A detected key is not treated as a verified runtime. With no verified provider, the build selects `placeholder-svg` and still completes. Users install, configure, and pay for third-party providers themselves.
+StoryVista checks configuration signals without printing secrets or making paid calls. A detected key is not treated as a verified runtime. With no configured direct provider, the build recommends a practical provider and prepares a prompt workflow; `placeholder-svg` is only the final display fallback while images are pending. Users install, configure, and pay for third-party providers themselves.
 
 ```bash
 python scripts/detect_image_provider.py --no-network
 ```
 
 See [visual-provider-preflight.md](docs/visual-provider-preflight.md) and [image-provider recommendations](skill/references/image-provider-recommendations.md).
+
+## Why Am I Seeing Placeholders?
+
+Placeholders mean the atlas is complete but a real image has not yet been bound. Open `prompt-pack.md` or use each card's **Copy prompt** action, generate the image externally, save it with the displayed expected filename, then bind it:
+
+```bash
+python scripts/storyvista.py bind-images output/demo --assets output/demo/assets/generated
+```
+
+The command updates `image-manifest.json` and rebuilds `atlas.html`. See [manual-image-binding.md](docs/manual-image-binding.md).
+
+## Use Jimeng / 即梦
+
+```bash
+python scripts/storyvista.py export-prompts output/demo --provider jimeng
+```
+
+Open `output/demo/prompts/jimeng-prompts.md`, copy each Chinese prompt into Jimeng, download each result using its expected filename, place the files in `output/demo/assets/generated/`, and run `bind-images`.
+
+```bash
+python scripts/storyvista.py rebuild-atlas output/demo
+```
+
+## Use Seedream / SeeDream
+
+```bash
+python scripts/storyvista.py export-prompts output/demo --provider seedream
+```
+
+Use `output/demo/prompts/seedream-prompts.md` with ByteDance Seedream or Volcengine Seedream. Direct API configuration is represented separately from the manual prompt workflow; StoryVista does not create accounts or make paid calls automatically.
 
 ## Cross-Agent Use
 

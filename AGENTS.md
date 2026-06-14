@@ -1,6 +1,6 @@
 # StoryVista Agent Instructions
 
-StoryVista is a runnable multilingual Reader Visual Codex. Keep the dependency-free CLI, spoiler-safe reader workflow, and semantic fallback working before adding optional adapters or providers.
+StoryVista is a runnable multilingual Reader Visual Codex with a provider-neutral real-image handoff layer. Keep the dependency-free CLI, spoiler-safe reader workflow, prompt export, manual binding, and semantic display fallback working.
 
 ## Primary Command
 
@@ -14,8 +14,9 @@ python scripts/storyvista.py build skill/examples/minimal-novel-demo/input.txt -
 2. Detect language and model characters, aliases, relations, locations, objects/lore, events, reader text, entity links, spoilers, and evidence.
 3. Mark claims as `explicit`, `inferred`, `ambiguous`, `contradictory`, or `unresolved`.
 4. Create `visual-asset-plan.json` before rendering.
-5. Create `image-manifest.json`, semantic placeholders, and `atlas.html`.
-6. Validate and write `verification-report.md`.
+5. Create `image-manifest.json`, prompt packs, provider-specific prompts, and semantic display fallbacks.
+6. Bind direct, externally generated, or user-provided images when available.
+7. Render `atlas.html`, validate, and write `verification-report.md`.
 
 ## Engineering Rules
 
@@ -23,6 +24,7 @@ python scripts/storyvista.py build skill/examples/minimal-novel-demo/input.txt -
 - Keep changes small, reproducible, and covered by targeted tests.
 - Do not invent missing story facts; preserve unresolved states.
 - Do not make image providers a prerequisite for atlas generation.
+- Do not select placeholder SVG as the image workflow when prompt export or manual generation remains available.
 - Bind all visuals through `image-manifest.json`.
 - Keep `allow_initials_avatar: false` unless the user explicitly opts in.
 - Mask secrets and avoid paid provider calls during diagnosis.
@@ -47,3 +49,5 @@ For HTML changes, also check embedded JavaScript syntax and verify desktop/mobil
 - Fallbacks: `skill/references/fallback-rules.md`
 - Verification: `skill/references/verification.md`
 - Image providers: `skill/references/image-provider.md`
+- Provider registry: `docs/image-provider-registry.md`
+- External generation: `docs/external-image-generation.md`

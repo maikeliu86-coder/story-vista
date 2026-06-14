@@ -4,9 +4,9 @@
 
 Character portraits, relationship web, location/map planning, object/lore codex, Reader Sync, entity jumps, spoiler safety, provider preflight, theme engine, English/Chinese UI, cross-agent docs, and semantic placeholders.
 
-## v0.4 - Real Image Provider Integration
+## v0.4 - Real Image Provider Layer
 
-OpenAI Image, ComfyUI, Qwen Image, MiniMax Image, prompt-only export, regeneration, asset versions, and quality checks.
+Provider registry, provider-aware prompt export, Jimeng and Seedream workflows, external asset binding, generation status, expected filenames, and atlas rebuilding. Direct paid generation remains user-configured and opt-in.
 
 ## v0.5 - Advanced Reading Companion
 

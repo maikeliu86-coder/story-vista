@@ -13,6 +13,7 @@ class ImageManifestSchemaTest(unittest.TestCase):
         schema = json.loads((ROOT / "skill" / "templates" / "image-manifest.schema.json").read_text(encoding="utf-8"))
         self.assertFalse(schema["properties"]["allow_initials_avatar"]["const"])
         self.assertIn("bound_to", schema["properties"]["assets"]["items"]["required"])
+        self.assertIn("pending_external_generation", schema["properties"]["assets"]["items"]["properties"]["status"]["enum"])
 
 
 if __name__ == "__main__":

@@ -30,6 +30,6 @@ def ingest_source(input_path: str, language: str | None = None) -> tuple[dict, s
         "language": language or detect_language(text),
         "created_at": datetime.now(timezone.utc).isoformat(),
         "character_count": len(text),
-        "notes": "Processed locally by StoryVista v0.3 Reader Visual Codex.",
+        "notes": "Processed locally by StoryVista v0.4 Reader Visual Codex.",
     }
     return {"schema_version": "0.3.0", "sources": [source]}, text

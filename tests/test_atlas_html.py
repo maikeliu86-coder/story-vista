@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class AtlasHtmlTest(unittest.TestCase):
     def test_reader_sync_and_jump_controls_exist(self) -> None:
         html = (ROOT / "skill/examples/reader-visual-codex-demo/expected/atlas.html").read_text()
-        for token in ("reader-handle", "reader-toggle", "entity-highlight", "data-paragraph", "localStorage", "themeProfile", "Objects & Lore", "Relationships", "Gallery"):
+        for token in ("reader-handle", "reader-toggle", "entity-highlight", "data-paragraph", "localStorage", "themeProfile", "Objects & Lore", "Relationships", "Gallery", "Copy prompt", "Open prompt pack", "pending_external_generation"):
             self.assertIn(token, html)
 
 

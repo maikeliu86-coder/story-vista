@@ -1,0 +1,1230 @@
+{
+  "schema_version": "0.4.0",
+  "providers": [
+    {
+      "provider_id": "openai-image",
+      "display_name": "OpenAI Image",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "natural-language art direction",
+        "image editing"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "OPENAI_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "chatgpt-image",
+      "display_name": "ChatGPT Image",
+      "region": "global",
+      "provider_type": "agent-native",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "conversational iteration",
+        "image editing"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "dall-e",
+      "display_name": "DALL-E",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "general illustration"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "OPENAI_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "google-imagen",
+      "display_name": "Google Imagen",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "high-fidelity imagery"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "GOOGLE_API_KEY",
+        "VERTEX_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "gemini-image",
+      "display_name": "Gemini Image",
+      "region": "global",
+      "provider_type": "agent-native",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "multimodal iteration"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "GEMINI_API_KEY",
+        "GOOGLE_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "stability-ai",
+      "display_name": "Stability AI",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "configurable diffusion workflows"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "STABILITY_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "stable-diffusion",
+      "display_name": "Stable Diffusion",
+      "region": "global",
+      "provider_type": "local-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "local control",
+        "custom models"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "flux",
+      "display_name": "FLUX",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "photorealism",
+        "typographic composition"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "BFL_API_KEY",
+        "FAL_KEY",
+        "REPLICATE_API_TOKEN"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "black-forest-labs",
+      "display_name": "Black Forest Labs",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "FLUX model access"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "BFL_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "replicate",
+      "display_name": "Replicate",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "hosted open models"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "REPLICATE_API_TOKEN"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "fal-ai",
+      "display_name": "fal.ai",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "fast hosted media models"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "FAL_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "together-ai",
+      "display_name": "Together AI",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "hosted open models"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "TOGETHER_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "runpod",
+      "display_name": "RunPod",
+      "region": "global",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "custom GPU endpoints"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "RUNPOD_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "modal",
+      "display_name": "Modal",
+      "region": "global",
+      "provider_type": "custom-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "custom serverless image pipelines"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "MODAL_TOKEN_ID",
+        "MODAL_TOKEN_SECRET"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "custom-api",
+      "display_name": "Custom Image API",
+      "region": "global",
+      "provider_type": "custom-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "bring-your-own endpoint"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "STORYVISTA_IMAGE_API_URL",
+        "STORYVISTA_IMAGE_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "comfyui",
+      "display_name": "ComfyUI",
+      "region": "local",
+      "provider_type": "local-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "node workflows",
+        "local model control"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "COMFYUI_URL"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "automatic1111",
+      "display_name": "AUTOMATIC1111",
+      "region": "local",
+      "provider_type": "local-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "Stable Diffusion WebUI API"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "AUTOMATIC1111_URL"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "sd-webui",
+      "display_name": "SD WebUI",
+      "region": "local",
+      "provider_type": "local-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "local Stable Diffusion"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "SD_WEBUI_URL"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "fooocus",
+      "display_name": "Fooocus",
+      "region": "local",
+      "provider_type": "local-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "simple local generation"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "FOOOCUS_URL"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "invokeai",
+      "display_name": "InvokeAI",
+      "region": "local",
+      "provider_type": "local-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "local canvas and workflows"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "INVOKEAI_URL"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "local-folder",
+      "display_name": "Local Generated Folder",
+      "region": "local",
+      "provider_type": "manual-assets",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "existing local images"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "manual-assets",
+      "display_name": "Manual Assets",
+      "region": "local",
+      "provider_type": "manual-assets",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "licensed or user-created images"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "qwen-image",
+      "display_name": "Qwen Image",
+      "region": "china-asia",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "Chinese semantics",
+        "bilingual prompts"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "DASHSCOPE_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "tongyi-wanxiang",
+      "display_name": "Tongyi Wanxiang / 通义万相",
+      "region": "china",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "Chinese creative prompts"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "DASHSCOPE_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "minimax-image",
+      "display_name": "MiniMax Image",
+      "region": "china-asia",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "cinematic Chinese prompts"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "MINIMAX_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "tencent-hunyuan-image",
+      "display_name": "Tencent Hunyuan Image",
+      "region": "china",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "Chinese-language imagery"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "TENCENT_SECRET_ID",
+        "TENCENT_SECRET_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "baidu-wenxin-image",
+      "display_name": "Baidu Wenxin Image",
+      "region": "china",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "Chinese-language imagery"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "BAIDU_API_KEY",
+        "BAIDU_SECRET_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "volcengine-seedream",
+      "display_name": "Volcengine Seedream / 火山引擎 Seedream",
+      "region": "china-asia",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "high-fidelity cinematic imagery",
+        "Chinese prompts"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "VOLCENGINE_API_KEY",
+        "VOLCENGINE_ACCESS_KEY",
+        "VOLCENGINE_SECRET_KEY",
+        "SEEDREAM_API_KEY",
+        "BYTEDANCE_SEEDREAM_API_KEY"
+      ],
+      "notes": "Configuration detection does not verify API availability."
+    },
+    {
+      "provider_id": "bytedance-seedream",
+      "display_name": "ByteDance Seedream / SeeDream",
+      "region": "china-asia",
+      "provider_type": "custom-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "high-fidelity cinematic imagery",
+        "character consistency"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "SEEDREAM_API_KEY",
+        "BYTEDANCE_SEEDREAM_API_KEY"
+      ],
+      "notes": "Falls back to prompt export when no user API configuration is present."
+    },
+    {
+      "provider_id": "jimeng",
+      "display_name": "Jimeng / 即梦",
+      "region": "china",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "stylized cinematic images",
+        "Chinese-language prompts",
+        "short-video-friendly visuals"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": "Copy exported prompts into the Jimeng web workflow, then bind downloaded images."
+    },
+    {
+      "provider_id": "jianying-jimeng",
+      "display_name": "Jianying Jimeng / 剪映即梦",
+      "region": "china",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "mainland creator workflows",
+        "short-video-friendly visuals"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "liblibai",
+      "display_name": "LiblibAI",
+      "region": "china",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "community models",
+        "Chinese creator workflows"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "runninghub",
+      "display_name": "RunningHub",
+      "region": "china-asia",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "hosted ComfyUI workflows"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "siliconflow",
+      "display_name": "SiliconFlow",
+      "region": "china-asia",
+      "provider_type": "direct-api",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "hosted open image models"
+      ],
+      "requires_api_key": true,
+      "requires_browser": false,
+      "supports_direct_generation": "configurable",
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "configurable",
+      "env_vars": [
+        "SILICONFLOW_API_KEY"
+      ],
+      "notes": ""
+    },
+    {
+      "provider_id": "modelscope",
+      "display_name": "ModelScope",
+      "region": "china-asia",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "open model discovery and demos"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "midjourney",
+      "display_name": "Midjourney",
+      "region": "global",
+      "provider_type": "prompt-only",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "stylized cinematic imagery",
+        "concept art"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "ideogram",
+      "display_name": "Ideogram",
+      "region": "global",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "graphic design",
+        "text-aware images"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "leonardo",
+      "display_name": "Leonardo AI",
+      "region": "global",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "game assets",
+        "concept art"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "canva",
+      "display_name": "Canva",
+      "region": "global",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "design layouts",
+        "social assets"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "adobe-firefly",
+      "display_name": "Adobe Firefly",
+      "region": "global",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "commercial creative workflows"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "krea",
+      "display_name": "Krea",
+      "region": "global",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "rapid visual iteration"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "playground",
+      "display_name": "Playground",
+      "region": "global",
+      "provider_type": "manual-web",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "web-based image iteration"
+      ],
+      "requires_api_key": false,
+      "requires_browser": true,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "prompt-pack",
+      "display_name": "Prompt Pack",
+      "region": "global",
+      "provider_type": "fallback",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "external generation handoff"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    },
+    {
+      "provider_id": "placeholder-svg",
+      "display_name": "Semantic Placeholder SVG",
+      "region": "local",
+      "provider_type": "fallback",
+      "capabilities": [
+        "character_portrait",
+        "character_half_body",
+        "location_art",
+        "map_art",
+        "object_art",
+        "background_art",
+        "image_editing"
+      ],
+      "best_for": [
+        "offline visual fallback"
+      ],
+      "requires_api_key": false,
+      "requires_browser": false,
+      "supports_direct_generation": false,
+      "supports_prompt_export": true,
+      "supports_manual_binding": true,
+      "status": "available-as-prompt-workflow",
+      "env_vars": [],
+      "notes": ""
+    }
+  ]
+}

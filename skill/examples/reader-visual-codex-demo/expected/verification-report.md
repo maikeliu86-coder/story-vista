@@ -1,13 +1,13 @@
 # StoryVista Verification Report
 
 ## Result
-- Passed checks: 65
+- Passed checks: 67
 - Warnings: 0
 - Input language: en
 - UI language: en
 - UI locale status: supported
-- Provider status: fallback-selected
-- Selected provider: placeholder-svg
+- Provider status: prompt-workflow-ready
+- Recommended provider: openai-image
 - Theme: futuristic-sci-fi
 - Atlas generation status: complete
 
@@ -46,6 +46,8 @@
 - Valid JSON: provider-choice-state.json
 - Exists: theme-profile.json
 - Valid JSON: theme-profile.json
+- Exists: prompt-pack.md
+- Exists: manual-generation-instructions.md
 - Exists: atlas.html
 - Major character has entity_id: Lord Elias Alexander Varron
 - Major character has entity_id: Doctor Mirabelle Saye Ashcroft
@@ -58,23 +60,23 @@
 - Relation evidence state recorded: rel_003
 - Visual asset ids are unique
 - Manifest asset ids are unique
-- Placeholder exists: asset_char_001_portrait
-- Placeholder exists: asset_char_001_half_body
-- Placeholder exists: asset_char_001_first_scene
-- Placeholder exists: asset_char_002_portrait
-- Placeholder exists: asset_char_002_half_body
-- Placeholder exists: asset_char_002_first_scene
-- Placeholder exists: asset_char_003_portrait
-- Placeholder exists: asset_char_003_half_body
-- Placeholder exists: asset_char_003_first_scene
-- Placeholder exists: asset_loc_001_keyart
-- Placeholder exists: asset_loc_002_keyart
-- Placeholder exists: asset_loc_003_keyart
-- Placeholder exists: asset_obj_001_codex
-- Placeholder exists: asset_obj_002_codex
-- Placeholder exists: asset_lore_001_codex
-- Placeholder exists: asset_story_map
-- Placeholder exists: asset_atlas_background
+- Display and fallback assets exist: asset_char_001_portrait
+- Display and fallback assets exist: asset_char_001_half_body
+- Display and fallback assets exist: asset_char_001_first_scene
+- Display and fallback assets exist: asset_char_002_portrait
+- Display and fallback assets exist: asset_char_002_half_body
+- Display and fallback assets exist: asset_char_002_first_scene
+- Display and fallback assets exist: asset_char_003_portrait
+- Display and fallback assets exist: asset_char_003_half_body
+- Display and fallback assets exist: asset_char_003_first_scene
+- Display and fallback assets exist: asset_loc_001_keyart
+- Display and fallback assets exist: asset_loc_002_keyart
+- Display and fallback assets exist: asset_loc_003_keyart
+- Display and fallback assets exist: asset_obj_001_codex
+- Display and fallback assets exist: asset_obj_002_codex
+- Display and fallback assets exist: asset_lore_001_codex
+- Display and fallback assets exist: asset_story_map
+- Display and fallback assets exist: asset_atlas_background
 - Every major character has a portrait asset
 - Initials-only avatars disabled
 
@@ -88,9 +90,14 @@
 - None
 
 ## Missing Optional Assets
-- API-generated images are optional in v0.3; semantic placeholders are present.
+- Manifest status counts: {'pending_external_generation': 17}
+- Real images may remain pending external generation; semantic placeholders are display fallbacks.
+
+## Manual Image Binding
+- Successfully bound: 0
+- Unmatched files: []
 
 ## Next Steps
 - Review inferred visual details and ambiguous aliases before publishing.
-- Replace placeholder assets through image-manifest.json when licensed images are available.
+- Use prompt-pack.md or provider-specific prompt files, then bind generated files with the CLI.
 - Review evidence tags before publishing the atlas.

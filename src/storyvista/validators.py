@@ -8,7 +8,8 @@ REQUIRED_FILES = [
     "source-index.json", "chunks.json", "language-profile.json", "reader-text.json", "entity-linking.json",
     "character-atlas.json", "relationship-web.json", "location-atlas.json", "map-plan.json",
     "object-lore-codex.json", "visual-evidence.json", "story-atlas.json", "visual-asset-plan.json",
-    "image-manifest.json", "spoiler-state.json", "provider-choice-state.json", "theme-profile.json", "atlas.html",
+    "image-manifest.json", "spoiler-state.json", "provider-choice-state.json", "theme-profile.json",
+    "prompt-pack.md", "manual-generation-instructions.md", "atlas.html",
 ]
 
 
@@ -72,11 +73,12 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
     for asset in manifest.get("assets", []):
         if asset.get("bound_to") not in valid_bindings and not str(asset.get("bound_to", "")).startswith("asset_"):
             warnings.append(f"Manifest binding does not exist: {asset.get('asset_id')}")
-        placeholder = root / asset.get("file_path", "")
-        if placeholder.exists():
-            passed.append(f"Placeholder exists: {asset.get('asset_id')}")
+        display_file = root / asset.get("file_path", "")
+        fallback_file = root / asset.get("placeholder_path", asset.get("file_path", ""))
+        if display_file.exists() and fallback_file.exists():
+            passed.append(f"Display and fallback assets exist: {asset.get('asset_id')}")
         else:
-            warnings.append(f"Missing placeholder: {asset.get('file_path')}")
+            warnings.append(f"Missing display or fallback asset: {asset.get('asset_id')}")
 
     major_ids = {item["entity_id"] for item in characters if item.get("importance") == "major"}
     portrait_ids = {item.get("entity_id") for item in plan.get("assets", []) if item.get("asset_type") == "character_portrait"}
@@ -102,14 +104,21 @@ def write_verification_report(out_dir: str | Path, passed: list[str], warnings: 
     for event in atlas.get("events", []):
         if event.get("status") == "unresolved":
             unresolved.append(event.get("event_id"))
+    manifest_path = root / "image-manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {"assets": []}
+    status_counts = {}
+    for asset in manifest["assets"]:
+        status_counts[asset.get("status", "unknown")] = status_counts.get(asset.get("status", "unknown"), 0) + 1
+    binding_path = root / "binding-report.json"
+    binding = json.loads(binding_path.read_text(encoding="utf-8")) if binding_path.exists() else {"matched_count": 0, "unmatched": []}
     lines = [
         "# StoryVista Verification Report", "", "## Result",
         f"- Passed checks: {len(passed)}", f"- Warnings: {len(warnings)}",
         f"- Input language: {(language_profile or {}).get('input_language', 'unknown')}",
         f"- UI language: {(language_profile or {}).get('ui_language', 'unknown')}",
         f"- UI locale status: {(language_profile or {}).get('ui_locale_status', 'unknown')}",
-        f"- Provider status: {(provider_state or {}).get('status', 'placeholder-svg')}",
-        f"- Selected provider: {(provider_state or {}).get('selected_provider', 'placeholder-svg')}",
+        f"- Provider status: {(provider_state or {}).get('status', 'prompt-workflow-ready')}",
+        f"- Recommended provider: {(provider_state or {}).get('recommended_provider', 'prompt-pack')}",
         f"- Theme: {(theme_profile or {}).get('theme_id', 'unknown')}",
         "- Atlas generation status: complete" if not warnings else "- Atlas generation status: complete with warnings",
         "", "## Passed Checks", *[f"- {item}" for item in passed],
@@ -117,10 +126,14 @@ def write_verification_report(out_dir: str | Path, passed: list[str], warnings: 
         "", "## Unresolved Evidence", *([f"- {item}" for item in unresolved] or ["- None"]),
         "", "## Ambiguous Entity Links", *([f"- {item['alias']}: {', '.join(item['candidate_entity_ids'])}" for item in (entity_linking or {}).get('ambiguous', [])] or ["- None"]),
         "", "## Missing Optional Assets",
-        "- API-generated images are optional in v0.3; semantic placeholders are present.",
+        f"- Manifest status counts: {status_counts}",
+        "- Real images may remain pending external generation; semantic placeholders are display fallbacks.",
+        "", "## Manual Image Binding",
+        f"- Successfully bound: {binding.get('matched_count', 0)}",
+        f"- Unmatched files: {binding.get('unmatched', [])}",
         "", "## Next Steps",
         "- Review inferred visual details and ambiguous aliases before publishing.",
-        "- Replace placeholder assets through image-manifest.json when licensed images are available.",
+        "- Use prompt-pack.md or provider-specific prompt files, then bind generated files with the CLI.",
         "- Review evidence tags before publishing the atlas.",
     ]
     path = root / "verification-report.md"

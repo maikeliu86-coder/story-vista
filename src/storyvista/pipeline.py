@@ -16,6 +16,7 @@ from .location_atlas import build_location_atlas
 from .map_planner import build_map_plan
 from .object_lore_codex import build_object_lore_codex
 from .placeholder_svg import generate_placeholders
+from .prompt_export import export_prompts
 from .provider_preflight import build_provider_choice_state
 from .reader_text import build_reader_text
 from .relationship_web import build_relationship_web
@@ -29,6 +30,38 @@ from .visual_profile import attach_visual_profiles
 
 def write_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _render_payload(out: Path, repo_root: Path) -> None:
+    def load(name: str) -> dict:
+        return json.loads((out / name).read_text(encoding="utf-8"))
+
+    language_profile = load("language-profile.json")
+    render_atlas({
+        "atlas": load("story-atlas.json"), "manifest": load("image-manifest.json"),
+        "languageProfile": language_profile, "readerText": load("reader-text.json"),
+        "entityLinking": load("entity-linking.json"), "characterAtlas": load("character-atlas.json"),
+        "relationshipWeb": load("relationship-web.json"), "locationAtlas": load("location-atlas.json"),
+        "mapPlan": load("map-plan.json"), "objectLoreCodex": load("object-lore-codex.json"),
+        "visualEvidence": load("visual-evidence.json"), "spoilerState": load("spoiler-state.json"),
+        "providerState": load("provider-choice-state.json"), "themeProfile": load("theme-profile.json"),
+        "visualAssetPlan": load("visual-asset-plan.json"),
+        "locale": load_locale(repo_root, language_profile["ui_language"]), "allLocales": load_all_locales(repo_root),
+    }, repo_root / "skill" / "templates" / "atlas.html", out / "atlas.html")
+
+
+def rebuild_atlas(output_dir: str, repo_root: Path) -> dict:
+    out = Path(output_dir).resolve()
+    _render_payload(out, repo_root)
+    passed, warnings = validate_output(out)
+    write_verification_report(
+        out, passed, warnings, json.loads((out / "story-atlas.json").read_text(encoding="utf-8")),
+        json.loads((out / "language-profile.json").read_text(encoding="utf-8")),
+        json.loads((out / "entity-linking.json").read_text(encoding="utf-8")),
+        json.loads((out / "provider-choice-state.json").read_text(encoding="utf-8")),
+        json.loads((out / "theme-profile.json").read_text(encoding="utf-8")),
+    )
+    return {"output_dir": str(out), "passed": len(passed), "warnings": warnings}
 
 
 def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = "auto", spoiler_mode: str = "safe") -> dict:
@@ -50,7 +83,7 @@ def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = 
     object_lore_codex = build_object_lore_codex(extracted["objects"], extracted["concepts"])
     visual_evidence = build_visual_evidence([extracted["characters"]])
     spoiler_state = build_spoiler_state(extracted["relations"], extracted["events"], spoiler_mode)
-    provider_state = build_provider_choice_state()
+    provider_state = build_provider_choice_state(language_profile["input_language"])
     theme_profile = build_theme_profile(text)
     atlas = {
         "schema_version": "0.3.0",
@@ -85,15 +118,8 @@ def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = 
     write_json(out / "provider-choice-state.json", provider_state)
     write_json(out / "theme-profile.json", theme_profile)
     generate_placeholders(atlas, manifest, out)
-    render_atlas({
-        "atlas": atlas, "manifest": manifest, "languageProfile": language_profile,
-        "readerText": reader_text, "entityLinking": entity_linking,
-        "characterAtlas": {"characters": extracted["characters"]}, "relationshipWeb": relationship_web,
-        "locationAtlas": location_atlas, "mapPlan": map_plan, "objectLoreCodex": object_lore_codex,
-        "visualEvidence": visual_evidence, "spoilerState": spoiler_state,
-        "providerState": provider_state, "themeProfile": theme_profile,
-        "locale": load_locale(repo_root, language_profile["ui_language"]), "allLocales": load_all_locales(repo_root),
-    }, repo_root / "skill" / "templates" / "atlas.html", out / "atlas.html")
+    export_prompts(out)
+    _render_payload(out, repo_root)
     passed, warnings = validate_output(out)
     write_verification_report(out, passed, warnings, atlas, language_profile, entity_linking, provider_state, theme_profile)
     return {"output_dir": str(out), "passed": len(passed), "warnings": warnings}
