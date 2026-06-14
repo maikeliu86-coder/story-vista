@@ -1,0 +1,88 @@
+{
+  "schema_version": "0.3.0",
+  "locations": [
+    {
+      "entity_id": "loc_001",
+      "entity_type": "location",
+      "canonical_name": "Greyford Village",
+      "name": "Greyford Village",
+      "localized_names": {},
+      "location_type": "river village",
+      "mood": [
+        "rain",
+        "bells",
+        "wet stone"
+      ],
+      "visual_keywords": [
+        "slate roofs",
+        "narrow bridge"
+      ],
+      "spatial_notes": "west of Meridian Station",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "Petrov | the captain who listens before he speaks Location: Greyford Village | river village | rain, bells, wet stone | slate roofs, narrow bridge | west of Meridian Station Location: Meridian Station | orbital railway terminus | cold light, iron echoes | bras",
+          "summary": "Source text mentions: Greyford Village",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ]
+    },
+    {
+      "entity_id": "loc_002",
+      "entity_type": "location",
+      "canonical_name": "Meridian Station",
+      "name": "Meridian Station",
+      "localized_names": {},
+      "location_type": "orbital railway terminus",
+      "mood": [
+        "cold light",
+        "iron echoes"
+      ],
+      "visual_keywords": [
+        "brass clocks",
+        "glass platforms"
+      ],
+      "spatial_notes": "connected to Greyford by the night rail",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "aptain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river village | rain, bells, wet stone | slate roofs, narrow bridg",
+          "summary": "Source text mentions: Meridian Station",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ]
+    },
+    {
+      "entity_id": "loc_003",
+      "entity_type": "location",
+      "canonical_name": "Ash Observatory",
+      "name": "Ash Observatory",
+      "localized_names": {},
+      "location_type": "abandoned hill observatory",
+      "mood": [
+        "wind",
+        "dust",
+        "blue fire"
+      ],
+      "visual_keywords": [
+        "cracked dome",
+        "star charts"
+      ],
+      "spatial_notes": "above Greyford on the northern ridge",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "atforms | connected to Greyford by the night rail Location: Ash Observatory | abandoned hill observatory | wind, dust, blue fire | cracked dome, star charts | above Greyford on the northern ridge Object: Azure Lumen Tonic | potion | A cobalt-blue potion that g",
+          "summary": "Source text mentions: Ash Observatory",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ]
+    }
+  ]
+}

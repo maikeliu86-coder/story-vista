@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Object Lore Codex v0.3","type":"object","required":["schema_version","entries","categories"],"properties":{"schema_version":{"const":"0.3.0"},"entries":{"type":"array"},"categories":{"type":"array"}}}

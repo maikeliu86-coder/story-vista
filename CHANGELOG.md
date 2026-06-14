@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased - Reader Visual Codex v0.3
+
+- Repositioned StoryVista as a multilingual visual reading companion for complex novels.
+- Added Reader Sync, entity highlighting and bidirectional jumps, spoiler locks, alias resolution, multilingual UI, theme profiles, provider preflight, and reader-focused codex outputs.
+- Added English, Chinese, bilingual, ancient Chinese, and futuristic sci-fi demos.
+- Demoted actor, writer, and director modes to future extensions.
+
 All notable changes to StoryVista will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).

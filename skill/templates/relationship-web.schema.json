@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Relationship Web v0.3","type":"object","required":["schema_version","nodes","relationships"],"properties":{"schema_version":{"const":"0.3.0"},"nodes":{"type":"array"},"relationships":{"type":"array","items":{"type":"object","required":["relation_id","spoiler_status"]}}}}

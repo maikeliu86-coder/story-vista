@@ -1,32 +1,18 @@
 # StoryVista Documentation
 
-StoryVista turns complex text worlds into interactive visual story atlases.
+StoryVista turns complex novels into multilingual, spoiler-safe visual reading codexes.
 
-## Start here
+## Start Here
 
 - [Quick Start](quickstart.md)
-- [Example Workflows](examples.md)
-- [Prompt Library](prompts.md)
-- [FAQ](faq.md)
-
-## Project planning
-
+- [Product Vision](product-vision.md)
+- [Internationalization](i18n.md)
+- [Reader Sync Panel](reader-sync-panel.md)
+- [Theme Engine](theme-engine.md)
+- [Visual Provider Preflight](visual-provider-preflight.md)
+- [Agent Compatibility](agent-compatibility.md)
+- [Legal And Rights](legal-and-rights.md)
 - [Roadmap](roadmap.md)
-- [Release Notes v0.1.2](release-notes-v0.1.2.md)
-- [Release Notes v0.1.1](release-notes-v0.1.1.md)
-- [Release Notes v0.1.0](release-notes-v0.1.0.md)
-- [Visual Assets Needed](assets-needed.md)
-- [Keyword Coverage](keywords.md)
-- [Public-Readiness Audit](public-readiness-audit.md)
+- [v0.3 Upgrade Report](upgrade-report-reader-visual-codex.md)
 
-## Growth and publishing
-
-- [30-Day Ethical Growth Plan](growth-plan.md)
-- [Profile Promotion Suggestions](profile-promotion.md)
-
-## Main repository pages
-
-- [English README](../README.md)
-- [Chinese README](../README.zh-CN.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Security](../SECURITY.md)
+Historical v0.1/v0.2 audits and release notes remain available as project history; they do not describe the current primary product surface.

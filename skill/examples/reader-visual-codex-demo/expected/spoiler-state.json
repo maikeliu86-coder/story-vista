@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.3.0",
+  "mode": "safe",
+  "enabled": true,
+  "progress": {
+    "type": "uploaded-fragment",
+    "value": "current"
+  },
+  "locked_item_ids": [
+    "rel_003",
+    "evt_003"
+  ],
+  "reveal_policy": "hide-locked-details"
+}

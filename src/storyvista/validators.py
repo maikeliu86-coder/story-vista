@@ -5,8 +5,10 @@ from pathlib import Path
 
 
 REQUIRED_FILES = [
-    "source-index.json", "chunks.json", "story-atlas.json", "visual-asset-plan.json",
-    "image-manifest.json", "atlas.html",
+    "source-index.json", "chunks.json", "language-profile.json", "reader-text.json", "entity-linking.json",
+    "character-atlas.json", "relationship-web.json", "location-atlas.json", "map-plan.json",
+    "object-lore-codex.json", "visual-evidence.json", "story-atlas.json", "visual-asset-plan.json",
+    "image-manifest.json", "spoiler-state.json", "provider-choice-state.json", "theme-profile.json", "atlas.html",
 ]
 
 
@@ -68,7 +70,7 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
         warnings.append("Duplicate manifest asset ids")
 
     for asset in manifest.get("assets", []):
-        if asset.get("bound_to") not in valid_bindings:
+        if asset.get("bound_to") not in valid_bindings and not str(asset.get("bound_to", "")).startswith("asset_"):
             warnings.append(f"Manifest binding does not exist: {asset.get('asset_id')}")
         placeholder = root / asset.get("file_path", "")
         if placeholder.exists():
@@ -91,7 +93,7 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
     return passed, warnings
 
 
-def write_verification_report(out_dir: str | Path, passed: list[str], warnings: list[str], atlas: dict) -> Path:
+def write_verification_report(out_dir: str | Path, passed: list[str], warnings: list[str], atlas: dict, language_profile: dict | None = None, entity_linking: dict | None = None, provider_state: dict | None = None, theme_profile: dict | None = None) -> Path:
     root = Path(out_dir)
     unresolved = []
     for relation in atlas.get("relations", []):
@@ -103,15 +105,21 @@ def write_verification_report(out_dir: str | Path, passed: list[str], warnings: 
     lines = [
         "# StoryVista Verification Report", "", "## Result",
         f"- Passed checks: {len(passed)}", f"- Warnings: {len(warnings)}",
-        "- Provider status: placeholder-svg (verified local fallback)",
+        f"- Input language: {(language_profile or {}).get('input_language', 'unknown')}",
+        f"- UI language: {(language_profile or {}).get('ui_language', 'unknown')}",
+        f"- UI locale status: {(language_profile or {}).get('ui_locale_status', 'unknown')}",
+        f"- Provider status: {(provider_state or {}).get('status', 'placeholder-svg')}",
+        f"- Selected provider: {(provider_state or {}).get('selected_provider', 'placeholder-svg')}",
+        f"- Theme: {(theme_profile or {}).get('theme_id', 'unknown')}",
         "- Atlas generation status: complete" if not warnings else "- Atlas generation status: complete with warnings",
         "", "## Passed Checks", *[f"- {item}" for item in passed],
         "", "## Warnings", *([f"- {item}" for item in warnings] or ["- None"]),
         "", "## Unresolved Evidence", *([f"- {item}" for item in unresolved] or ["- None"]),
+        "", "## Ambiguous Entity Links", *([f"- {item['alias']}: {', '.join(item['candidate_entity_ids'])}" for item in (entity_linking or {}).get('ambiguous', [])] or ["- None"]),
         "", "## Missing Optional Assets",
-        "- API-generated images are optional in v0.2; semantic placeholders are present.",
+        "- API-generated images are optional in v0.3; semantic placeholders are present.",
         "", "## Next Steps",
-        "- Review inferred Actor Mode notes before production use.",
+        "- Review inferred visual details and ambiguous aliases before publishing.",
         "- Replace placeholder assets through image-manifest.json when licensed images are available.",
         "- Review evidence tags before publishing the atlas.",
     ]

@@ -1,0 +1,12 @@
+# Cold Orbit
+
+Character: Commander Hana Reyes | starship commander | Aster Fleet | protagonist | Hana, Commander Reyes | commander with the cracked visor
+Character: Tarek Omondi | systems engineer | Kepler Station | ally | Tarek, Engineer Omondi | engineer of the holographic core
+Location: Kepler Station | space station | cold light, silence | holographic screens, ring habitat | orbiting the colony planet Nysa
+Location: Starship Ardent | starship | engine hum, deep space | black hull, blue drive | docked at Kepler Station
+Location: Nysa | colony planet | red desert, twin moons | domes, basalt plains | below Kepler Station
+Object: Helix Lance | energy weapon | A spinal weapon that releases a narrow crimson beam. | red energy, superconducting coils
+Object: Holo-Core | technology | A blue holographic interface that models the colony weather. | cold light, transparent layers
+Lore: Fold Wake | technology | A navigation effect left behind by a starship jump. | deep space, luminous trail
+
+Commander Hana Reyes watched Kepler Station rotate above Nysa. Tarek Omondi opened the Holo-Core while the Starship Ardent charged the Helix Lance in silence.

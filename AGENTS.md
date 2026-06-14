@@ -1,6 +1,6 @@
 # StoryVista Agent Instructions
 
-StoryVista is a runnable, evidence-aware Story Atlas skill. Keep the v0.2 dependency-free CLI working before adding optional adapters or providers.
+StoryVista is a runnable multilingual Reader Visual Codex. Keep the dependency-free CLI, spoiler-safe reader workflow, and semantic fallback working before adding optional adapters or providers.
 
 ## Primary Command
 
@@ -11,7 +11,7 @@ python scripts/storyvista.py build skill/examples/minimal-novel-demo/input.txt -
 ## Required Pipeline
 
 1. Ingest source and create `source-index.json` plus `chunks.json`.
-2. Model entities, relations, events, timeline, Actor Mode, and evidence.
+2. Detect language and model characters, aliases, relations, locations, objects/lore, events, reader text, entity links, spoilers, and evidence.
 3. Mark claims as `explicit`, `inferred`, `ambiguous`, `contradictory`, or `unresolved`.
 4. Create `visual-asset-plan.json` before rendering.
 5. Create `image-manifest.json`, semantic placeholders, and `atlas.html`.
@@ -37,7 +37,7 @@ python -m unittest discover -s tests -v
 python scripts/storyvista.py validate output/minimal-novel-demo
 ```
 
-For HTML changes, also check embedded JavaScript syntax and verify desktop/mobile layouts, navigation, search, filters, evidence drawer, Actor Mode, image loading, and console errors.
+For HTML changes, also check embedded JavaScript syntax and verify desktop/mobile layouts, navigation, search, Reader Sync, bidirectional jumps, spoiler locks, settings persistence, image loading, and console errors.
 
 ## Canonical References
 

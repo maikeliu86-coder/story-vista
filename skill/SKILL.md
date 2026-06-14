@@ -1,104 +1,116 @@
 ---
 name: story-vista
-description: Build an evidence-aware interactive Story Atlas from novels, scripts, lore, and long-form prose.
+description: Build a multilingual, spoiler-safe Reader Visual Codex from complex novels and long-form story text.
 ---
 
-# StoryVista | 文景
+# StoryVista | Reader Visual Codex
 
-StoryVista turns a UTF-8 story source into structured JSON, semantic visual assets, and a static interactive atlas. The runnable path uses only the Python standard library. Image providers are optional.
+## Mission
 
-## Run First
+Turn complex novels into multilingual visual reading companions: characters, aliases, relationships, locations, maps, objects, lore, highlighted source text, and spoiler-safe evidence.
+
+## Required Inputs
+
+- UTF-8 source text
+- output directory
+- optional `--ui-language auto|en|zh-CN|...`
+- optional `--spoiler-mode safe|full`
+- optional explicit visual provider or manual assets
+
+## Run
 
 ```bash
-python scripts/storyvista.py build input.txt --out output/story
+python scripts/storyvista.py build input.txt --out output/story --ui-language auto
 python scripts/storyvista.py validate output/story
 ```
 
-Expected output:
+## Required Outputs
 
-- `source-index.json`
-- `chunks.json`
-- `story-atlas.json`
-- `visual-asset-plan.json`
-- `image-manifest.json`
-- `assets/placeholders/*.svg`
-- `atlas.html`
-- `verification-report.md`
+Create source/chunk indexes, language profile, reader text, entity links, character atlas, relationship web, location atlas, map plan, object/lore codex, visual evidence, visual asset plan, image manifest, spoiler state, provider state, theme profile, placeholders, `atlas.html`, and `verification-report.md`.
 
-## Six-Step Workflow
+## Language And Locale Rules
 
-1. **Ingest**: read UTF-8 text, identify title/language, and create `source-index.json`.
-2. **Chunk**: split source into stable, offset-addressed chunks in `chunks.json`.
-3. **Model**: extract entities, relations, events, Actor Mode notes, and evidence into `story-atlas.json`.
-4. **Plan visuals**: create `visual-asset-plan.json` before rendering the atlas.
-5. **Bind assets**: create `image-manifest.json`; use user assets, a configured provider, or semantic SVG placeholders.
-6. **Render and verify**: build `atlas.html`, then validate IDs, evidence state, asset bindings, placeholders, and the no-initials policy.
+- Detect input language and script.
+- Detect or accept UI language independently.
+- Preserve canonical names and original spelling.
+- Add localized labels only when useful; do not force-translate proper nouns.
+- Apply language-specific alias rules conservatively.
+- Mark uncertain alias merges ambiguous.
+- Use English visual prompts by default unless explicitly changed.
+- Load interface labels from locale files.
+- Record language assumptions and locale status in verification.
+- `en` and `zh-CN` are supported; other bundled locales are experimental.
 
-## Evidence Contract
+## Core Pipeline
 
-- Every explicit relation and event needs source evidence.
-- Evidence records include `source_id`, `chunk_id`, quote, confidence, and status.
-- Allowed status: `explicit`, `inferred`, `ambiguous`, `contradictory`, `unresolved`.
-- Never present an inference as source fact. Actor Mode is preparation material, not a definitive interpretation.
+1. Run provider preflight; missing providers are not fatal.
+2. Ingest and chunk source text with stable offsets.
+3. Detect language, script, name system, and UI locale.
+4. Set reader progress and spoiler-safe state.
+5. Detect genre/atmosphere and create a spoiler-free theme profile.
+6. Extract characters, places, organizations, objects, lore, relations, and events.
+7. Resolve full names, titles, surnames, nicknames, and aliases conservatively.
+8. Build character visual profiles and relationship/location/object codex data.
+9. Build interpretive map data without inventing exact geography.
+10. Build visual evidence with confirmed/contextual/inferred/unknown status.
+11. Build reader paragraphs and entity links.
+12. Create visual asset plan before image manifest or atlas rendering.
+13. Bind provider, manual, prompt-only, or semantic placeholder assets.
+14. Render localized `atlas.html` with Reader Sync and bidirectional jumps.
+15. Validate every contract and write the verification report.
 
-## Source Directives
+## Spoiler Rules
 
-The minimal extractor recognizes optional Chinese directives. Put one record per line before or beside prose:
+- Default to `safe` mode.
+- Hide details marked `locked`.
+- Do not place later revelations in portraits, backgrounds, summaries, or alt text.
+- Full mode requires explicit user choice.
 
-```text
-人物：姓名｜角色｜阵营｜叙事功能
-地点：名称｜类型｜氛围关键词｜视觉关键词
-组织：名称｜说明
-道具：名称｜说明
-概念：名称｜说明
-关系：人物A -> 人物B｜关系类型｜polarity｜0.8｜阶段
-事件：事件名｜人物A、人物B｜地点｜摘要
-表演：姓名｜场景目标｜秘密｜剧透信息｜潜台词｜情绪弧｜动作｜服装道具｜声音形体
-```
+## Visual Provider Preflight
 
-If directives are absent, keep uncertain fields unresolved. Do not invent missing plot facts.
+- Inspect configuration signals without printing secrets.
+- A configured key is not a verified callable provider.
+- Explicit user selection wins.
+- Never auto-install providers, create accounts, or make paid calls.
+- Fallback order: configured provider, manual assets, prompt-only, placeholder SVG.
 
-## Image Provider Rules
+## Theme Engine
 
-- Auto Mode may inspect configured providers, but provider absence is never fatal.
-- Explicit user configuration wins.
-- Do not print full API keys or make paid calls during diagnosis.
-- Default fallback is `placeholder-svg`, with full entity name and semantic type.
-- `allow_initials_avatar` must remain `false` unless the user explicitly overrides it.
-- All atlas image bindings come from `image-manifest.json`.
+- Derive theme from source motifs, not from unsupported plot assumptions.
+- Keep backgrounds atmospheric, text-free, character-free, and spoiler-free.
+- Record theme ID, palette, motifs, confidence, and background prompt.
 
-Run provider diagnosis separately:
+## Reader Sync And Entity Jump
 
-```bash
-python scripts/detect_image_provider.py --no-network
-```
+- Render source paragraphs with stable IDs.
+- Highlight resolved characters, locations, organizations, objects, and lore.
+- Clicking a highlight opens the matching codex entry.
+- Clicking evidence opens the Reader panel and scrolls to the source paragraph.
+- Persist reader open state, width, progress, font size, and line height locally.
 
-See [image-provider.md](references/image-provider.md) for levels, switching, ComfyUI checks, and recommendations.
+## Fallback Rules
 
-## Atlas Experience
+- Missing provider: continue with semantic SVG.
+- Missing visual fact: use `unknown`, not invention.
+- Ambiguous alias: keep candidates and report ambiguity.
+- Missing geography: use interpretive map with a disclaimer.
+- Missing locale key: fall back to English and keep experimental status.
+- Never use initials-only avatars by default.
 
-The default `Cinematic Bible` atlas includes:
+## Verification Checklist
 
-- overview metrics and themes
-- searchable character cards
-- relationship and event views
-- locations and visual bible
-- evidence drawer
-- Actor Mode with objectives, subtext, emotional arc, playable actions, costume/props, and voice/physicality notes
+- All required JSON/HTML files exist and parse.
+- Major characters have portrait, half-body, and first-scene plans.
+- Locations, map, objects/lore, and background have plans.
+- Every asset has a unique manifest record and existing fallback file.
+- Relation endpoints resolve and spoiler locks are preserved.
+- Reader links resolve to both entities and paragraphs.
+- Theme and locale are embedded in the atlas.
+- Desktop and mobile Reader layouts are usable.
+- No unsupported language or agent runtime is called fully supported.
 
-Use `atlas.html` as a dependency-free baseline. Extend it only when the source and user request justify more complex maps, graph engines, or 3D scenes.
+## Final Response
 
-## Verification
+Report output path, selected provider/fallback, input/UI language, theme, spoiler mode, test result, warnings, and known limitations.
 
-Before completion, confirm:
-
-- required JSON and HTML files exist and parse
-- relation endpoints resolve
-- explicit claims have evidence or remain unresolved
-- every major character has a portrait plan
-- every planned asset has a unique manifest binding
-- semantic placeholders exist when no image provider is used
-- initials-only avatars are disabled
-- desktop and mobile layouts remain readable
-
-Detailed contracts: [core-pipeline.md](references/core-pipeline.md), [data-contracts.md](references/data-contracts.md), [verification.md](references/verification.md), and [fallback-rules.md](references/fallback-rules.md).
+Actor, writer, and director modes are future extensions, not core workflow steps.

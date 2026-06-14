@@ -52,4 +52,4 @@ def chunk_text(text: str, source_id: str = "src_001", max_chars: int = 1200) -> 
         offset += len(part)
     if buffer.strip():
         emit(buffer, buffer_start, current_heading)
-    return {"schema_version": "0.2.0", "chunks": chunks}
+    return {"schema_version": "0.3.0", "chunks": chunks}

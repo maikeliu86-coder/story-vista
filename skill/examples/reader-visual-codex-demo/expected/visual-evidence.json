@@ -1,0 +1,443 @@
+{
+  "schema_version": "0.3.0",
+  "allowed_statuses": [
+    "confirmed",
+    "contextual",
+    "inferred",
+    "unknown"
+  ],
+  "records": [
+    {
+      "visual_evidence_id": "ve_0001",
+      "entity_id": "char_001",
+      "field": "identity",
+      "value": "Lord Elias Alexander Varron",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator |",
+          "summary": "Source text mentions: Lord Elias Alexander Varron",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0002",
+      "entity_id": "char_001",
+      "field": "age",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0003",
+      "entity_id": "char_001",
+      "field": "build",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0004",
+      "entity_id": "char_001",
+      "field": "face",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0005",
+      "entity_id": "char_001",
+      "field": "hair",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0006",
+      "entity_id": "char_001",
+      "field": "eyes",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0007",
+      "entity_id": "char_001",
+      "field": "clothing",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0008",
+      "entity_id": "char_001",
+      "field": "accessories",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0009",
+      "entity_id": "char_001",
+      "field": "posture",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0010",
+      "entity_id": "char_001",
+      "field": "palette",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0011",
+      "entity_id": "char_001",
+      "field": "distinctive_features",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0012",
+      "entity_id": "char_001",
+      "field": "role_impression",
+      "value": "exiled cartographer",
+      "status": "contextual",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator |",
+          "summary": "Source text mentions: Lord Elias Alexander Varron",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": "Role/faction context only; not asserted as physical fact."
+    },
+    {
+      "visual_evidence_id": "ve_0013",
+      "entity_id": "char_001",
+      "field": "faction_impression",
+      "value": "Meridian Survey",
+      "status": "inferred",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator |",
+          "summary": "Source text mentions: Lord Elias Alexander Varron",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": "Role/faction context only; not asserted as physical fact."
+    },
+    {
+      "visual_evidence_id": "ve_0014",
+      "entity_id": "char_002",
+      "field": "identity",
+      "value": "Doctor Mirabelle Saye Ashcroft",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "n, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov",
+          "summary": "Source text mentions: Doctor Mirabelle Saye Ashcroft",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0015",
+      "entity_id": "char_002",
+      "field": "age",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0016",
+      "entity_id": "char_002",
+      "field": "build",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0017",
+      "entity_id": "char_002",
+      "field": "face",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0018",
+      "entity_id": "char_002",
+      "field": "hair",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0019",
+      "entity_id": "char_002",
+      "field": "eyes",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0020",
+      "entity_id": "char_002",
+      "field": "clothing",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0021",
+      "entity_id": "char_002",
+      "field": "accessories",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0022",
+      "entity_id": "char_002",
+      "field": "posture",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0023",
+      "entity_id": "char_002",
+      "field": "palette",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0024",
+      "entity_id": "char_002",
+      "field": "distinctive_features",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0025",
+      "entity_id": "char_002",
+      "field": "role_impression",
+      "value": "physician-alchemist",
+      "status": "contextual",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "n, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov",
+          "summary": "Source text mentions: Doctor Mirabelle Saye Ashcroft",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": "Role/faction context only; not asserted as physical fact."
+    },
+    {
+      "visual_evidence_id": "ve_0026",
+      "entity_id": "char_002",
+      "field": "faction_impression",
+      "value": "Greyford Clinic",
+      "status": "inferred",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "n, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov",
+          "summary": "Source text mentions: Doctor Mirabelle Saye Ashcroft",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": "Role/faction context only; not asserted as physical fact."
+    },
+    {
+      "visual_evidence_id": "ve_0027",
+      "entity_id": "char_003",
+      "field": "identity",
+      "value": "Captain Aleksandr Ilyich Petrov",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "or Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river",
+          "summary": "Source text mentions: Captain Aleksandr Ilyich Petrov",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0028",
+      "entity_id": "char_003",
+      "field": "age",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0029",
+      "entity_id": "char_003",
+      "field": "build",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0030",
+      "entity_id": "char_003",
+      "field": "face",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0031",
+      "entity_id": "char_003",
+      "field": "hair",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0032",
+      "entity_id": "char_003",
+      "field": "eyes",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0033",
+      "entity_id": "char_003",
+      "field": "clothing",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0034",
+      "entity_id": "char_003",
+      "field": "accessories",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0035",
+      "entity_id": "char_003",
+      "field": "posture",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0036",
+      "entity_id": "char_003",
+      "field": "palette",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0037",
+      "entity_id": "char_003",
+      "field": "distinctive_features",
+      "value": "unknown",
+      "status": "unknown",
+      "evidence": [],
+      "inference_note": ""
+    },
+    {
+      "visual_evidence_id": "ve_0038",
+      "entity_id": "char_003",
+      "field": "role_impression",
+      "value": "station security captain",
+      "status": "contextual",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "or Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river",
+          "summary": "Source text mentions: Captain Aleksandr Ilyich Petrov",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": "Role/faction context only; not asserted as physical fact."
+    },
+    {
+      "visual_evidence_id": "ve_0039",
+      "entity_id": "char_003",
+      "field": "faction_impression",
+      "value": "Meridian Station",
+      "status": "inferred",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "or Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river",
+          "summary": "Source text mentions: Captain Aleksandr Ilyich Petrov",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "inference_note": "Role/faction context only; not asserted as physical fact."
+    }
+  ]
+}

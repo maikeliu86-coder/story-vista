@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.3.0",
+  "theme_id": "futuristic-sci-fi",
+  "confidence": "contextual",
+  "palette": [
+    "#070b12",
+    "#d9edf2",
+    "#55a7b7",
+    "#d24d4d",
+    "#667085"
+  ],
+  "motifs": [
+    "deep space",
+    "starship",
+    "holographic interface",
+    "cool light"
+  ],
+  "background_prompt": "Spoiler-free atmospheric reading background, deep space, starship, holographic interface, cool light, no characters, no text, no plot events.",
+  "background_enabled": true
+}

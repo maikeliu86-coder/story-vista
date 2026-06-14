@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://storyvista.dev/schemas/story-atlas.schema.json",
-  "title": "StoryVista Story Atlas v0.2",
+  "title": "StoryVista Story Atlas v0.3",
   "type": "object",
   "required": ["schema_version", "metadata", "summary", "themes", "entities", "relations", "events", "timeline", "actor_mode", "visual_style", "evidence_index"],
   "properties": {
-    "schema_version": { "const": "0.2.0" },
+    "schema_version": { "const": "0.3.0" },
     "metadata": {
       "type": "object",
       "required": ["title", "mode", "status"],

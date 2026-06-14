@@ -1,19 +1,13 @@
 # Agent Compatibility
 
-## Status
+StoryVista's verified interface is the local Python CLI and generated file contract. Coding agents are optional orchestration layers.
 
-- **CLI**: implemented and preferred in v0.2.
-- **Codex Skill**: documented and preferred when installed.
-- **adapter-docs**: available under `skill/agents/`.
-- **adapter-runtime**: not fully implemented; framework files are integration guidance only.
-- **API server**: planned for a later release.
+| Tool family | Usage | Status |
+| --- | --- | --- |
+| Codex, Claude Code, Cursor, Qwen Code, Trae | Run the documented CLI in the repository | documented; not every release/runtime tested |
+| GitHub Copilot and IDE agents | Run CLI through terminal/task integration | documented |
+| Mainland agent platforms | Use the same local command where shell/file access exists | environment-dependent |
+| CrewAI, LangChain, LlamaIndex, smolagents | Wrap CLI or JSON outputs in custom code | integration pattern only |
+| No agent | Run Python directly | verified |
 
-Every supported agent can use the same portable command:
-
-```bash
-python scripts/storyvista.py build input.txt --out output/story
-```
-
-Agents with file and shell access should run the CLI and inspect `verification-report.md`. Chat-only agents can follow the six-step workflow in `skill/SKILL.md` and return JSON matching the schemas. Framework agents may wrap each phase as a tool but must preserve stable IDs, evidence statuses, and manifest binding rules.
-
-Provider, browser, and image capabilities are optional. Without them, the output remains complete through semantic placeholders and a static HTML atlas. Platform documents must not be described as working runtime adapters unless executable integration code exists.
+Do not claim native adapters merely because an instruction file exists. Agent authentication, filesystem access, browser policy, and shell permissions vary by product and region.

@@ -1,0 +1,37 @@
+# The Glass Meridian
+
+Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass
+Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves
+Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks
+Location: Greyford Village | river village | rain, bells, wet stone | slate roofs, narrow bridge | west of Meridian Station
+Location: Meridian Station | orbital railway terminus | cold light, iron echoes | brass clocks, glass platforms | connected to Greyford by the night rail
+Location: Ash Observatory | abandoned hill observatory | wind, dust, blue fire | cracked dome, star charts | above Greyford on the northern ridge
+Object: Azure Lumen Tonic | potion | A cobalt-blue potion that glows when exposed to starlight. | blue glass, silver bubbles, cold radiance
+Object: Resonance Pistol | sonic weapon | A compact weapon that releases a focused red pressure wave. | red energy ring, black ceramic, tuning forks
+Lore: The Glass Meridian | technology | A hidden navigation lattice that links maps, memory, and the station clocks. | luminous lines, fractured compass, holographic grid
+Relation: Lord Elias Alexander Varron -> Doctor Mirabelle Saye Ashcroft | wary trust | positive | 0.72 | current | visible
+Relation: Doctor Mirabelle Saye Ashcroft -> Captain Aleksandr Ilyich Petrov | professional suspicion | negative | 0.58 | current | visible
+Relation: Captain Aleksandr Ilyich Petrov -> Lord Elias Alexander Varron | secret brotherhood oath | positive | 0.91 | later reveal | locked
+Event: The Bell at Midnight | Lord Elias Alexander Varron, Doctor Mirabelle Saye Ashcroft | Greyford Village | Elias arrives as every clock in Greyford rings thirteen times. | visible
+Event: The Red Echo | Captain Aleksandr Ilyich Petrov, Doctor Mirabelle Saye Ashcroft | Meridian Station | A red sonic pulse crosses the abandoned platform. | visible
+Event: The Oath Beneath the Dome | Captain Aleksandr Ilyich Petrov, Lord Elias Alexander Varron | Ash Observatory | A hidden oath connects the captain and the cartographer. | locked
+
+## Chapter One: Thirteen Bells
+
+Rain polished the slate roofs of Greyford Village when Lord Elias Alexander Varron stepped off the night coach. Most people called him Elias. The innkeeper, who distrusted titles, called him Varron and pointed toward the narrow bridge without another word.
+
+Doctor Mirabelle Saye Ashcroft waited beside the bridge with ink-stained gloves folded over a blue bottle. Mira lifted the Azure Lumen Tonic into the rain. The cobalt liquid woke with a cold inner glow, and silver bubbles climbed the glass as if they were remembering the stars.
+
+“Meridian Station has been silent for nine years,” Dr. Saye said. “Tonight every clock in Greyford rang thirteen times.”
+
+Captain Aleksandr Ilyich Petrov arrived before Elias could answer. Captain Petrov carried no visible rifle. A black ceramic Resonance Pistol rested at his belt, its twin tuning forks surrounding a narrow chamber where a red energy ring trembled without sound.
+
+Sasha looked from the silver compass in Elias's hand to the Azure Lumen Tonic. “The Ash Observatory is open,” he said. “That should be impossible.”
+
+## Chapter Two: The Abandoned Platform
+
+At Meridian Station, brass clocks faced one another across a glass platform. The Glass Meridian appeared for an instant beneath the floor: luminous lines joined the station, Greyford Village, and the Ash Observatory in a map that seemed to remember whoever looked at it.
+
+Doctor Ashcroft heard the pressure wave first. Captain Petrov drew the Resonance Pistol. A red circle unfolded through the cold air, revealing a door where the wall had been.
+
+Elias touched the fractured compass. He knew the door, but he did not yet tell Mira why.

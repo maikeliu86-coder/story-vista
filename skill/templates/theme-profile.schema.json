@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Theme Profile v0.3","type":"object","required":["schema_version","theme_id","palette","motifs","background_prompt"],"properties":{"schema_version":{"const":"0.3.0"},"theme_id":{"type":"string"},"palette":{"type":"array","minItems":5},"motifs":{"type":"array"},"background_prompt":{"type":"string"}}}

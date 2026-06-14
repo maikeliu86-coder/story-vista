@@ -1,0 +1,9 @@
+# The North Window
+
+Character: Eleanor Beatrice Harrow | archivist | North Library | protagonist | Eleanor, Miss Harrow | the archivist at the north window
+Character: Professor Julian March | historian | Royal College | mentor | Professor March, Julian | the historian with the brass key
+Location: North Library | library | snow, silence | tall windows, dark shelves | beside the frozen canal
+Object: Brass Memory Key | artifact | A key engraved with dates that have not happened. | brass, fine numerals
+Relation: Eleanor Beatrice Harrow -> Professor Julian March | student and mentor | positive | 0.8 | current | visible
+
+Eleanor Beatrice Harrow found Professor March waiting at the North Library. Julian placed the Brass Memory Key on the desk, but Miss Harrow did not touch it.

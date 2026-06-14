@@ -1,0 +1,195 @@
+{
+  "schema_version": "0.3.0",
+  "provider_status": "verified-local-fallback",
+  "binding_source": "image-manifest.json",
+  "allow_initials_avatar": false,
+  "assets": [
+    {
+      "asset_id": "asset_char_001_portrait",
+      "bound_to": "char_001",
+      "file_path": "assets/placeholders/asset_char_001_portrait.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_001_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_001_half_body",
+      "bound_to": "char_001",
+      "file_path": "assets/placeholders/asset_char_001_half_body.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_001_half_body",
+      "alt_text": "Semantic character_half_body placeholder for char_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_001_first_scene",
+      "bound_to": "char_001",
+      "file_path": "assets/placeholders/asset_char_001_first_scene.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_001_first_scene",
+      "alt_text": "Semantic character_first_scene placeholder for char_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_002_portrait",
+      "bound_to": "char_002",
+      "file_path": "assets/placeholders/asset_char_002_portrait.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_002_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_002_half_body",
+      "bound_to": "char_002",
+      "file_path": "assets/placeholders/asset_char_002_half_body.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_002_half_body",
+      "alt_text": "Semantic character_half_body placeholder for char_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_002_first_scene",
+      "bound_to": "char_002",
+      "file_path": "assets/placeholders/asset_char_002_first_scene.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_002_first_scene",
+      "alt_text": "Semantic character_first_scene placeholder for char_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_003_portrait",
+      "bound_to": "char_003",
+      "file_path": "assets/placeholders/asset_char_003_portrait.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_003_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_003",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_003_half_body",
+      "bound_to": "char_003",
+      "file_path": "assets/placeholders/asset_char_003_half_body.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_003_half_body",
+      "alt_text": "Semantic character_half_body placeholder for char_003",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_003_first_scene",
+      "bound_to": "char_003",
+      "file_path": "assets/placeholders/asset_char_003_first_scene.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_char_003_first_scene",
+      "alt_text": "Semantic character_first_scene placeholder for char_003",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_loc_001_keyart",
+      "bound_to": "loc_001",
+      "file_path": "assets/placeholders/asset_loc_001_keyart.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_loc_001_keyart",
+      "alt_text": "Semantic location_keyart placeholder for loc_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_loc_002_keyart",
+      "bound_to": "loc_002",
+      "file_path": "assets/placeholders/asset_loc_002_keyart.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_loc_002_keyart",
+      "alt_text": "Semantic location_keyart placeholder for loc_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_loc_003_keyart",
+      "bound_to": "loc_003",
+      "file_path": "assets/placeholders/asset_loc_003_keyart.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_loc_003_keyart",
+      "alt_text": "Semantic location_keyart placeholder for loc_003",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_obj_001_codex",
+      "bound_to": "obj_001",
+      "file_path": "assets/placeholders/asset_obj_001_codex.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_obj_001_codex",
+      "alt_text": "Semantic object_lore_keyart placeholder for obj_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_obj_002_codex",
+      "bound_to": "obj_002",
+      "file_path": "assets/placeholders/asset_obj_002_codex.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_obj_002_codex",
+      "alt_text": "Semantic object_lore_keyart placeholder for obj_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_lore_001_codex",
+      "bound_to": "lore_001",
+      "file_path": "assets/placeholders/asset_lore_001_codex.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_lore_001_codex",
+      "alt_text": "Semantic object_lore_keyart placeholder for lore_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_story_map",
+      "bound_to": "asset_story_map",
+      "file_path": "assets/placeholders/asset_story_map.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_story_map",
+      "alt_text": "Semantic interpretive_map placeholder for asset_story_map",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_atlas_background",
+      "bound_to": "asset_atlas_background",
+      "file_path": "assets/placeholders/asset_atlas_background.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T18:15:19.317527+00:00",
+      "prompt_ref": "asset_atlas_background",
+      "alt_text": "Semantic spoiler_safe_background placeholder for asset_atlas_background",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    }
+  ]
+}

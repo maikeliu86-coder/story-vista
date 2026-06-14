@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Entity Linking v0.3","type":"object","required":["schema_version","links","ambiguous"],"properties":{"schema_version":{"const":"0.3.0"},"links":{"type":"array"},"ambiguous":{"type":"array"}}}

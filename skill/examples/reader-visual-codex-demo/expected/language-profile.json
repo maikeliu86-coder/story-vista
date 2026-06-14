@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.3.0",
+  "input_language": "en",
+  "input_script": "Latin",
+  "writing_direction": "ltr",
+  "ui_language": "en",
+  "secondary_ui_languages": [
+    "zh-CN"
+  ],
+  "detected_name_system": "western",
+  "detected_culture_context": "unresolved",
+  "translation_mode": "preserve-canonical-with-localized-labels",
+  "translation_needed": false,
+  "aliases_need_localization": false,
+  "ui_locale_status": "supported",
+  "notes": []
+}

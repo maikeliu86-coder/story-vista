@@ -1,16 +1,14 @@
-# Legal, Rights, and Privacy
+# Legal, Rights, And Privacy
 
-StoryVista is a workflow and local reference implementation, not legal advice.
+1. Users must have the right to process uploaded text.
+2. Unpublished manuscripts, scripts, and complete paid books should not be sent to untrusted third parties.
+3. Third-party image providers may receive prompts, descriptions, or source-derived data.
+4. Generated atlases are local/private by default; public sharing requires a rights review.
+5. AI-generated images should be labelled AI-assisted where appropriate.
+6. Avoid requests that imitate a specific living artist's style.
+7. Never present inferred visual details as source facts.
+8. Use extra care with real people and copyrighted characters.
+9. Prompt-only and manual-asset modes must retain provenance and license notes.
+10. Never print, store, or commit complete API keys.
 
-1. Users must confirm they have the right to process the uploaded or local source text.
-2. StoryVista does not authorize bypassing film, television, publishing, game, or other IP rights.
-3. Do not default to generating commercial materials from a real actor's likeness without permission.
-4. Do not instruct image models to copy the style of a specific living artist.
-5. Atlas output is local/private by default; publication is a separate user decision.
-6. Public release requires human review of excerpts, interpretations, images, credits, and rights.
-7. Unreleased scripts and project documents should remain local unless external processing is explicitly authorized.
-8. Third-party image or language providers may upload data; disclose that boundary before use.
-9. Published generated material should be labeled AI-assisted where appropriate or required.
-10. Distinguish historical people and events from fictional adaptations and screen portrayals.
-
-Never print or commit complete API keys. Record supplied and generated image provenance in `image-manifest.json`. Actor Mode may contain inference and must be reviewed by the creative team.
+Semantic placeholder mode processes text locally and uses no third-party image service.

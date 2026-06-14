@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.3.0",
+  "map_type": "interpretive",
+  "canonical_accuracy": "unresolved",
+  "disclaimer": "Relative placement is interpretive unless the source explicitly states geography.",
+  "nodes": [
+    {
+      "location_id": "loc_001",
+      "label": "Greyford Village",
+      "spatial_notes": "west of Meridian Station"
+    },
+    {
+      "location_id": "loc_002",
+      "label": "Meridian Station",
+      "spatial_notes": "connected to Greyford by the night rail"
+    },
+    {
+      "location_id": "loc_003",
+      "label": "Ash Observatory",
+      "spatial_notes": "above Greyford on the northern ridge"
+    }
+  ],
+  "edges": []
+}

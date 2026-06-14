@@ -1,0 +1,292 @@
+{
+  "schema_version": "0.3.0",
+  "links": [
+    {
+      "link_id": "link_0001",
+      "paragraph_id": "p_0001",
+      "entity_id": "loc_001",
+      "entity_type": "location",
+      "matched_text": "Greyford Village",
+      "start": 33,
+      "end": 49,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0002",
+      "paragraph_id": "p_0001",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "matched_text": "Lord Elias Alexander Varron",
+      "start": 55,
+      "end": 82,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0003",
+      "paragraph_id": "p_0001",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "matched_text": "Elias",
+      "start": 135,
+      "end": 140,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0004",
+      "paragraph_id": "p_0001",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "matched_text": "Varron",
+      "start": 191,
+      "end": 197,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0005",
+      "paragraph_id": "p_0002",
+      "entity_id": "char_002",
+      "entity_type": "character",
+      "matched_text": "Doctor Mirabelle Saye Ashcroft",
+      "start": 0,
+      "end": 30,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0006",
+      "paragraph_id": "p_0002",
+      "entity_id": "char_002",
+      "entity_type": "character",
+      "matched_text": "Mira",
+      "start": 107,
+      "end": 111,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0007",
+      "paragraph_id": "p_0002",
+      "entity_id": "obj_001",
+      "entity_type": "object",
+      "matched_text": "Azure Lumen Tonic",
+      "start": 123,
+      "end": 140,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0008",
+      "paragraph_id": "p_0003",
+      "entity_id": "loc_002",
+      "entity_type": "location",
+      "matched_text": "Meridian Station",
+      "start": 1,
+      "end": 17,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0009",
+      "paragraph_id": "p_0003",
+      "entity_id": "char_002",
+      "entity_type": "character",
+      "matched_text": "Dr. Saye",
+      "start": 51,
+      "end": 59,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0010",
+      "paragraph_id": "p_0004",
+      "entity_id": "char_003",
+      "entity_type": "character",
+      "matched_text": "Captain Aleksandr Ilyich Petrov",
+      "start": 0,
+      "end": 31,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0011",
+      "paragraph_id": "p_0004",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "matched_text": "Elias",
+      "start": 47,
+      "end": 52,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0012",
+      "paragraph_id": "p_0004",
+      "entity_id": "char_003",
+      "entity_type": "character",
+      "matched_text": "Captain Petrov",
+      "start": 67,
+      "end": 81,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0013",
+      "paragraph_id": "p_0004",
+      "entity_id": "obj_002",
+      "entity_type": "object",
+      "matched_text": "Resonance Pistol",
+      "start": 124,
+      "end": 140,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0014",
+      "paragraph_id": "p_0005",
+      "entity_id": "char_003",
+      "entity_type": "character",
+      "matched_text": "Sasha",
+      "start": 0,
+      "end": 5,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0015",
+      "paragraph_id": "p_0005",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "matched_text": "Elias",
+      "start": 40,
+      "end": 45,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0016",
+      "paragraph_id": "p_0005",
+      "entity_id": "obj_001",
+      "entity_type": "object",
+      "matched_text": "Azure Lumen Tonic",
+      "start": 60,
+      "end": 77,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0017",
+      "paragraph_id": "p_0005",
+      "entity_id": "loc_003",
+      "entity_type": "location",
+      "matched_text": "Ash Observatory",
+      "start": 84,
+      "end": 99,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0018",
+      "paragraph_id": "p_0006",
+      "entity_id": "loc_002",
+      "entity_type": "location",
+      "matched_text": "Meridian Station",
+      "start": 3,
+      "end": 19,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0019",
+      "paragraph_id": "p_0006",
+      "entity_id": "lore_001",
+      "entity_type": "lore",
+      "matched_text": "The Glass Meridian",
+      "start": 77,
+      "end": 95,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0020",
+      "paragraph_id": "p_0006",
+      "entity_id": "loc_001",
+      "entity_type": "location",
+      "matched_text": "Greyford Village",
+      "start": 174,
+      "end": 190,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0021",
+      "paragraph_id": "p_0006",
+      "entity_id": "loc_003",
+      "entity_type": "location",
+      "matched_text": "Ash Observatory",
+      "start": 200,
+      "end": 215,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0022",
+      "paragraph_id": "p_0007",
+      "entity_id": "char_002",
+      "entity_type": "character",
+      "matched_text": "Doctor Ashcroft",
+      "start": 0,
+      "end": 15,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0023",
+      "paragraph_id": "p_0007",
+      "entity_id": "char_003",
+      "entity_type": "character",
+      "matched_text": "Captain Petrov",
+      "start": 47,
+      "end": 61,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0024",
+      "paragraph_id": "p_0007",
+      "entity_id": "obj_002",
+      "entity_type": "object",
+      "matched_text": "Resonance Pistol",
+      "start": 71,
+      "end": 87,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0025",
+      "paragraph_id": "p_0008",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "matched_text": "Elias",
+      "start": 0,
+      "end": 5,
+      "status": "resolved",
+      "confidence": 1.0
+    },
+    {
+      "link_id": "link_0026",
+      "paragraph_id": "p_0008",
+      "entity_id": "char_002",
+      "entity_type": "character",
+      "matched_text": "Mira",
+      "start": 79,
+      "end": 83,
+      "status": "resolved",
+      "confidence": 1.0
+    }
+  ],
+  "ambiguous": []
+}

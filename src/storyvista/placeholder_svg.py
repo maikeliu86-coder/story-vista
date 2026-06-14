@@ -9,7 +9,7 @@ def entity_lookup(atlas: dict) -> dict:
     for group in atlas["entities"].values():
         for item in group:
             lookup[item["entity_id"]] = item
-    for event in atlas["events"]:
+    for event in atlas.get("events", []):
         lookup[event["event_id"]] = event
     return lookup
 
@@ -46,9 +46,15 @@ def generate_placeholders(atlas: dict, manifest: dict, out_dir: Path) -> list[st
     placeholder_dir = out_dir / "assets" / "placeholders"
     placeholder_dir.mkdir(parents=True, exist_ok=True)
     created = []
+    legacy_written = set()
     for asset in manifest["assets"]:
-        item = lookup.get(asset["bound_to"], {"name": asset["bound_to"], "entity_type": "concept"})
+        item = lookup.get(asset["bound_to"], {"name": asset["alt_text"].replace("Semantic ", ""), "entity_type": "concept"})
         path = out_dir / asset["file_path"]
         path.write_text(svg_for(item), encoding="utf-8")
         created.append(str(path))
+        if asset["bound_to"] in lookup and asset["bound_to"] not in legacy_written:
+            legacy_path = placeholder_dir / f"{asset['bound_to']}.svg"
+            legacy_path.write_text(svg_for(item), encoding="utf-8")
+            legacy_written.add(asset["bound_to"])
+            created.append(str(legacy_path))
     return created

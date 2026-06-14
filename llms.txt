@@ -1,62 +1,37 @@
 # StoryVista | 文景
 
-StoryVista turns a UTF-8 story source into evidence-aware JSON, semantic visual assets, and a static interactive Story Atlas.
+StoryVista is a multilingual, spoiler-safe visual reading companion for complex novels.
 
-Primary command:
+Verified command:
 
-python scripts/storyvista.py build skill/examples/minimal-novel-demo/input.txt --out output/minimal-novel-demo
+python scripts/storyvista.py build skill/examples/reader-visual-codex-demo/input.txt --out output/reader-visual-codex-demo --ui-language auto
 
-Required outputs:
+Core v0.3 outputs:
 
-- source-index.json
-- chunks.json
-- story-atlas.json
-- visual-asset-plan.json
-- image-manifest.json
-- assets/placeholders/*.svg
-- atlas.html
-- verification-report.md
+- source-index.json and chunks.json
+- language-profile.json
+- reader-text.json and entity-linking.json
+- character-atlas.json and relationship-web.json
+- location-atlas.json and map-plan.json
+- object-lore-codex.json and visual-evidence.json
+- visual-asset-plan.json and image-manifest.json
+- spoiler-state.json, provider-choice-state.json, theme-profile.json
+- semantic placeholder SVG assets
+- atlas.html and verification-report.md
 
-Implemented in v0.2:
+Supported UI: English and Simplified Chinese.
+Experimental UI structures: Traditional Chinese, Japanese, Korean, French, Spanish, German, Russian.
+Image providers are optional. Missing providers fall back to local semantic SVG.
+Actor, writer, and director modes are future extensions, not core workflow.
 
-- standard-library CLI
-- conservative directive-based extraction
-- characters, locations, organizations, objects, concepts, relations, events, and timeline
-- source evidence and uncertainty states
-- Reader Mode and Actor Mode prototype
-- Cinematic Bible HTML atlas
-- semantic SVG placeholders
-- image provider detection and fallback interface
-- validation and tests
-
-Planned, not implemented as complete runtime features:
-
-- generalized LLM/NLP extraction adapter
-- external image-generation adapters
-- advanced graph layout and 3D maps
-- Writer, Director, and Worldbuilder mode implementations
-- API server and full framework adapter runtimes
-
-Canonical files:
+Primary references:
 
 - README.md
 - README.zh-CN.md
-- AGENTS.md
 - skill/SKILL.md
-- skill/references/core-pipeline.md
-- skill/references/data-contracts.md
-- skill/references/fallback-rules.md
-- skill/references/verification.md
-- skill/references/image-provider.md
-- skill/templates/
-- skill/examples/minimal-novel-demo/
-- docs/upgrade-report-v0.2.md
-
-Rules:
-
-- Do not fabricate evidence or story facts.
-- Missing image providers never block the build.
-- Bind visuals through image-manifest.json.
-- Initials-only avatars are disabled by default.
-- Adapter documents are not proof of adapter runtime.
-- Users remain responsible for source and image rights.
+- docs/i18n.md
+- docs/reader-sync-panel.md
+- docs/visual-provider-preflight.md
+- docs/theme-engine.md
+- docs/agent-compatibility.md
+- docs/upgrade-report-reader-visual-codex.md

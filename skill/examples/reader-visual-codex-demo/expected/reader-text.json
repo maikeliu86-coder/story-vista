@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.3.0",
+  "paragraphs": [
+    {
+      "paragraph_id": "p_0001",
+      "chapter": "Chapter One: Thirteen Bells",
+      "text": "Rain polished the slate roofs of Greyford Village when Lord Elias Alexander Varron stepped off the night coach. Most people called him Elias. The innkeeper, who distrusted titles, called him Varron and pointed toward the narrow bridge without another word.",
+      "start_offset": 2381,
+      "end_offset": 2637,
+      "chunk_id": "ch_003"
+    },
+    {
+      "paragraph_id": "p_0002",
+      "chapter": "Chapter One: Thirteen Bells",
+      "text": "Doctor Mirabelle Saye Ashcroft waited beside the bridge with ink-stained gloves folded over a blue bottle. Mira lifted the Azure Lumen Tonic into the rain. The cobalt liquid woke with a cold inner glow, and silver bubbles climbed the glass as if they were remembering the stars.",
+      "start_offset": 2639,
+      "end_offset": 2917,
+      "chunk_id": "ch_002"
+    },
+    {
+      "paragraph_id": "p_0003",
+      "chapter": "Chapter One: Thirteen Bells",
+      "text": "“Meridian Station has been silent for nine years,” Dr. Saye said. “Tonight every clock in Greyford rang thirteen times.”",
+      "start_offset": 2919,
+      "end_offset": 3039,
+      "chunk_id": "ch_003"
+    },
+    {
+      "paragraph_id": "p_0004",
+      "chapter": "Chapter One: Thirteen Bells",
+      "text": "Captain Aleksandr Ilyich Petrov arrived before Elias could answer. Captain Petrov carried no visible rifle. A black ceramic Resonance Pistol rested at his belt, its twin tuning forks surrounding a narrow chamber where a red energy ring trembled without sound.",
+      "start_offset": 3041,
+      "end_offset": 3300,
+      "chunk_id": "ch_002"
+    },
+    {
+      "paragraph_id": "p_0005",
+      "chapter": "Chapter One: Thirteen Bells",
+      "text": "Sasha looked from the silver compass in Elias's hand to the Azure Lumen Tonic. “The Ash Observatory is open,” he said. “That should be impossible.”",
+      "start_offset": 3302,
+      "end_offset": 3449,
+      "chunk_id": "ch_003"
+    },
+    {
+      "paragraph_id": "p_0006",
+      "chapter": "Chapter Two: The Abandoned Platform",
+      "text": "At Meridian Station, brass clocks faced one another across a glass platform. The Glass Meridian appeared for an instant beneath the floor: luminous lines joined the station, Greyford Village, and the Ash Observatory in a map that seemed to remember whoever looked at it.",
+      "start_offset": 3491,
+      "end_offset": 3761,
+      "chunk_id": "ch_004"
+    },
+    {
+      "paragraph_id": "p_0007",
+      "chapter": "Chapter Two: The Abandoned Platform",
+      "text": "Doctor Ashcroft heard the pressure wave first. Captain Petrov drew the Resonance Pistol. A red circle unfolded through the cold air, revealing a door where the wall had been.",
+      "start_offset": 3763,
+      "end_offset": 3937,
+      "chunk_id": "ch_004"
+    },
+    {
+      "paragraph_id": "p_0008",
+      "chapter": "Chapter Two: The Abandoned Platform",
+      "text": "Elias touched the fractured compass. He knew the door, but he did not yet tell Mira why.",
+      "start_offset": 3939,
+      "end_offset": 4027,
+      "chunk_id": "ch_004"
+    }
+  ],
+  "chapter_count": 2
+}

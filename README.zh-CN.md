@@ -1,84 +1,69 @@
 # StoryVista | 文景
 
-**把故事文本变成可追溯、可交互的视觉故事图谱。**
+**StoryVista｜文景，是一个面向全球读者的多语言小说视觉化阅读辅助 Skill。**
 
-![StoryVista Cinematic Bible Atlas](assets/docs/storyvista-overview-desktop.png)
+它把复杂小说中的人物、别名、关系、地点、地图、武器、科技、魔法、药剂和世界观设定整理成防剧透的游戏图鉴，并把小说原文放在同一页面的 Reader Sync Panel 中。
 
-StoryVista v0.2 已从“方法说明”升级为可运行的最小产品：使用 Python 标准库读取小说、剧本或设定文本，生成结构化数据、视觉资产计划、语义占位图、图片清单和静态交互 Atlas。
+[English](README.md) · [Skill](skill/SKILL.md) · [完整演示](skill/examples/reader-visual-codex-demo) · [升级报告](docs/upgrade-report-reader-visual-codex.md)
 
-[English](README.md) · [Skill](skill/SKILL.md) · [最小演示](skill/examples/minimal-novel-demo) · [升级报告](docs/upgrade-report-v0.2.md)
-
-## 先跑起来
+## 快速开始
 
 ```bash
-python scripts/storyvista.py build skill/examples/minimal-novel-demo/input.txt --out output/minimal-novel-demo
-python scripts/storyvista.py validate output/minimal-novel-demo
+python scripts/storyvista.py build skill/examples/reader-visual-codex-demo/input.txt --out output/reader-visual-codex-demo --ui-language auto
+python scripts/storyvista.py validate output/reader-visual-codex-demo
 ```
 
-然后打开 `output/minimal-novel-demo/atlas.html`。不需要安装依赖，也不需要 API Key 或生图模型。
+打开 `output/reader-visual-codex-demo/atlas.html`。默认流程完全本地运行，不需要 API Key、生图模型或额外运行时依赖。
 
-## 输出内容
-
-- `source-index.json`：来源、标题、语言和文件信息
-- `chunks.json`：带稳定 ID 和字符偏移的文本块
-- `story-atlas.json`：人物、地点、关系、事件、Actor Mode 与证据
-- `visual-asset-plan.json`：渲染前的视觉资产需求
-- `image-manifest.json`：图片路径、状态、绑定和版权说明
-- `assets/placeholders/*.svg`：本地语义占位图
-- `atlas.html`：可搜索、可筛选、可查看证据的交互页面
-- `verification-report.md`：自动验证结果
-
-## v0.2 能做什么
-
-- 抽取显式标注的人物、地点、组织、道具、概念、关系与事件
-- 为事实、推断、歧义、矛盾和未解决内容保留不同证据状态
-- 生成 Cinematic Bible 风格的静态交互 Atlas
-- 提供人物卡、关系、时间线、地点、Visual Bible 和证据抽屉
-- 提供 Actor Mode：场景目标、潜台词、情绪弧、可表演动作、服装道具、声音形体
-- 在没有生图模型时生成带完整名称和类型的 SVG，而不是偷偷使用首字母头像
-
-![Actor Mode](assets/docs/storyvista-actor-desktop.png)
-
-## 当前边界
-
-最小抽取器偏向确定性和可验证性，主要依赖可选的中文指令行；没有明确证据的内容会保持 `unresolved`。它不是一个被包装成“万能文学理解”的黑盒模型。
-
-```text
-人物：姓名｜角色｜阵营｜叙事功能
-地点：名称｜类型｜氛围关键词｜视觉关键词
-关系：人物A -> 人物B｜关系类型｜polarity｜0.8｜阶段
-事件：事件名｜人物A、人物B｜地点｜摘要
-表演：姓名｜场景目标｜秘密｜剧透信息｜潜台词｜情绪弧｜动作｜服装道具｜声音形体
-```
-
-完整示例见 [《吴越夜雨》输入文件](skill/examples/minimal-novel-demo/input.txt)。
-
-## 生图模型是可选项
-
-- Level 0：`placeholder-svg`，本地生成语义占位图和完整提示词
-- Level 1：`manual-assets`，用户手动生成或提供图片，再写入 manifest
-- Level 2：可调用 provider，由适配器读取视觉计划并生成图片
+也可以让输入语言和 UI 语言不同：
 
 ```bash
-python scripts/detect_image_provider.py --no-network
+python scripts/storyvista.py build english.txt --out output/zh-ui --ui-language zh-CN
+python scripts/storyvista.py build chinese.txt --out output/en-ui --ui-language en
 ```
 
-StoryVista 可以推荐国内可访问和全球可访问的模型，但不会自动安装、注册或产生付费调用。切换方法见 [image-provider.md](skill/references/image-provider.md)。
+## 核心能力
 
-## 验证
+- 人物画像图鉴：保留全名、姓氏、昵称、头衔、阵营、记忆标签和视觉证据状态。
+- 人物关系网：展示人物和阵营关系，并对后续关系加锁。
+- 小说地理地图：区分原文明确地理和解释性地图，不伪造精确距离。
+- 物品与设定图鉴：支持武器、药剂、科技、魔法、神器、载具、生物和概念。
+- Reader Sync Panel：右侧可收起、可拖动宽度，移动端可全屏阅读。
+- 双向跳转：点击原文高亮跳到图鉴；点击图鉴证据跳回原文段落。
+- 防剧透：默认隐藏标记为 `locked` 的关系和事件细节。
+- 生图模型预检：只检查配置和提供建议，不自动安装、注册或付费。
+- 气质主题：生成不含剧情剧透的主题色和背景提示词。
+- 视觉证据：严格区分 `confirmed`、`contextual`、`inferred`、`unknown`。
+- 多语言：英文和简体中文 UI 已支持，其他 locale 为实验性结构。
+- 跨 Agent：任何能运行 Python 的编程智能体都可使用同一 CLI。
+
+## 语言状态
+
+英文与简体中文输入检测和 UI 路径已有自动测试。日文、韩文、俄文、阿拉伯文和希伯来文目前仅提供文字系统检测或实验性 locale，不声称具备完整语言理解能力。
+
+专有名词默认保留 `canonical_name`，不会被强制翻译。需要时可补充 `localized_names`、`localized_aliases` 和 `memory_label`。
+
+## 演示
+
+- `reader-visual-codex-demo`：完整英文演示，含长名字、别名、蓝色发光药剂、红色声波武器和隐藏关系。
+- `english-reader-demo`：英文小说片段。
+- `chinese-reader-demo`：中文称谓、门派、地点和物品。
+- `bilingual-demo`：英文输入、中文 UI。
+- `ancient-chinese-demo`：古典文学主题。
+- `futuristic-sci-fi-demo`：未来科幻主题。
+
+## 生图模型与 fallback
+
+StoryVista 会生成 `provider-choice-state.json`。没有经过验证的 provider 时，自动使用本地 `semantic placeholder SVG`，任务不会中断。第三方 provider 需要用户自行安装、配置并确认费用和隐私风险。
+
+## 开发验证
 
 ```bash
-python -m unittest discover -s tests -v
-python scripts/storyvista_validate.py output/minimal-novel-demo
+.venv/bin/python -m pytest -q
+.venv/bin/python scripts/storyvista.py validate skill/examples/reader-visual-codex-demo/expected
 ```
 
-验证覆盖文件、JSON、关系端点、证据状态、资产唯一性、manifest 绑定、占位图、主要人物肖像计划以及禁用首字母头像策略。
-
-## 兼容性、隐私与权利
-
-核心实现是普通文件和 Python CLI，可被 Codex、Claude Code、Cursor、Copilot、Qwen Code、MiniMax、混元、AgentBuilder、CrewAI、LangChain、LlamaIndex 和 smolagents 调用。最小流水线在本地处理文本；用户仍需确认源文本和图片的使用权，不应把机密稿件或完整密钥发送给未经授权的服务。
-
-更多内容见 [产品愿景](docs/product-vision.md)、[数据契约](skill/references/data-contracts.md)、[权利说明](docs/legal-and-rights.md) 和 [路线图](docs/roadmap.md)。
+Actor、Writer、Director 工作台已从核心产品中降级，只保留为未来扩展方向。
 
 ## License
 

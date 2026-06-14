@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Spoiler State v0.3","type":"object","required":["schema_version","mode","enabled","locked_item_ids","reveal_policy"],"properties":{"schema_version":{"const":"0.3.0"},"mode":{"enum":["safe","full"]},"enabled":{"type":"boolean"},"locked_item_ids":{"type":"array"}}}

@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Map Plan v0.3","type":"object","required":["schema_version","map_type","canonical_accuracy","nodes","edges"],"properties":{"schema_version":{"const":"0.3.0"},"map_type":{"enum":["canonical","interpretive"]},"nodes":{"type":"array"},"edges":{"type":"array"}}}

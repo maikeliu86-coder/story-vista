@@ -19,7 +19,7 @@ def find_title(text: str, fallback: str) -> str:
     return fallback
 
 
-def ingest_source(input_path: str) -> tuple[dict, str]:
+def ingest_source(input_path: str, language: str | None = None) -> tuple[dict, str]:
     path = Path(input_path)
     text = path.read_text(encoding="utf-8")
     source = {
@@ -27,9 +27,9 @@ def ingest_source(input_path: str) -> tuple[dict, str]:
         "path": str(path),
         "type": "text",
         "title": find_title(text, path.stem.replace("-", " ").title()),
-        "language": detect_language(text),
+        "language": language or detect_language(text),
         "created_at": datetime.now(timezone.utc).isoformat(),
         "character_count": len(text),
-        "notes": "Processed locally by StoryVista v0.2.",
+        "notes": "Processed locally by StoryVista v0.3 Reader Visual Codex.",
     }
-    return {"schema_version": "0.2.0", "sources": [source]}, text
+    return {"schema_version": "0.3.0", "sources": [source]}, text

@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.3.0",
+  "mode": "auto",
+  "detected_providers": [],
+  "selected_provider": "placeholder-svg",
+  "fallback_provider": "placeholder-svg",
+  "prompt_only": false,
+  "status": "fallback-selected",
+  "selection_reason": "No callable provider was verified; local semantic placeholders keep the build complete.",
+  "installation_policy": "recommend-only; never auto-install or create paid accounts"
+}

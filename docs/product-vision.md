@@ -1,31 +1,20 @@
 # Product Vision
 
-StoryVista helps readers, writers, performers, and creative teams see a story as a connected system without losing contact with the source text.
+StoryVista is a multilingual visual reading companion for complex novels. Its primary job is to reduce reader confusion around long names, aliases, relationships, geography, objects, technology, magic, and lore without revealing later plot information.
 
-The product is not a decorative summary generator. Its durable value is the chain from source evidence to structured story facts, visual assets, interactive navigation, and role-specific interpretation.
+The product combines a game codex, literary atlas, and synchronized source reader. It must remain useful without an image provider, coding agent, network connection, or translated proper nouns.
 
-## Audiences
+## Core Principles
 
-- Readers exploring a long narrative
-- Writers checking continuity and world structure
-- Directors and actors preparing scenes and relationships
-- Lore and game teams maintaining a shared story bible
+1. Reader comprehension before creative production.
+2. Canonical source names before forced localization.
+3. Evidence and uncertainty before impressive invention.
+4. Spoiler-safe defaults before complete revelation.
+5. Local, provider-neutral fallbacks before external dependencies.
+6. English and Simplified Chinese first, with honest experimental labels elsewhere.
 
-## Product Principles
+## Core Surface
 
-1. Evidence before confidence.
-2. Data contracts before visual spectacle.
-3. A runnable local baseline before optional services.
-4. Images are replaceable assets, not hidden dependencies.
-5. Reader Mode and Actor Mode serve different questions.
-6. Uncertainty is visible rather than smoothed away.
+Character Portrait Atlas, Relationship Web, Location Atlas, interpretive Story Geography Map, Object & Lore Codex, Reader Sync Panel, Entity Highlight & Jump, provider preflight, theme engine, visual evidence, spoiler state, and multilingual UI.
 
-## Modes
-
-- **Reader Mode, implemented in v0.2**: characters, relationships, locations, timeline, themes, search, and evidence.
-- **Actor Mode, prototype in v0.2**: role summary, scene objectives, relationship beats, emotional arc, subtext, playable actions, costume/props, and physicality.
-- **Writer Mode, planned**: character arcs, structural gaps, setups/payoffs, conflict intensity, and scene function.
-- **Director Mode, planned**: blocking, spatial relationships, shot ideas, emotional rhythm, and visual motifs.
-- **Worldbuilder Mode, planned**: factions, geography, systems, objects, quest lines, and historical chronology.
-
-Planned modes are product directions, not implemented runtime claims.
+Actor, writer, and director workspaces are future extensions. They must not change the core reader data model or appear as the primary product promise.

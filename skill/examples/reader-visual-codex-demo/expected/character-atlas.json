@@ -1,0 +1,386 @@
+{
+  "schema_version": "0.3.0",
+  "characters": [
+    {
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "canonical_name": "Lord Elias Alexander Varron",
+      "name": "Lord Elias Alexander Varron",
+      "localized_names": {},
+      "localized_aliases": {},
+      "aliases": [
+        "Elias",
+        "Lord Varron",
+        "Varron",
+        "Elias Alexander Varron"
+      ],
+      "memory_label": "the mapmaker with the silver compass",
+      "role_name": "exiled cartographer",
+      "faction": "Meridian Survey",
+      "narrative_function": "protagonist",
+      "importance": "major",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator |",
+          "summary": "Source text mentions: Lord Elias Alexander Varron",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "alias_resolution": {
+        "rule_set": "western",
+        "status": "resolved"
+      },
+      "visual_profile": {
+        "identity": {
+          "value": "Lord Elias Alexander Varron",
+          "status": "confirmed",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator |",
+              "summary": "Source text mentions: Lord Elias Alexander Varron",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        },
+        "age": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "build": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "face": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "hair": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "eyes": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "clothing": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "accessories": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "posture": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "palette": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "distinctive_features": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "role_impression": {
+          "value": "exiled cartographer",
+          "status": "contextual",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator |",
+              "summary": "Source text mentions: Lord Elias Alexander Varron",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        },
+        "faction_impression": {
+          "value": "Meridian Survey",
+          "status": "inferred",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "Character: Lord Elias Alexander Varron | exiled cartographer | Meridian Survey | protagonist | Elias, Lord Varron, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator |",
+              "summary": "Source text mentions: Lord Elias Alexander Varron",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entity_id": "char_002",
+      "entity_type": "character",
+      "canonical_name": "Doctor Mirabelle Saye Ashcroft",
+      "name": "Doctor Mirabelle Saye Ashcroft",
+      "localized_names": {},
+      "localized_aliases": {},
+      "aliases": [
+        "Mira",
+        "Dr. Saye",
+        "Doctor Ashcroft",
+        "Ashcroft"
+      ],
+      "memory_label": "the doctor with ink-stained gloves",
+      "role_name": "physician-alchemist",
+      "faction": "Greyford Clinic",
+      "narrative_function": "investigator",
+      "importance": "major",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "n, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov",
+          "summary": "Source text mentions: Doctor Mirabelle Saye Ashcroft",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "alias_resolution": {
+        "rule_set": "western",
+        "status": "resolved"
+      },
+      "visual_profile": {
+        "identity": {
+          "value": "Doctor Mirabelle Saye Ashcroft",
+          "status": "confirmed",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "n, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov",
+              "summary": "Source text mentions: Doctor Mirabelle Saye Ashcroft",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        },
+        "age": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "build": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "face": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "hair": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "eyes": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "clothing": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "accessories": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "posture": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "palette": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "distinctive_features": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "role_impression": {
+          "value": "physician-alchemist",
+          "status": "contextual",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "n, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov",
+              "summary": "Source text mentions: Doctor Mirabelle Saye Ashcroft",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        },
+        "faction_impression": {
+          "value": "Greyford Clinic",
+          "status": "inferred",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "n, Varron | the mapmaker with the silver compass Character: Doctor Mirabelle Saye Ashcroft | physician-alchemist | Greyford Clinic | investigator | Mira, Dr. Saye, Doctor Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov",
+              "summary": "Source text mentions: Doctor Mirabelle Saye Ashcroft",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entity_id": "char_003",
+      "entity_type": "character",
+      "canonical_name": "Captain Aleksandr Ilyich Petrov",
+      "name": "Captain Aleksandr Ilyich Petrov",
+      "localized_names": {},
+      "localized_aliases": {},
+      "aliases": [
+        "Sasha",
+        "Captain Petrov",
+        "Petrov",
+        "Aleksandr Ilyich Petrov"
+      ],
+      "memory_label": "the captain who listens before he speaks",
+      "role_name": "station security captain",
+      "faction": "Meridian Station",
+      "narrative_function": "rival-ally",
+      "importance": "major",
+      "evidence": [
+        {
+          "source_id": "src_001",
+          "chunk_id": "ch_002",
+          "quote": "or Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river",
+          "summary": "Source text mentions: Captain Aleksandr Ilyich Petrov",
+          "confidence": "high",
+          "status": "explicit"
+        }
+      ],
+      "alias_resolution": {
+        "rule_set": "western",
+        "status": "resolved"
+      },
+      "visual_profile": {
+        "identity": {
+          "value": "Captain Aleksandr Ilyich Petrov",
+          "status": "confirmed",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "or Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river",
+              "summary": "Source text mentions: Captain Aleksandr Ilyich Petrov",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        },
+        "age": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "build": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "face": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "hair": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "eyes": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "clothing": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "accessories": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "posture": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "palette": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "distinctive_features": {
+          "value": "unknown",
+          "status": "unknown",
+          "evidence": []
+        },
+        "role_impression": {
+          "value": "station security captain",
+          "status": "contextual",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "or Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river",
+              "summary": "Source text mentions: Captain Aleksandr Ilyich Petrov",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        },
+        "faction_impression": {
+          "value": "Meridian Station",
+          "status": "inferred",
+          "evidence": [
+            {
+              "source_id": "src_001",
+              "chunk_id": "ch_002",
+              "quote": "or Ashcroft | the doctor with ink-stained gloves Character: Captain Aleksandr Ilyich Petrov | station security captain | Meridian Station | rival-ally | Sasha, Captain Petrov, Petrov | the captain who listens before he speaks Location: Greyford Village | river",
+              "summary": "Source text mentions: Captain Aleksandr Ilyich Petrov",
+              "confidence": "high",
+              "status": "explicit"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

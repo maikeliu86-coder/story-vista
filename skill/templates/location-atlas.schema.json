@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Location Atlas v0.3","type":"object","required":["schema_version","locations"],"properties":{"schema_version":{"const":"0.3.0"},"locations":{"type":"array"}}}

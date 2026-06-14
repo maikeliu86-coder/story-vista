@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://storyvista.dev/schemas/image-manifest.schema.json",
-  "title": "StoryVista Image Manifest v0.2",
+  "title": "StoryVista Image Manifest v0.3",
   "type": "object",
   "required": ["schema_version", "provider_status", "binding_source", "allow_initials_avatar", "assets"],
   "properties": {
-    "schema_version": { "const": "0.2.0" },
+    "schema_version": { "const": "0.3.0" },
     "provider_status": { "type": "string" },
     "binding_source": { "const": "image-manifest.json" },
     "allow_initials_avatar": { "const": false },

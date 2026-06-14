@@ -1,29 +1,27 @@
 # Roadmap
 
-## v0.1 - Documentation Skill
+## v0.3 - Reader Visual Codex
 
-README, Skill workflow, references, templates, early examples, and provider interface ideas.
+Character portraits, relationship web, location/map planning, object/lore codex, Reader Sync, entity jumps, spoiler safety, provider preflight, theme engine, English/Chinese UI, cross-agent docs, and semantic placeholders.
 
-## v0.2 - Minimal Runnable Loop
+## v0.4 - Real Image Provider Integration
 
-`input.txt` to `atlas.html`, semantic SVG placeholders, Actor Mode prototype, evidence records, schemas, and `verification-report.md`.
+OpenAI Image, ComfyUI, Qwen Image, MiniMax Image, prompt-only export, regeneration, asset versions, and quality checks.
 
-## v0.3 - Actor and Writer Depth
+## v0.5 - Advanced Reading Companion
 
-Scene detection, character emotional lines, subtext, role biographies, screenplay version comparison, and richer evidence-preserving extraction adapters.
+Incremental chapter updates, unlock notifications, recent-context reminders, memory cards, stronger progress persistence, and spoiler controls.
 
-## v0.4 - Design System
+## v0.6 - Map And Worldbuilding Upgrade
 
-Production implementations of Manuscript, Cinematic Bible, and Game Codex themes plus localization and accessibility review.
+Interactive maps, movement routes, location hierarchies, star/kingdom/city/building maps, faction maps, and event playback.
 
-## v0.5 - Image Provider Plugins
+## v0.7 - Public Sharing And Export
 
-Optional OpenAI, ComfyUI, Qwen, MiniMax, manual-assets, and local-folder adapters. The dependency-free placeholder path remains supported.
+HTML, PDF, long-image, Obsidian, Notion, and book-club/presentation exports.
 
-## v0.6 - Publishing
+## v1.0 - Immersive Novel Visual Reader
 
-Obsidian output, static-site publishing, portable project bundles, and public-domain demo galleries.
+Unified reading, codex, navigation, maps, gallery, evidence, theme, and generation.
 
-## v1.0 - Story Operating System
-
-Integrated story understanding, visual assets, creative collaboration, verification, and publishing, without hiding evidence or provider boundaries.
+Actor, writer, and director workspaces may be explored after the reader roadmap and only as optional extensions.

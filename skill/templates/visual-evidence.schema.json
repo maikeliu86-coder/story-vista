@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Visual Evidence v0.3","type":"object","required":["schema_version","allowed_statuses","records"],"properties":{"schema_version":{"const":"0.3.0"},"allowed_statuses":{"type":"array"},"records":{"type":"array"}}}
