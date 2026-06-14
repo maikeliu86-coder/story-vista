@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyvista.dev/schemas/visual-asset-plan.schema.json",
+  "title": "StoryVista Visual Asset Plan",
+  "type": "object",
+  "required": ["schema_version", "provider_status", "assets"],
+  "properties": {
+    "schema_version": { "const": "0.2.0" },
+    "provider_status": { "type": "string" },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["asset_id", "asset_type", "priority", "prompt", "negative_prompt", "style_profile", "provider_preference", "status"],
+        "properties": {
+          "asset_id": { "type": "string", "minLength": 1 },
+          "entity_id": { "type": ["string", "null"] },
+          "event_id": { "type": ["string", "null"] },
+          "location_id": { "type": ["string", "null"] },
+          "asset_type": { "enum": ["character_portrait", "location_keyart", "event_keyframe"] },
+          "priority": { "enum": ["high", "medium", "low"] },
+          "prompt": { "type": "string", "minLength": 1 },
+          "negative_prompt": { "type": "string" },
+          "style_profile": { "type": "string" },
+          "provider_preference": { "type": "string" },
+          "status": { "enum": ["planned", "prompt_ready", "generated", "user_provided", "placeholder", "missing", "failed"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

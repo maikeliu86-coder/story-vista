@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+from urllib.parse import urljoin
 
 PROVIDERS = [
     ("openai", "api", ["OPENAI_API_KEY"], 88, ["api_key_detected", "high_storyvista_fit", "supports_character_portraits", "supports_location_keyart"], False),
@@ -28,6 +29,7 @@ PROVIDERS = [
 MANUAL_ENV = ["STORYVISTA_IMAGE_ASSETS_DIR", "STORYVISTA_MANUAL_ASSETS_DIR", "STORYVISTA_IMAGE_MANIFEST_PATH"]
 PROMPT_ONLY_PROVIDERS = {"midjourney", "jimeng", "jianying"}
 PLACEHOLDER_PROVIDERS = {"placeholder-svg"}
+DEFAULT_COMFYUI_URL = "http://127.0.0.1:8188"
 
 
 def mask_secret(value):
@@ -52,15 +54,33 @@ def read_config(config_path):
     return data
 
 
-def endpoint_reachable(url):
+def read_dotenv(path):
+    values = {}
+    dotenv = Path(path)
+    if not dotenv.exists():
+        return values
+    for line in dotenv.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, value = stripped.split("=", 1)
+        values[key.strip()] = value.strip().strip("\"'")
+    return values
+
+
+def endpoint_reachable(url, paths=("",)):
     from urllib.error import URLError
     from urllib.request import urlopen
 
-    try:
-        with urlopen(url, timeout=2) as response:
-            return response.status < 500
-    except (ValueError, URLError, TimeoutError, OSError):
-        return False
+    base = url.rstrip("/") + "/"
+    for path in paths:
+        try:
+            with urlopen(urljoin(base, path.lstrip("/")), timeout=2) as response:
+                if response.status < 500:
+                    return True
+        except (ValueError, URLError, TimeoutError, OSError):
+            continue
+    return False
 
 
 def score_provider(base, reasons, signal_count, verified, status):
@@ -117,27 +137,32 @@ def main():
     parser.add_argument("--json", action="store_true", help="Output JSON. JSON is the default output.")
     parser.add_argument("--verify", action="store_true", help="Verify local endpoints when network is allowed.")
     parser.add_argument("--config", default="image-provider.config.yaml", help="Path to image-provider config.")
+    parser.add_argument("--env-file", default=".env", help="Optional dotenv file to inspect without printing secrets.")
     parser.add_argument("--no-network", action="store_true", help="Disable network checks.")
     args = parser.parse_args()
 
     config = read_config(args.config)
+    dotenv = read_dotenv(args.env_file)
+    environment = dict(dotenv)
+    environment.update(os.environ)
     detected = []
 
     for provider, mode, env_names, base, reasons, is_endpoint in PROVIDERS:
-        signals = [name for name in env_names if os.environ.get(name)]
+        signals = [name for name in env_names if environment.get(name)]
         if not signals:
             continue
         verified = False
         status = "detected"
         if is_endpoint and args.verify and not args.no_network:
-            verified = endpoint_reachable(os.environ[signals[0]])
+            paths = ("system_stats", "object_info") if provider == "comfyui" else ("",)
+            verified = endpoint_reachable(environment[signals[0]], paths)
             status = "reachable" if verified else "unreachable"
         score, selection_reason, risk_reasons = score_provider(base, reasons, len(signals), verified, status)
         detected.append({
             "provider": provider,
             "source": "local_endpoint" if is_endpoint else "environment_variable",
             "signals": signals,
-            "masked_signals": {name: mask_secret(os.environ[name]) for name in signals},
+            "masked_signals": {name: mask_secret(environment[name]) for name in signals},
             "status": status,
             "verified": verified,
             "safe_to_use": "yes" if verified else "unknown",
@@ -149,7 +174,7 @@ def main():
         })
 
     for name in MANUAL_ENV:
-        value = os.environ.get(name)
+        value = environment.get(name)
         if not value:
             continue
         exists = Path(value).exists()
@@ -167,6 +192,25 @@ def main():
             "risk_reasons": [] if exists else ["provider_configured_but_unverified"],
             "notes": "Manual asset path exists." if exists else "Manual asset path was configured but not found."
         })
+
+    comfy_configured = any(item["provider"] == "comfyui" for item in detected)
+    if not comfy_configured and args.verify and not args.no_network:
+        verified = endpoint_reachable(DEFAULT_COMFYUI_URL, ("system_stats", "object_info"))
+        if verified:
+            detected.append({
+                "provider": "comfyui",
+                "source": "default_local_endpoint",
+                "signals": ["default:http://127.0.0.1:8188"],
+                "masked_signals": {},
+                "status": "reachable",
+                "verified": True,
+                "safe_to_use": "yes",
+                "mode": "api",
+                "score": 84,
+                "selection_reason": ["verified_api_available", "default_local_endpoint", "supports_custom_workflow"],
+                "risk_reasons": [],
+                "notes": "ComfyUI responded on the default local endpoint."
+            })
 
     if config and config.get("provider") and config["provider"] != "auto":
         found = next((item for item in detected if item["provider"] == config["provider"]), None)
@@ -204,7 +248,7 @@ def main():
 
     missing = []
     for _, _, env_names, _, _, _ in PROVIDERS:
-        missing.extend([name for name in env_names if not os.environ.get(name)])
+        missing.extend([name for name in env_names if not environment.get(name)])
 
     report = {
         "storyvista_image_provider_report": {
@@ -235,7 +279,7 @@ def main():
         }
     }
     print(json.dumps(report, ensure_ascii=False, indent=2))
-    raise SystemExit(0 if selected else 1)
+    raise SystemExit(0)
 
 
 if __name__ == "__main__":

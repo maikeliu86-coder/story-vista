@@ -1,68 +1,62 @@
-# StoryVista
+# StoryVista | 文景
 
-One-line summary: StoryVista is a Codex-first, cross-agent compatible story visualization skill for turning novels, scripts, lore documents, and long-form prose into interactive visual story atlases.
+StoryVista turns a UTF-8 story source into evidence-aware JSON, semantic visual assets, and a static interactive Story Atlas.
 
-Main use cases:
-- Build character maps, relationship graphs, character cards, and aliases.
-- Build location maps, route maps, 3D spatial maps, and location cards.
-- Build timelines, object indexes, organization maps, concept indexes, and visual asset libraries.
-- Generate image prompts, image manifests, semantic placeholders, and optional interactive HTML atlases.
-- Run preflight image provider checks, diagnose provider availability, and select an image provider with Auto Mode.
+Primary command:
 
-Core files:
+python scripts/storyvista.py build skill/examples/minimal-novel-demo/input.txt --out output/minimal-novel-demo
+
+Required outputs:
+
+- source-index.json
+- chunks.json
+- story-atlas.json
+- visual-asset-plan.json
+- image-manifest.json
+- assets/placeholders/*.svg
+- atlas.html
+- verification-report.md
+
+Implemented in v0.2:
+
+- standard-library CLI
+- conservative directive-based extraction
+- characters, locations, organizations, objects, concepts, relations, events, and timeline
+- source evidence and uncertainty states
+- Reader Mode and Actor Mode prototype
+- Cinematic Bible HTML atlas
+- semantic SVG placeholders
+- image provider detection and fallback interface
+- validation and tests
+
+Planned, not implemented as complete runtime features:
+
+- generalized LLM/NLP extraction adapter
+- external image-generation adapters
+- advanced graph layout and 3D maps
+- Writer, Director, and Worldbuilder mode implementations
+- API server and full framework adapter runtimes
+
+Canonical files:
+
 - README.md
 - README.zh-CN.md
 - AGENTS.md
 - skill/SKILL.md
-- skill/references/cross-agent-compatibility.md
-- skill/references/image-provider-guide.md
-- skill/references/preflight-image-provider-check.md
-- skill/references/image-provider-diagnosis.md
-- skill/references/provider-selection-policy.md
-- skill/references/image-provider-recommendations.md
-- skill/references/image-provider-switching.md
-- skill/references/visual-asset-generation.md
+- skill/references/core-pipeline.md
+- skill/references/data-contracts.md
 - skill/references/fallback-rules.md
-- skill/templates/story-atlas.schema.json
-- skill/templates/image-manifest.schema.json
-- skill/templates/image-provider.config.example.yaml
-- skill/templates/preflight-check-report.example.json
-- skill/templates/image-provider-report.example.json
-- scripts/detect-image-provider.js
-- scripts/detect-image-provider.py
+- skill/references/verification.md
+- skill/references/image-provider.md
+- skill/templates/
+- skill/examples/minimal-novel-demo/
+- docs/upgrade-report-v0.2.md
 
-Installation modes:
-- Core Skill Mode for agents that read SKILL.md.
-- Project Instruction Mode for agents that read repository instructions.
-- AGENTS.md Mode for coding agents.
-- Prompt-Only Mode for web chat agents.
-- Framework Adapter Mode for Hugging Face smolagents, LlamaIndex, LangChain, CrewAI, AutoGen, Qwen-Agent, and custom Python agents.
-- BYO Image Model Mode and Manual Asset Binding Mode.
+Rules:
 
-Image provider support:
-- openai, chatgpt-image, google, gemini-image, imagen, midjourney, stable-diffusion, stability, flux, comfyui, automatic1111, minimax-image, qwen-image, tencent-hunyuan-image, baidu-wenxin-image, zhipu-image, volcengine-seedream, ideogram, leonardo, replicate, fal, together, local-folder, manual-assets, placeholder-svg, custom-api.
-
-Preflight and Auto Mode:
-- StoryVista defaults to Auto Mode.
-- It checks config files, environment variables, local endpoints, manual asset folders, and existing manifests.
-- It scores detected providers and recommends one when possible.
-- Multiple providers do not force a beginner choice; the user can manually override.
-- Missing provider is not fatal; prompt-only and placeholder-svg are valid continuation modes.
-- Detection reports must mask secrets and never print full API keys.
-
-Cross-agent support:
-- OpenAI Codex, Claude Code, GitHub Copilot Agent Mode, Cursor, Windsurf, OpenCode, generic coding agents, Hugging Face smolagents, LlamaIndex, LangChain, CrewAI, AutoGen, Qwen Code, Qwen-Agent, MiniMax, Tencent Hunyuan, Tencent Cloud Agent Development Platform, Baidu Wenxin AgentBuilder, Baidu Comate, GLM, DeepSeek-based local agents, OpenHands, and generic prompt-only agents.
-
-Safety and limitation notes:
-- Do not paste private manuscripts, NDA material, API keys, or sensitive personal data into public issues.
-- StoryVista does not grant rights to copyrighted source material or generated images.
-- Image generation is optional; if unavailable, generate prompts, image-manifest.json, and semantic SVG placeholders.
+- Do not fabricate evidence or story facts.
+- Missing image providers never block the build.
+- Bind visuals through image-manifest.json.
 - Initials-only avatars are disabled by default.
-- Generated pages should include a subtle image provider attribution note.
-
-Links:
-- README: README.md
-- Chinese README: README.zh-CN.md
-- Skill: skill/SKILL.md
-- Image provider guide: skill/references/image-provider-guide.md
-- Cross-agent compatibility guide: skill/references/cross-agent-compatibility.md
+- Adapter documents are not proof of adapter runtime.
+- Users remain responsible for source and image rights.

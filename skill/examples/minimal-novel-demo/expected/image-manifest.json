@@ -1,0 +1,151 @@
+{
+  "schema_version": "0.2.0",
+  "provider_status": "verified",
+  "binding_source": "image-manifest.json",
+  "allow_initials_avatar": false,
+  "assets": [
+    {
+      "asset_id": "asset_char_001_portrait",
+      "bound_to": "char_001",
+      "file_path": "assets/placeholders/char_001.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_char_001_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_002_portrait",
+      "bound_to": "char_002",
+      "file_path": "assets/placeholders/char_002.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_char_002_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_003_portrait",
+      "bound_to": "char_003",
+      "file_path": "assets/placeholders/char_003.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_char_003_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_003",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_004_portrait",
+      "bound_to": "char_004",
+      "file_path": "assets/placeholders/char_004.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_char_004_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_004",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_char_005_portrait",
+      "bound_to": "char_005",
+      "file_path": "assets/placeholders/char_005.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_char_005_portrait",
+      "alt_text": "Semantic character_portrait placeholder for char_005",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_loc_001_keyart",
+      "bound_to": "loc_001",
+      "file_path": "assets/placeholders/loc_001.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_loc_001_keyart",
+      "alt_text": "Semantic location_keyart placeholder for loc_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_loc_002_keyart",
+      "bound_to": "loc_002",
+      "file_path": "assets/placeholders/loc_002.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_loc_002_keyart",
+      "alt_text": "Semantic location_keyart placeholder for loc_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_loc_003_keyart",
+      "bound_to": "loc_003",
+      "file_path": "assets/placeholders/loc_003.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_loc_003_keyart",
+      "alt_text": "Semantic location_keyart placeholder for loc_003",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_loc_004_keyart",
+      "bound_to": "loc_004",
+      "file_path": "assets/placeholders/loc_004.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_loc_004_keyart",
+      "alt_text": "Semantic location_keyart placeholder for loc_004",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_evt_001_keyframe",
+      "bound_to": "evt_001",
+      "file_path": "assets/placeholders/evt_001.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_evt_001_keyframe",
+      "alt_text": "Semantic event_keyframe placeholder for evt_001",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_evt_002_keyframe",
+      "bound_to": "evt_002",
+      "file_path": "assets/placeholders/evt_002.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_evt_002_keyframe",
+      "alt_text": "Semantic event_keyframe placeholder for evt_002",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_evt_003_keyframe",
+      "bound_to": "evt_003",
+      "file_path": "assets/placeholders/evt_003.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_evt_003_keyframe",
+      "alt_text": "Semantic event_keyframe placeholder for evt_003",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    },
+    {
+      "asset_id": "asset_evt_004_keyframe",
+      "bound_to": "evt_004",
+      "file_path": "assets/placeholders/evt_004.svg",
+      "provider": "placeholder-svg",
+      "status": "placeholder",
+      "generated_at": "2026-06-14T16:35:09.594361+00:00",
+      "prompt_ref": "asset_evt_004_keyframe",
+      "alt_text": "Semantic event_keyframe placeholder for evt_004",
+      "license_note": "Generated locally by StoryVista; no third-party image used."
+    }
+  ]
+}

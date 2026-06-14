@@ -1,7 +1,10 @@
 .DS_Store
 *.log
 node_modules/
+__pycache__/
+*.pyc
 dist/
 tmp/
+output/
 
 .tools/

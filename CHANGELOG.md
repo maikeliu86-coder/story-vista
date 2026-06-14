@@ -4,6 +4,23 @@ All notable changes to StoryVista will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.2.0] - 2026-06-15
+
+### Added
+
+- Runnable standard-library CLI for source ingest, chunking, story modeling, asset planning, atlas rendering, and validation.
+- Evidence-aware data contracts, semantic SVG placeholders, Actor Mode, and a fictional Chinese demo.
+- Six regression tests and browser-oriented verification guidance.
+
+### Changed
+
+- Reorganized README and Skill documentation around the working command and generated artifacts.
+- Consolidated duplicated image-provider guidance into one canonical reference.
+
+### Known limitations
+
+- The minimal extractor is directive-based; optional richer extraction adapters are planned.
+
 ## [0.1.2] - 2026-06-03
 
 ### Changed

@@ -1,4 +1,4 @@
 interface:
   display_name: "StoryVista"
   short_description: "Make text worlds visible"
-  default_prompt: "Use $story-vista to turn this novel, script, or long-form text into an interactive visual atlas for characters, scenes, timelines, concepts, and world maps."
+  default_prompt: "Use $story-vista to build an evidence-aware interactive Story Atlas. Run the portable CLI when shell access exists; otherwise follow the six-step contract and keep uncertain claims unresolved."

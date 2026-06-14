@@ -1,75 +1,49 @@
 # StoryVista Agent Instructions
 
-StoryVista is a Codex-first, cross-agent compatible story visualization skill. Use it to turn novels, scripts, screenplays, lore documents, long-form prose, character notes, location notes, and timelines into interactive visual story atlases.
+StoryVista is a runnable, evidence-aware Story Atlas skill. Keep the v0.2 dependency-free CLI working before adding optional adapters or providers.
 
-## Required Workflow
+## Primary Command
 
-1. Parse source text.
-2. Extract entities.
-3. Classify entities by importance.
-4. Build the story data model.
-5. Run or offer Preflight Image Provider Check.
-6. Run or offer Image Provider Diagnosis.
-7. Apply Auto Mode provider selection.
-8. Select `api`, `manual-assets`, `prompt-only`, or `placeholder-svg` mode.
-9. Create `visual-asset-plan.json`.
-10. Generate image prompts and/or images.
-11. Create `image-manifest.json`.
-12. Bind assets to character cards, location cards, relationship graphs, timelines, concept cards, detail panels, and 3D map nodes.
-13. Generate the final interactive atlas.
-14. Add a subtle image provider attribution note.
-15. Run the verification checklist.
+```bash
+python scripts/storyvista.py build skill/examples/minimal-novel-demo/input.txt --out output/minimal-novel-demo
+```
 
-## Preflight And Auto Mode
+## Required Pipeline
 
-StoryVista defaults to Auto Mode for image provider selection. Beginners should not be forced to choose from a long provider list. If exactly one verified provider is detected, use it. If multiple providers are detected, recommend the highest-scoring provider and explain why. If no provider is detected, continue with prompt-only or semantic placeholder mode.
+1. Ingest source and create `source-index.json` plus `chunks.json`.
+2. Model entities, relations, events, timeline, Actor Mode, and evidence.
+3. Mark claims as `explicit`, `inferred`, `ambiguous`, `contradictory`, or `unresolved`.
+4. Create `visual-asset-plan.json` before rendering.
+5. Create `image-manifest.json`, semantic placeholders, and `atlas.html`.
+6. Validate and write `verification-report.md`.
 
-Explicit user configuration always wins, and manual override must remain available. Missing provider is not a fatal error.
+## Engineering Rules
 
-## Visual Asset Requirement
+- Prefer the Python standard library and existing repository patterns.
+- Keep changes small, reproducible, and covered by targeted tests.
+- Do not invent missing story facts; preserve unresolved states.
+- Do not make image providers a prerequisite for atlas generation.
+- Bind all visuals through `image-manifest.json`.
+- Keep `allow_initials_avatar: false` unless the user explicitly opts in.
+- Mask secrets and avoid paid provider calls during diagnosis.
+- Treat files in `skill/agents/` as adapter documentation unless executable runtime code exists.
 
-Do not build the final atlas before creating a visual asset plan. Every major character needs a planned or bound `character_portrait` asset. Every key location needs a planned or bound `location_keyart` asset.
+## Verification
 
-## Image Provider Neutrality
+Run:
 
-StoryVista defines what images are needed, not where they are generated. Do not require a specific image model. Support configured providers, bring-your-own image models, manual assets, local folders, custom APIs, and semantic placeholder SVGs.
+```bash
+python -m unittest discover -s tests -v
+python scripts/storyvista.py validate output/minimal-novel-demo
+```
 
-Do not print full API keys during diagnosis. Mask secrets and separate StoryVista generation status from image provider status.
+For HTML changes, also check embedded JavaScript syntax and verify desktop/mobile layouts, navigation, search, filters, evidence drawer, Actor Mode, image loading, and console errors.
 
-## No Initials-Only Avatar By Default
+## Canonical References
 
-Do not use initials-only avatars as default character portraits. Initials-only placeholders are allowed only as a last resort when explicitly enabled by the user or configuration. Default: `allow_initials_avatar: false`.
-
-## Output Requirements
-
-Expected outputs usually include:
-
-- `story-atlas.json`
-- `visual-asset-plan.json`
-- `image-manifest.json`
-- interactive `index.html` or equivalent atlas page when requested
-- semantic placeholder assets when no image provider or user asset is available
-
-## Verification Checklist
-
-Before completion, verify:
-
-- Major characters have `character_portrait` assets.
-- Key locations have `location_keyart` assets.
-- All images or placeholders are registered in `image-manifest.json`.
-- Provider status, selected provider, selected mode, score, and selection reason are reported.
-- The atlas contains a subtle provider attribution note.
-- The atlas never silently substitutes missing images with initials.
-- Generated HTML/JS passes syntax checks when applicable.
-- Desktop, tablet, and mobile layouts are readable when an HTML atlas is produced.
-
-## Read More
-
-- Core workflow: `skill/SKILL.md`
-- Cross-agent modes: `skill/references/cross-agent-compatibility.md`
-- Image providers: `skill/references/image-provider-guide.md`
-- Provider diagnosis: `skill/references/image-provider-diagnosis.md`
-- Provider selection: `skill/references/provider-selection-policy.md`
-- Provider switching: `skill/references/image-provider-switching.md`
-- Asset generation: `skill/references/visual-asset-generation.md`
-- Schemas and examples: `skill/templates/` and `skill/examples/`
+- Workflow: `skill/SKILL.md`
+- Pipeline: `skill/references/core-pipeline.md`
+- Data: `skill/references/data-contracts.md`
+- Fallbacks: `skill/references/fallback-rules.md`
+- Verification: `skill/references/verification.md`
+- Image providers: `skill/references/image-provider.md`

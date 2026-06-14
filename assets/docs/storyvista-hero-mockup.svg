@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 840" role="img" aria-labelledby="title desc">
+  <title id="title">StoryVista Cinematic Bible atlas mockup</title>
+  <desc id="desc">Dark editorial story atlas with navigation, project overview, metrics, and character portraits.</desc>
+  <rect width="1440" height="840" fill="#0e0f10"/>
+  <rect width="230" height="840" fill="#111213"/>
+  <path d="M230 0v840M0 76h1440" stroke="#34373a"/>
+  <text x="34" y="50" fill="#c6a967" font-family="Georgia,serif" font-size="26">StoryVista</text>
+  <text x="34" y="70" fill="#777b7f" font-family="Arial,sans-serif" font-size="9" letter-spacing="3">文景 · STORY ATLAS</text>
+  <g font-family="Arial,sans-serif" font-size="13">
+    <rect x="24" y="128" width="182" height="38" fill="#1a1b1d"/>
+    <rect x="24" y="128" width="2" height="38" fill="#c6a967"/>
+    <text x="42" y="152" fill="#e2dfd8">Overview</text>
+    <text x="42" y="199" fill="#96999d">Characters</text>
+    <text x="42" y="242" fill="#96999d">Relationships</text>
+    <text x="42" y="285" fill="#96999d">Timeline</text>
+    <text x="42" y="328" fill="#96999d">Locations</text>
+    <text x="42" y="371" fill="#96999d">Visual Bible</text>
+    <text x="42" y="414" fill="#96999d">Actor Mode</text>
+  </g>
+  <rect x="266" y="20" width="590" height="38" fill="#151719" stroke="#34373a"/>
+  <text x="286" y="44" fill="#73777b" font-family="Arial,sans-serif" font-size="13">搜索人物、地点、事件或关键词</text>
+  <text x="276" y="126" fill="#c6a967" font-family="Arial,sans-serif" font-size="10" letter-spacing="3">PROJECT BIBLE / 001</text>
+  <text x="276" y="203" fill="#e2dfd8" font-family="Georgia,serif" font-size="68">吴越夜雨</text>
+  <text x="278" y="244" fill="#a7a8a5" font-family="Arial,sans-serif" font-size="16">忠诚、误判与权力在一场雨夜旧案中互相逼近。</text>
+  <g transform="translate(276 292)" font-family="Arial,sans-serif">
+    <path d="M0 0h1090M0 100h1090M272 0v100M544 0v100M816 0v100" stroke="#34373a"/>
+    <g fill="#c6a967" font-family="Georgia,serif" font-size="34"><text x="20" y="45">5</text><text x="292" y="45">4</text><text x="564" y="45">4</text><text x="836" y="45">5</text></g>
+    <g fill="#96999d" font-size="11"><text x="20" y="70">主要人物</text><text x="292" y="70">故事地点</text><text x="564" y="70">关键事件</text><text x="836" y="70">关系线</text></g>
+  </g>
+  <g transform="translate(276 440)">
+    <g><rect width="205" height="330" fill="#17191b" stroke="#34373a"/><rect x="16" y="16" width="173" height="186" fill="#202225"/><circle cx="102" cy="80" r="30" fill="none" stroke="#c6a967" stroke-width="4"/><path d="M50 180c8-51 28-75 52-75s44 24 52 75" fill="none" stroke="#c6a967" stroke-width="4"/><text x="16" y="232" fill="#c6a967" font-family="Arial" font-size="9" letter-spacing="2">禁军</text><text x="16" y="267" fill="#e2dfd8" font-family="Georgia" font-size="22">沈砚</text><text x="16" y="294" fill="#96999d" font-family="Arial" font-size="12">年轻将领 · protagonist</text></g>
+    <g transform="translate(222)"><rect width="205" height="330" fill="#17191b" stroke="#34373a"/><rect x="16" y="16" width="173" height="186" fill="#202225"/><circle cx="102" cy="80" r="30" fill="none" stroke="#c6a967" stroke-width="4"/><path d="M50 180c8-51 28-75 52-75s44 24 52 75" fill="none" stroke="#c6a967" stroke-width="4"/><text x="16" y="232" fill="#c6a967" font-family="Arial" font-size="9" letter-spacing="2">旧朝文臣</text><text x="16" y="267" fill="#e2dfd8" font-family="Georgia" font-size="22">顾惟忠</text><text x="16" y="294" fill="#96999d" font-family="Arial" font-size="12">被陷害的老臣 · mentor</text></g>
+    <g transform="translate(444)"><rect width="205" height="330" fill="#17191b" stroke="#34373a"/><rect x="16" y="16" width="173" height="186" fill="#202225"/><circle cx="102" cy="80" r="30" fill="none" stroke="#c6a967" stroke-width="4"/><path d="M50 180c8-51 28-75 52-75s44 24 52 75" fill="none" stroke="#c6a967" stroke-width="4"/><text x="16" y="232" fill="#c6a967" font-family="Arial" font-size="9" letter-spacing="2">王廷</text><text x="16" y="267" fill="#e2dfd8" font-family="Georgia" font-size="22">钱弘俶</text><text x="16" y="294" fill="#96999d" font-family="Arial" font-size="12">吴越君主 · ruler</text></g>
+    <g transform="translate(666)"><rect width="205" height="330" fill="#17191b" stroke="#34373a"/><rect x="16" y="16" width="173" height="186" fill="#202225"/><circle cx="102" cy="80" r="30" fill="none" stroke="#c6a967" stroke-width="4"/><path d="M50 180c8-51 28-75 52-75s44 24 52 75" fill="none" stroke="#c6a967" stroke-width="4"/><text x="16" y="232" fill="#c6a967" font-family="Arial" font-size="9" letter-spacing="2">内廷</text><text x="16" y="267" fill="#e2dfd8" font-family="Georgia" font-size="22">韩烛</text><text x="16" y="294" fill="#96999d" font-family="Arial" font-size="12">密使 · catalyst</text></g>
+  </g>
+</svg>

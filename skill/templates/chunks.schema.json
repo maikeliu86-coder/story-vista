@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyvista.dev/schemas/chunks.schema.json",
+  "title": "StoryVista Source Chunks",
+  "type": "object",
+  "required": ["schema_version", "chunks"],
+  "properties": {
+    "schema_version": { "const": "0.2.0" },
+    "chunks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["chunk_id", "source_id", "start_offset", "end_offset", "text", "summary", "detected_entities"],
+        "properties": {
+          "chunk_id": { "type": "string", "pattern": "^ch_[0-9]{3,}$" },
+          "source_id": { "type": "string", "minLength": 1 },
+          "start_offset": { "type": "integer", "minimum": 0 },
+          "end_offset": { "type": "integer", "minimum": 1 },
+          "chapter": { "type": ["string", "null"] },
+          "scene": { "type": ["string", "null"] },
+          "heading": { "type": ["string", "null"] },
+          "text": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string", "minLength": 1 },
+          "detected_entities": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

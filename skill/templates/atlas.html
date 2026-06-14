@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StoryVista Atlas</title>
+  <style>
+    :root {
+      --bg: #0e0f10; --panel: #17191b; --panel-2: #202225; --line: #34373a;
+      --text: #e2dfd8; --muted: #96999d; --gold: #c6a967; --gold-dim: #74694f;
+      --positive: #80a887; --negative: #b87369; --inferred: #8294ac; --warning: #c49457;
+      --radius: 6px; --max: 1480px;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; }
+    body { margin: 0; min-height: 100vh; overflow-x: hidden; background: var(--bg); }
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    .shell { width: 100%; min-width: 0; min-height: 100vh; display: grid; grid-template-columns: 240px minmax(0,1fr); }
+    .sidebar { min-width: 0; position: sticky; top: 0; height: 100vh; padding: 30px 22px; border-right: 1px solid var(--line); background: #111213; }
+    .brand { font-family: Georgia, serif; font-size: 24px; color: var(--gold); }
+    .brand small { display: block; margin-top: 6px; font-family: inherit; font-size: 10px; letter-spacing: 3px; color: var(--muted); }
+    .nav { min-width: 0; margin-top: 42px; display: grid; gap: 5px; }
+    .nav button { width: 100%; padding: 10px 12px; border: 0; border-left: 2px solid transparent; background: transparent; text-align: left; color: var(--muted); cursor: pointer; }
+    .nav button:hover, .nav button.active { color: var(--text); border-color: var(--gold); background: #1a1b1d; }
+    .sidebar-meta { position: absolute; bottom: 24px; left: 22px; right: 22px; font-size: 11px; color: #73777b; line-height: 1.6; }
+    main { width: 100%; min-width: 0; }
+    .topbar { min-height: 76px; display: flex; align-items: center; gap: 14px; padding: 16px 34px; border-bottom: 1px solid var(--line); background: rgba(14,15,16,.96); position: sticky; top: 0; z-index: 5; }
+    .search { flex: 1; max-width: 620px; border: 1px solid var(--line); background: #151719; color: var(--text); padding: 11px 14px; border-radius: 4px; outline: none; }
+    .search:focus { border-color: var(--gold-dim); }
+    select { border: 1px solid var(--line); background: #151719; color: var(--muted); padding: 10px; border-radius: 4px; }
+    .content { width: 100%; min-width: 0; max-width: var(--max); margin: 0 auto; padding: 40px 42px 70px; }
+    .section { display: none; }
+    .section.active { display: block; animation: reveal .22s ease; }
+    @keyframes reveal { from { opacity: .3; transform: translateY(4px); } }
+    h1, h2, h3 { margin: 0; font-family: Georgia, 'Noto Serif SC', serif; font-weight: 500; letter-spacing: 0; }
+    h1 { max-width: 900px; font-size: clamp(36px, 5vw, 72px); line-height: 1.05; }
+    h2 { font-size: 30px; }
+    h3 { font-size: 19px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+    .section-head p { margin: 0; max-width: 650px; color: var(--muted); line-height: 1.7; }
+    .folio { margin-bottom: 22px; color: var(--gold); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
+    .lede { max-width: 850px; margin: 24px 0 34px; color: #b5b5b1; font-size: 18px; line-height: 1.8; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .metric { padding: 20px 18px; border-right: 1px solid var(--line); }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; font-family: Georgia, serif; font-size: 32px; color: var(--gold); }
+    .metric span { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; }
+    .themes { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 28px; }
+    .tag { padding: 5px 8px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); font-size: 11px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+    .card { border: 1px solid var(--line); background: var(--panel); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: border-color .18s, transform .18s; }
+    .card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+    .portrait { aspect-ratio: 4 / 3; width: 100%; object-fit: cover; display: block; background: #111; }
+    .card-body { padding: 17px; }
+    .card-kicker { color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+    .card h3 { margin-top: 8px; }
+    .card p { color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .meta-row { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; color: #797d81; font-size: 11px; }
+    .evidence-tag { border: 1px solid #435146; background: transparent; color: #9abb9f; padding: 3px 6px; font-size: 10px; border-radius: 2px; }
+    button.evidence-tag { cursor: pointer; }
+    .evidence-tag.inferred { border-color: #465468; color: #9bb0ca; }
+    .evidence-tag.unresolved { border-color: #71593e; color: #d0a46c; }
+    .relation-list, .timeline, .actor-list { display: grid; gap: 12px; }
+    .relation, .event, .actor-row { display: grid; grid-template-columns: 170px minmax(0,1fr) auto; gap: 18px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .relation strong, .event strong { font-family: Georgia, serif; }
+    .relation p, .event p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .strength { width: 86px; height: 3px; background: #303235; }
+    .strength span { display: block; height: 100%; background: var(--gold); }
+    .timeline { border-left: 1px solid var(--gold-dim); margin-left: 14px; }
+    .event { position: relative; grid-template-columns: 80px minmax(0,1fr) auto; margin-left: 18px; }
+    .event::before { content: ''; position: absolute; left: -23px; width: 9px; height: 9px; border: 2px solid var(--gold); background: var(--bg); border-radius: 50%; }
+    .location-card { padding: 20px; min-height: 190px; cursor: pointer; border: 1px solid var(--line); background: var(--panel); }
+    .location-card h3 { margin-top: 20px; }
+    .visual-bible { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; }
+    .bible-panel { padding: 24px; border: 1px solid var(--line); background: var(--panel); }
+    .swatches { display: flex; gap: 8px; margin: 20px 0 30px; }
+    .swatch { width: 54px; height: 54px; border: 1px solid #555; }
+    .spec-list { margin: 18px 0 0; padding: 0; list-style: none; }
+    .spec-list li { padding: 10px 0; border-top: 1px solid var(--line); color: var(--muted); }
+    .actor-layout { display: grid; grid-template-columns: 260px minmax(0,1fr); gap: 16px; }
+    .actor-menu { display: grid; align-content: start; gap: 4px; }
+    .actor-menu button { padding: 13px; border: 1px solid transparent; background: transparent; color: var(--muted); text-align: left; cursor: pointer; }
+    .actor-menu button.active { border-color: var(--line); background: var(--panel); color: var(--text); }
+    .actor-detail { padding: 26px; border: 1px solid var(--line); background: var(--panel); min-height: 520px; }
+    .actor-detail h2 { color: var(--gold); }
+    .actor-columns { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; margin-top: 24px; }
+    .actor-block { padding-top: 15px; border-top: 1px solid var(--line); }
+    .actor-block strong { display: block; margin-bottom: 9px; color: var(--gold); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+    .actor-block p, .actor-block li { color: #b3b4b2; line-height: 1.65; font-size: 14px; }
+    .drawer { position: fixed; right: 0; top: 0; z-index: 20; width: min(440px, 92vw); height: 100vh; background: #17191b; border-left: 1px solid var(--gold-dim); padding: 28px; transform: translateX(100%); transition: transform .25s ease; overflow: auto; }
+    .drawer.open { transform: translateX(0); }
+    .drawer-close { float: right; border: 1px solid var(--line); background: transparent; width: 34px; height: 34px; cursor: pointer; }
+    .drawer h2 { margin-top: 40px; }
+    .evidence-item { margin-top: 14px; padding: 16px; border-left: 2px solid var(--gold); background: #121415; }
+    .evidence-item blockquote { margin: 10px 0; color: #bdbbb5; line-height: 1.65; }
+    .empty { color: var(--muted); padding: 26px; border: 1px dashed var(--line); }
+    .attribution { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); color: #6f7377; font-size: 11px; line-height: 1.6; }
+    [hidden] { display: none !important; }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: minmax(0, 1fr); }
+      .sidebar { width: 100%; max-width: 100vw; position: sticky; z-index: 10; height: auto; padding: 16px 18px; overflow: hidden; border-right: 0; border-bottom: 1px solid var(--line); }
+      .brand small, .sidebar-meta { display: none; }
+      .nav { width: 100%; max-width: 100%; margin-top: 14px; display: flex; overflow-x: auto; }
+      .nav button { width: auto; white-space: nowrap; border-left: 0; border-bottom: 2px solid transparent; }
+      .topbar { width: 100%; min-width: 0; top: 104px; padding: 12px 18px; }
+      .content { padding: 28px 18px 60px; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(2) { border-right: 0; }
+      .visual-bible, .actor-layout { grid-template-columns: 1fr; }
+      .actor-menu { display: flex; overflow-x: auto; }
+      .actor-menu button { white-space: nowrap; }
+    }
+    @media (max-width: 600px) {
+      .topbar { top: 101px; flex-wrap: wrap; }
+      .search { min-width: 100%; }
+      .content { padding-top: 22px; }
+      h1 { font-size: 40px; }
+      .section-head { align-items: start; flex-direction: column; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .relation, .event { grid-template-columns: 1fr; }
+      .strength { width: 100%; }
+      .actor-columns { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">StoryVista<small>文景 · STORY ATLAS</small></div>
+      <nav class="nav" id="nav"></nav>
+      <div class="sidebar-meta">v0.2 prototype<br>Evidence-aware · Placeholder-first</div>
+    </aside>
+    <main>
+      <div class="topbar">
+        <input id="search" class="search" type="search" placeholder="搜索人物、地点、事件或关键词">
+        <select id="entityType"><option value="all">全部类型</option><option value="characters">人物</option><option value="locations">地点</option><option value="timeline">事件</option></select>
+        <select id="importance"><option value="all">全部重要性</option><option value="major">主要</option><option value="supporting">次要</option></select>
+        <select id="faction"><option value="all">全部阵营</option></select>
+      </div>
+      <div class="content" id="content"></div>
+    </main>
+  </div>
+  <aside class="drawer" id="drawer"><button class="drawer-close" id="drawerClose" aria-label="关闭">×</button><div id="drawerContent"></div></aside>
+  <script id="storyvista-data" type="application/json">__STORYVISTA_DATA__</script>
+  <script>
+    const payload = JSON.parse(document.getElementById('storyvista-data').textContent);
+    const atlas = payload.atlas, manifest = payload.manifest;
+    const sections = ['Overview','Characters','Relationships','Timeline','Locations','Visual Bible','Actor Mode'];
+    const ids = sections.map(x => x.toLowerCase().replace(/ /g,'-'));
+    const assetMap = Object.fromEntries(manifest.assets.map(a => [a.bound_to, a.file_path]));
+    const chars = atlas.entities.characters || [], locations = atlas.entities.locations || [], events = atlas.events || [];
+    const byId = Object.fromEntries([...chars, ...locations, ...(atlas.entities.organizations || []), ...(atlas.entities.objects || []), ...(atlas.entities.concepts || [])].map(x => [x.entity_id,x]));
+    const nav = document.getElementById('nav'), content = document.getElementById('content');
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const tag = status => `<span class="evidence-tag ${esc(status)}">${esc(status || 'unresolved')}</span>`;
+    const evidenceButton = (kind,id,status) => `<button class="evidence-tag ${esc(status)}" data-evidence-kind="${kind}" data-evidence-id="${esc(id)}">查看证据 · ${esc(status)}</button>`;
+    sections.forEach((name,i) => nav.insertAdjacentHTML('beforeend', `<button data-section="${ids[i]}" class="${i===0?'active':''}">${name}</button>`));
+    content.innerHTML = `
+      <section id="overview" class="section active"><div class="folio">PROJECT BIBLE / 001</div><h1>${esc(atlas.metadata.title)}</h1><p class="lede">${esc(atlas.summary)}</p><div class="metrics"><div class="metric"><strong>${chars.length}</strong><span>主要人物与角色</span></div><div class="metric"><strong>${locations.length}</strong><span>故事地点</span></div><div class="metric"><strong>${events.length}</strong><span>关键事件</span></div><div class="metric"><strong>${atlas.relations.length}</strong><span>关系线</span></div></div><div class="themes">${atlas.themes.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div><div class="attribution">图片资产使用本地 semantic placeholder 生成，并通过 image-manifest.json 绑定。你可以切换生图引擎并重新生成视觉资产。</div></section>
+      <section id="characters" class="section"><div class="section-head"><h2>Characters</h2><p>角色卡保留阵营、叙事功能、首次出现、关系数量与证据状态。点击卡片查看来源。</p></div><div class="grid" id="characterGrid"></div></section>
+      <section id="relationships" class="section"><div class="section-head"><h2>Relationships</h2><p>关系强度是结构化表达，不代表确定事实；证据状态决定可信度。</p></div><div class="relation-list">${atlas.relations.map(r=>`<article class="relation searchable" data-text="${esc(JSON.stringify(r))}"><div><strong>${esc(byId[r.source_entity_id]?.name || r.source_entity_id)} → ${esc(byId[r.target_entity_id]?.name || r.target_entity_id)}</strong><p>${esc(r.relation_type)} · ${esc(r.stage)}</p></div><div><div class="strength"><span style="width:${Math.round(r.strength*100)}%"></span></div></div>${evidenceButton('relation',r.relation_id,r.status)}</article>`).join('') || '<div class="empty">未抽取到明确关系。</div>'}</div></section>
+      <section id="timeline" class="section"><div class="section-head"><h2>Timeline</h2><p>事件按文本标注顺序排列；点击证据标签可回到来源摘要。</p></div><div class="timeline">${events.map(e=>`<article class="event searchable" data-text="${esc(JSON.stringify(e))}"><div>EVT ${String(e.timeline_order).padStart(2,'0')}</div><div><strong>${esc(e.title)}</strong><p>${esc(e.summary)}</p></div>${evidenceButton('event',e.event_id,e.status)}</article>`).join('') || '<div class="empty">未抽取到明确事件。</div>'}</div></section>
+      <section id="locations" class="section"><div class="section-head"><h2>Locations</h2><p>地点视觉信息来自文本标记；同时显示关联事件和人物数量。</p></div><div class="grid">${locations.map(l=>{const linked=events.filter(e=>e.location_id===l.entity_id);const people=new Set(linked.flatMap(e=>e.participants));return `<article class="location-card searchable" data-text="${esc(JSON.stringify(l))}" data-evidence-kind="entity" data-evidence-id="${l.entity_id}"><div class="card-kicker">${esc(l.location_type)}</div><h3>${esc(l.name)}</h3><p>${esc(l.mood.join(' · ') || '氛围未标注')}</p><p>${linked.length} 个事件 · ${people.size} 位关联人物</p><div class="themes">${l.visual_keywords.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div></article>`}).join('') || '<div class="empty">未抽取到地点。</div>'}</div></section>
+      <section id="visual-bible" class="section"><div class="section-head"><h2>Visual Bible</h2><p>默认实现 Cinematic Bible；手稿档案与游戏图鉴仅保留设计方向。</p></div><div class="visual-bible"><div class="bible-panel"><div class="card-kicker">Color system</div><div class="swatches">${atlas.visual_style.palette.map(x=>`<div class="swatch" style="background:${x}" title="${x}"></div>`).join('')}</div><h3>Composition & Camera</h3><ul class="spec-list">${[...atlas.visual_style.composition,...atlas.visual_style.camera_language].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="bible-panel"><div class="card-kicker">Materials & restrictions</div><ul class="spec-list">${atlas.visual_style.materials.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3 style="margin-top:28px">Do not use</h3><ul class="spec-list">${atlas.visual_style.avoid.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div></section>
+      <section id="actor-mode" class="section"><div class="section-head"><h2>Actor Mode</h2><p>场次目标、潜台词与可表演动作均显示证据状态。推断内容必须由演员与主创复核。</p></div><div class="actor-layout"><div class="actor-menu" id="actorMenu"></div><div class="actor-detail" id="actorDetail"></div></div></section>`;
+    function renderCharacters(){
+      const q=document.getElementById('search').value.toLowerCase(), imp=document.getElementById('importance').value, fac=document.getElementById('faction').value;
+      const filtered=chars.filter(c => [c.name,c.role_name,c.faction,c.narrative_function].join(' ').toLowerCase().includes(q) && (imp==='all'||c.importance===imp) && (fac==='all'||c.faction===fac));
+      document.getElementById('characterGrid').innerHTML=filtered.map(c=>{const relationCount=atlas.relations.filter(r=>r.source_entity_id===c.entity_id||r.target_entity_id===c.entity_id).length;return `<article class="card" data-evidence-kind="entity" data-evidence-id="${c.entity_id}"><img class="portrait" src="${esc(assetMap[c.entity_id])}" alt="${esc(c.name)} semantic portrait placeholder"><div class="card-body"><div class="card-kicker">${esc(c.faction)}</div><h3>${esc(c.name)}</h3><p>${esc(c.role_name)} · ${esc(c.narrative_function)}</p><p>首次出现 ${esc(c.first_seen||'unresolved')} · ${relationCount} 条关系</p><div class="meta-row"><span>${esc(c.importance)}</span>${tag(c.evidence.length?'explicit':'unresolved')}</div></div></article>`}).join('') || '<div class="empty">没有符合筛选条件的人物。</div>';
+    }
+    [...new Set(chars.map(c=>c.faction))].forEach(f=>document.getElementById('faction').insertAdjacentHTML('beforeend',`<option value="${esc(f)}">${esc(f)}</option>`));
+    function showEvidence(kind,id){
+      let item = kind==='relation' ? atlas.relations.find(x=>x.relation_id===id) : kind==='event' ? events.find(x=>x.event_id===id) : byId[id];
+      if(!item) return; const evidence=item.evidence||[];
+      document.getElementById('drawerContent').innerHTML=`<div class="folio">EVIDENCE DRAWER</div><h2>${esc(item.name||item.title||item.relation_id)}</h2><p style="color:var(--muted)">${esc(item.summary||item.role_name||item.relation_type||'')}</p>${evidence.map(e=>`<div class="evidence-item">${tag(e.status)}<blockquote>“${esc(e.quote)}”</blockquote><small>${esc(e.source_id)} · ${esc(e.chunk_id)} · confidence ${esc(e.confidence)}</small></div>`).join('')||'<div class="empty">没有找到可引用证据；状态应保持 unresolved。</div>'}`;
+      document.getElementById('drawer').classList.add('open');
+    }
+    function showActor(index){
+      const a=atlas.actor_mode.characters[index]; if(!a) return; const c=byId[a.character_id];
+      document.querySelectorAll('#actorMenu button').forEach((b,i)=>b.classList.toggle('active',i===index));
+      document.getElementById('actorDetail').innerHTML=`<div class="folio">ACTOR FILE / ${String(index+1).padStart(3,'0')}</div><h2>${esc(c?.name)}</h2><p class="lede" style="font-size:15px;margin:16px 0">${esc(a.public_summary)}</p><div class="actor-columns"><div class="actor-block"><strong>Scene Objective</strong><p>${esc(a.scene_objectives.join(' / '))}</p></div><div class="actor-block"><strong>Emotional Arc</strong><p>${esc(a.emotional_arc)}</p></div><div class="actor-block"><strong>Subtext</strong><p>${esc(a.subtext)}</p></div><div class="actor-block"><strong>Playable Actions</strong><p>${esc(a.playable_actions.join(' · '))}</p></div><div class="actor-block"><strong>Relationship Beats</strong><p>${esc(a.relationship_beats.join(' · ')||'未标注')}</p></div><div class="actor-block"><strong>Costume & Props</strong><p>${esc(a.costume_and_prop_notes.join(' · ')||'未标注')}</p></div><div class="actor-block"><strong>Voice & Physicality</strong><p>${esc(a.voice_and_physicality_notes.join(' · ')||'未标注')}</p></div></div><div style="margin-top:24px">${evidenceButton('entity',a.character_id,a.status)}</div>`;
+    }
+    atlas.actor_mode.characters.forEach((a,i)=>document.getElementById('actorMenu').insertAdjacentHTML('beforeend',`<button data-actor="${i}">${esc(byId[a.character_id]?.name||a.character_id)}<br><small>${esc(a.role_name)}</small></button>`));
+    renderCharacters(); showActor(0);
+    nav.addEventListener('click',e=>{const b=e.target.closest('button[data-section]');if(!b)return;document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.section).classList.add('active');});
+    document.addEventListener('click',e=>{const ev=e.target.closest('[data-evidence-id]');if(ev)showEvidence(ev.dataset.evidenceKind,ev.dataset.evidenceId);const actor=e.target.closest('[data-actor]');if(actor)showActor(Number(actor.dataset.actor));});
+    document.getElementById('drawerClose').onclick=()=>document.getElementById('drawer').classList.remove('open');
+    document.getElementById('entityType').addEventListener('change',e=>{if(e.target.value==='all')return;const target=nav.querySelector(`[data-section="${e.target.value}"]`);if(target)target.click();});
+    ['search','importance','faction'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',()=>{renderCharacters();const q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.searchable').forEach(el=>el.hidden=q&&!el.dataset.text.toLowerCase().includes(q));}));
+  </script>
+</body>
+</html>
