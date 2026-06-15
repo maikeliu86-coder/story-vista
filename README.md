@@ -10,6 +10,12 @@ StoryVista turns complex novels into spoiler-safe visual codexes: character port
 
 [中文说明](README.zh-CN.md) · [Skill](skill/SKILL.md) · [Main demo](skill/examples/reader-visual-codex-demo) · [v0.4 provider workflow](docs/external-image-generation.md)
 
+<p align="center">
+  <img src="assets/v04/storyvista-v04-hero.webp" alt="StoryVista transforms a novel into character portraits, locations, relationship maps, and visual lore" width="100%">
+</p>
+
+<p align="center"><em>From source text to a navigable visual story world.</em></p>
+
 ## Why StoryVista
 
 StoryVista is designed for readers, students, book clubs, researchers, and worldbuilding fans across languages. It helps readers navigate long names, aliases, relationships, locations, and fictional objects without revealing later plot information.
@@ -44,6 +50,18 @@ python scripts/storyvista.py validate output/reader-visual-codex-demo
 ```
 
 在浏览器中打开 `output/reader-visual-codex-demo/atlas.html`。默认流程完全本地运行，并输出可复制的生图提示词；真实图片可在即梦、Seedream 或其他模型中生成后再绑定回来。
+
+## How It Works
+
+<p align="center">
+  <img src="assets/v04/storyvista-real-image-workflow.webp" alt="Five-step StoryVista workflow from manuscript to entities, prompts, generated assets, and the finished atlas" width="100%">
+</p>
+
+1. Provide a novel, screenplay, or story document.
+2. StoryVista extracts characters, locations, relationships, objects, and lore.
+3. It creates evidence-aware prompts for API, web, or local image providers.
+4. Generate images externally or use a configured provider, then bind the files.
+5. Open the responsive visual atlas with Reader Sync, maps, galleries, and spoiler controls.
 
 Override the interface language independently from the source:
 
@@ -80,6 +98,14 @@ Canonical names remain in the source language. Localized labels may be added whe
 | `bilingual-demo` | English source with `--ui-language zh-CN` |
 | `ancient-chinese-demo` | Ancient Chinese literary theme detection |
 | `futuristic-sci-fi-demo` | Futuristic science-fiction theme detection |
+
+## What The Finished Atlas Looks Like
+
+<p align="center">
+  <img src="assets/v04/storyvista-atlas-showcase.webp" alt="StoryVista finished atlas on desktop, tablet, and mobile with real character and location images" width="100%">
+</p>
+
+The generated atlas brings character portraits, location art, relationship networks, maps, lore, reading progress, and highlighted source passages into one responsive interface. Real images replace semantic placeholders after binding, without changing the story data model.
 
 ## Visual Provider Preflight
 

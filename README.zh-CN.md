@@ -6,6 +6,12 @@
 
 [English](README.md) · [Skill](skill/SKILL.md) · [完整演示](skill/examples/reader-visual-codex-demo) · [v0.4 生图工作流](docs/external-image-generation.md)
 
+<p align="center">
+  <img src="assets/v04/storyvista-v04-hero.webp" alt="StoryVista 将小说转化为人物画像、地点、关系地图与世界观图鉴" width="100%">
+</p>
+
+<p align="center"><em>从小说原文，走进一个可以探索的视觉故事世界。</em></p>
+
 ## 快速开始
 
 ```bash
@@ -21,6 +27,18 @@ python scripts/storyvista.py validate output/reader-visual-codex-demo
 python scripts/storyvista.py build english.txt --out output/zh-ui --ui-language zh-CN
 python scripts/storyvista.py build chinese.txt --out output/en-ui --ui-language en
 ```
+
+## 五步生成视觉图鉴
+
+<p align="center">
+  <img src="assets/v04/storyvista-real-image-workflow.webp" alt="StoryVista 从小说原文到实体提取、提示词、生图资产和最终图鉴的五步流程" width="100%">
+</p>
+
+1. 输入小说、剧本或世界观资料。
+2. 自动提取人物、地点、关系、物品和设定。
+3. 生成适配 API、网页或本地模型的视觉提示词。
+4. 在即梦、Seedream、OpenAI、ComfyUI 等工具生成图片并绑定回来。
+5. 打开支持桌面和移动端的完整视觉图鉴。
 
 ## 核心能力
 
@@ -51,6 +69,14 @@ python scripts/storyvista.py build chinese.txt --out output/en-ui --ui-language 
 - `bilingual-demo`：英文输入、中文 UI。
 - `ancient-chinese-demo`：古典文学主题。
 - `futuristic-sci-fi-demo`：未来科幻主题。
+
+## 最终效果
+
+<p align="center">
+  <img src="assets/v04/storyvista-atlas-showcase.webp" alt="StoryVista 在桌面、平板和手机上的最终视觉图鉴效果" width="100%">
+</p>
+
+最终图鉴把真实人物画像、地点图、关系网络、地图、物品设定、阅读进度和原文高亮整合在同一个响应式界面中。绑定真实图片后，页面会自动替换语义占位图，而不破坏已有故事数据。
 
 ## 生图模型与 fallback
 
