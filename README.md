@@ -1,14 +1,40 @@
-# StoryVista | 文景
+# StoryVista｜文景
 
-**StoryVista is a multilingual visual reading companion for complex novels.**
+**A multilingual visual reading companion for complex novels.**<br>
+**一个面向复杂小说、长篇世界观和角色关系的多语言视觉化阅读辅助 Skill。**
 
-StoryVista turns complex novels into spoiler-safe visual codexes: character portraits, relationship webs, location maps, object and lore cards, highlighted source text, and an immersive reading panel.
+![GitHub stars](https://img.shields.io/github/stars/maikeliu86-coder/story-vista?style=social)
+![GitHub forks](https://img.shields.io/github/forks/maikeliu86-coder/story-vista?style=social)
+![GitHub license](https://img.shields.io/github/license/maikeliu86-coder/story-vista)
+![GitHub last commit](https://img.shields.io/github/last-commit/maikeliu86-coder/story-vista)
+![GitHub issues](https://img.shields.io/github/issues/maikeliu86-coder/story-vista)
+![GitHub repo size](https://img.shields.io/github/repo-size/maikeliu86-coder/story-vista)
+![GitHub release](https://img.shields.io/github/v/release/maikeliu86-coder/story-vista)
 
-**StoryVista｜文景，是一个面向全球读者的多语言小说视觉化阅读辅助 Skill。**
+![Agent Skill](https://img.shields.io/badge/Agent-Skill-black)
+![Novel Visualization](https://img.shields.io/badge/Novel-Visualization-blueviolet)
+![Spoiler Safe](https://img.shields.io/badge/Spoiler--Safe-Yes-success)
+![Multilingual](https://img.shields.io/badge/Multilingual-CN%20%7C%20EN-blue)
+![Visual Codex](https://img.shields.io/badge/Visual-Codex-purple)
+![Image2 Ready](https://img.shields.io/badge/Image2-Ready-orange)
+![ComfyUI Optional](https://img.shields.io/badge/ComfyUI-Optional-blue)
+![SeeDream Optional](https://img.shields.io/badge/SeeDream-Optional-green)
+![Codex Friendly](https://img.shields.io/badge/Codex-Friendly-black)
 
-它把小说中的人物、人物关系、地点、地图、武器、科技、魔法、药剂、特殊物品和世界观设定整理成像游戏图鉴一样的可视化页面，帮助读者读得更清楚、记得更牢、不被剧透。
+[中文说明](./README.zh-CN.md) ·
+[Skill](./skill.md) ·
+[Quick Start](./docs/quick-start.md) ·
+[Main Demo](./examples/main-demo.md) ·
+[Provider Workflow](./docs/provider-workflow.md) ·
+[Examples](./examples) ·
+[Roadmap](./docs/roadmap.md) ·
+[FAQ](./docs/faq.md) ·
+[Troubleshooting](./docs/troubleshooting.md) ·
+[Issues](https://github.com/maikeliu86-coder/story-vista/issues)
 
-[中文说明](README.zh-CN.md) · [Skill](skill/SKILL.md) · [Main demo](skill/examples/reader-visual-codex-demo) · [v0.4 provider workflow](docs/external-image-generation.md)
+StoryVista turns complex novels into spoiler-safe visual codexes: character portraits, relationship webs, location maps, object and lore cards, highlighted source text, and immersive reading panels.
+
+StoryVista｜文景，可以把复杂小说中的人物、人物关系、地点、地图、武器、科技、魔法、药剂、特殊物品和世界观设定整理成像游戏图鉴一样的可视化页面，帮助读者读得更清楚、记得更牢、不被剧透。
 
 <p align="center">
   <img src="assets/v04/storyvista-v04-hero.webp" alt="StoryVista transforms a novel into character portraits, locations, relationship maps, and visual lore" width="100%">
