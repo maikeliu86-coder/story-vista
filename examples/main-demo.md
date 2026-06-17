@@ -1,6 +1,13 @@
 # Main Demo
 
-This demo shows the kind of structured output StoryVista should create from a short complex-fiction passage. It is intentionally text-only and does not reference any image files that do not exist.
+This demo shows the kind of story material StoryVista should turn into a visual atlas. The finished atlas should feel like a game codex, worldbuilding archive, or film concept dossier before it feels like a workflow report.
+
+The current product experience reference is documented in:
+
+- [Golden Reference](../docs/golden-reference.md)
+- [Product Experience Contract](../docs/product-experience-contract.md)
+
+The Markdown below is not the target user experience. It is a source checklist for what the rendered atlas should visualize with cards, relationship surfaces, timelines, maps, and prompt-ready image slots.
 
 ## Source Excerpt
 

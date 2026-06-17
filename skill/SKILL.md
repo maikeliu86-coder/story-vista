@@ -31,6 +31,14 @@ python scripts/storyvista.py validate output/story
 
 Create source/chunk indexes, language profile, reader text, entity links, character atlas, relationship web, location atlas, map plan, object/lore codex, visual evidence, visual asset plan, image manifest, spoiler state, provider state, theme profile, provider prompt files, manual generation instructions, actionable image-generation tasks, semantic display fallbacks, `atlas.html`, and `verification-report.md`.
 
+## Product Experience Contract
+
+The final `atlas.html` is the primary product. It should feel like an immersive visual reading atlas: a game codex, worldbuilding archive, or film concept dossier. Lead with story-facing surfaces such as character roster, relationship field, location/map surface, object and lore cards, event timeline, and reader evidence.
+
+Provider diagnostics, fallback status, validation details, prompt packs, and schema contracts are support systems. Keep them available, but do not let them dominate the final reader-facing page.
+
+Use `docs/product-experience-contract.md` and `docs/golden-reference.md` as the experience baseline.
+
 ## Language And Locale Rules
 
 - Detect input language and script.

@@ -15,6 +15,12 @@ Install or inspect the `skill/` directory when using StoryVista as an agent skil
 
 StoryVista must build a useful, spoiler-safe visual reading workflow from the user's source text. It should not invent story facts, future plot events, visual traits, or relationships that are not supported by the current reading scope.
 
+## Product Experience Rules
+
+StoryVista's final output should feel like an immersive visual reading atlas, not an engineering report. The page should lead with story-world browsing: character roster, relationship field, location/map surface, object and lore cards, event timeline, and reader evidence. Provider state, fallback status, validation details, and prompt workflow controls must remain available but secondary.
+
+Use [docs/product-experience-contract.md](docs/product-experience-contract.md) and [docs/golden-reference.md](docs/golden-reference.md) as the product direction. Engineering features should protect the atlas experience, not dominate it.
+
 ## Spoiler Rules
 
 - Default to spoiler-safe mode.
