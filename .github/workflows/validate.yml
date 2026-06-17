@@ -1,0 +1,86 @@
+name: Validate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate-doc-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate required files and README navigation
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_paths=(
+            "README.md"
+            "README.zh-CN.md"
+            "skill.md"
+            "docs/quick-start.md"
+            "docs/provider-workflow.md"
+            "docs/roadmap.md"
+            "docs/faq.md"
+            "docs/troubleshooting.md"
+            "docs/image-provider-guide.md"
+            "docs/agent-compatibility.md"
+            "docs/github-topics.md"
+            "examples"
+            "examples/main-demo.md"
+          )
+
+          for path in "${required_paths[@]}"; do
+            if [[ ! -e "$path" ]]; then
+              echo "Missing required path: $path" >&2
+              exit 1
+            fi
+          done
+
+          required_files=(
+            "README.md"
+            "README.zh-CN.md"
+            "skill.md"
+            "docs/quick-start.md"
+            "docs/provider-workflow.md"
+            "docs/roadmap.md"
+            "docs/faq.md"
+            "docs/troubleshooting.md"
+            "docs/image-provider-guide.md"
+            "docs/agent-compatibility.md"
+            "docs/github-topics.md"
+            "examples/main-demo.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [[ ! -s "$file" ]]; then
+              echo "Required file is empty: $file" >&2
+              exit 1
+            fi
+          done
+
+          readme_links=(
+            "./README.zh-CN.md"
+            "./skill.md"
+            "./docs/quick-start.md"
+            "./examples/main-demo.md"
+            "./docs/provider-workflow.md"
+            "./examples"
+            "./docs/roadmap.md"
+            "./docs/faq.md"
+            "./docs/troubleshooting.md"
+          )
+
+          for link in "${readme_links[@]}"; do
+            if ! grep -Fq "$link" README.md; then
+              echo "README.md is missing expected navigation target: $link" >&2
+              exit 1
+            fi
+          done
+
+          echo "Validate workflow checks passed."

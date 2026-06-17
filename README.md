@@ -9,7 +9,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/maikeliu86-coder/story-vista)
 ![GitHub issues](https://img.shields.io/github/issues/maikeliu86-coder/story-vista)
 ![GitHub repo size](https://img.shields.io/github/repo-size/maikeliu86-coder/story-vista)
-![GitHub release](https://img.shields.io/github/v/release/maikeliu86-coder/story-vista)
+[![Validate](https://github.com/maikeliu86-coder/story-vista/actions/workflows/validate.yml/badge.svg)](https://github.com/maikeliu86-coder/story-vista/actions/workflows/validate.yml)
 
 ![Agent Skill](https://img.shields.io/badge/Agent-Skill-black)
 ![Novel Visualization](https://img.shields.io/badge/Novel-Visualization-blueviolet)
@@ -137,15 +137,19 @@ The generated atlas brings character portraits, location art, relationship netwo
 
 StoryVista checks configuration signals without printing secrets or making paid calls. A detected key is not treated as a verified runtime. With no configured direct provider, the build recommends a practical provider and prepares a prompt workflow; `placeholder-svg` is only the final display fallback while images are pending. Users install, configure, and pay for third-party providers themselves.
 
+StoryVista is a visual reading workflow, not a placeholder template. If the current agent has no callable image model, it must say so and output a structured image generation task list with `image_id`, title, purpose, source basis, visual prompt, negative prompt, recommended provider, aspect ratio, and priority. It must not insert missing image links, broken URLs, blank placeholders as final output, or claim that images were generated before real files exist.
+
 ```bash
 python scripts/detect_image_provider.py --no-network
 ```
 
-See [visual-provider-preflight.md](docs/visual-provider-preflight.md) and [image-provider recommendations](skill/references/image-provider-recommendations.md).
+See [visual-provider-preflight.md](docs/visual-provider-preflight.md), [provider workflow](docs/provider-workflow.md), [image provider guide](docs/image-provider-guide.md), and [image-provider recommendations](skill/references/image-provider-recommendations.md).
 
 ## Why Am I Seeing Placeholders?
 
 Placeholders mean the atlas is complete but a real image has not yet been bound. Open `prompt-pack.md` or use each card's **Copy prompt** action, generate the image externally, save it with the displayed expected filename, then bind it:
+
+If no image model is available, StoryVista should output an `Image Generation Task List` instead of pretending images exist. Use the task list with Image2, SeeDream, ComfyUI, Flux, SDXL, or another cloud/local model, then bind the real files afterward.
 
 ```bash
 python scripts/storyvista.py bind-images output/demo --assets output/demo/assets/generated

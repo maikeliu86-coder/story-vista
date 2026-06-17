@@ -29,7 +29,7 @@ python scripts/storyvista.py validate output/story
 
 ## Required Outputs
 
-Create source/chunk indexes, language profile, reader text, entity links, character atlas, relationship web, location atlas, map plan, object/lore codex, visual evidence, visual asset plan, image manifest, spoiler state, provider state, theme profile, provider prompt files, manual generation instructions, placeholders, `atlas.html`, and `verification-report.md`.
+Create source/chunk indexes, language profile, reader text, entity links, character atlas, relationship web, location atlas, map plan, object/lore codex, visual evidence, visual asset plan, image manifest, spoiler state, provider state, theme profile, provider prompt files, manual generation instructions, actionable image-generation tasks, semantic display fallbacks, `atlas.html`, and `verification-report.md`.
 
 ## Language And Locale Rules
 
@@ -59,9 +59,10 @@ Create source/chunk indexes, language profile, reader text, entity links, charac
 11. Build reader paragraphs and entity links.
 12. Create visual asset plan before image manifest or atlas rendering.
 13. Export provider-specific prompts and expected filenames.
-14. Bind direct, externally generated, user-provided, or placeholder assets.
-15. Render localized `atlas.html` with generation status, prompt actions, Reader Sync, and bidirectional jumps.
-16. Validate every contract and write the verification report.
+14. Bind direct, externally generated, or user-provided real assets when available.
+15. If no image provider is callable, output a structured `Image Generation Task List` and use semantic fallbacks only as temporary display surfaces.
+16. Render localized `atlas.html` with generation status, prompt actions, Reader Sync, and bidirectional jumps.
+17. Validate every contract and write the verification report.
 
 ## Spoiler Rules
 
@@ -76,9 +77,34 @@ Create source/chunk indexes, language profile, reader text, entity links, charac
 - A configured key is not a verified callable provider.
 - Explicit user selection wins.
 - Never auto-install providers, create accounts, or make paid calls.
-- Fallback order: configured direct/local provider, external manual generation, prompt pack, placeholder SVG.
+- Before visual generation, confirm or detect whether an image model is available, whether an API key exists, whether a local service is running, whether the output directory is writable, whether rate limits are likely, and whether the user wants a text-first atlas before batch image generation.
+- Provider priority: user-specified model, callable Image2, available SeeDream for mainland/cloud workflows, local ComfyUI/Flux/SDXL, then structured task list.
+- Fallback order: configured direct/local provider, external manual generation, prompt pack, structured task list, semantic display fallback.
 - Keep Jimeng, Jianying Jimeng, ByteDance Seedream, and Volcengine Seedream as distinct registry entries.
 - Default prompt style is `creative-balanced`; `evidence-strict` and `cinematic-free` remain available planning modes.
+
+## Image Generation Safety Rules
+
+When no usable image model is detected, StoryVista must explicitly tell the user that no callable image model is available and list practical options: Image2, SeeDream, ComfyUI, Flux, SDXL, or another cloud/local model.
+
+Forbidden behavior:
+
+- generating blank placeholders as final image results
+- inserting nonexistent image links
+- pretending images were generated
+- using broken image URLs
+- using "image generation in progress" as a replacement for a real result
+- outputting placeholders with no usable generation prompt
+
+StoryVista must not treat image-link placeholders as completion. It must prioritize usable output: generate real images when possible, otherwise provide high-quality prompts and explain the unavailable provider state.
+
+## Image Generation Task List Format
+
+When direct generation is unavailable, include this table:
+
+| ID | Type | Title | Source Basis | Prompt | Negative Prompt | Recommended Provider | Aspect Ratio | Priority |
+|---|---|---|---|---|---|---|---|---|
+| image_001 | character/location/object/event | Short asset title | Source paragraph, scene, or evidence note | Copy-ready visual prompt | Exclusions and spoiler limits | Image2 / SeeDream / ComfyUI / Flux / SDXL / other | 16:9 / 4:5 / 1:1 | high/medium/low |
 
 ## Theme Engine
 
@@ -96,7 +122,7 @@ Create source/chunk indexes, language profile, reader text, entity links, charac
 
 ## Fallback Rules
 
-- Missing provider: create an actionable prompt workflow and continue with semantic SVG as the display fallback.
+- Missing provider: tell the user no callable image model is available, create an actionable prompt workflow, output a structured task list, and continue with semantic SVG only as the temporary display fallback.
 - Missing visual fact: use `unknown`, not invention.
 - Ambiguous alias: keep candidates and report ambiguity.
 - Missing geography: use interpretive map with a disclaimer.
@@ -114,6 +140,8 @@ Create source/chunk indexes, language profile, reader text, entity links, charac
 - Theme and locale are embedded in the atlas.
 - Desktop and mobile Reader layouts are usable.
 - No unsupported language or agent runtime is called fully supported.
+- No missing-provider path claims image generation succeeded.
+- Every ungenerated image has a usable task-list row with source basis, prompt, negative prompt, provider recommendation, aspect ratio, and priority.
 
 ## Final Response
 
