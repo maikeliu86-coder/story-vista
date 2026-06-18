@@ -116,8 +116,17 @@ Canonical names remain in the source language. Localized labels may be added whe
 
 ## Demos
 
+Try the formal raw-prose visual atlas demo:
+
+```bash
+python3 scripts/storyvista.py build examples/visual-atlas-demo/story.md --out output/visual-atlas-demo
+```
+
+Open `output/visual-atlas-demo/atlas.html`. The generated `output/` directory is local build output and should not be committed.
+
 | Demo | Purpose |
 | --- | --- |
+| [visual-atlas-demo](./examples/visual-atlas-demo/) | Public Chinese prose demo for Raw Narrative Mode, visual atlas review, and image prompt planning |
 | `reader-visual-codex-demo` | Full English Reader Visual Codex with aliases, potion, sonic weapon, map, and spoiler lock |
 | `english-reader-demo` | Compact English reading example |
 | `chinese-reader-demo` | Chinese titles, locations, faction, weapons, and potion |
