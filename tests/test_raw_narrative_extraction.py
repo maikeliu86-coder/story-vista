@@ -26,6 +26,18 @@ RAW_NARRATIVE_TEXT = textwrap.dedent(
     """
 ).strip()
 
+BOUNDARY_REGRESSION_TEXT = textwrap.dedent(
+    """
+    # 霜灯码头
+
+    林岑推开渡线车站的铁门时，轨道上的冷光在水洼里抖动。她把一枚裂纹罗盘藏进风衣内袋，想起父亲林鹤失踪在第七码头。沈砚没有解释，只递给她一枚旧警徽和潮汐档案馆的地下库通行票。
+
+    一个戴银色面罩的男人站在售票亭旁，手里转着一把没有刀刃的黑伞；另一个矮小的黑衣人擦掉屏幕上的潮汐会标记。两人穿过地下换乘层，来到旧海关楼里的潮汐档案馆。门口守着没有编号的灰衣人，城防议会封存了这里，巡城署却仍然派人暗中巡查。
+
+    地下库里，林岑找到碎裂的蓝晶芯片、被烧掉半边的航图和一封信。白发老妇推着小车出现，说罗盘不是钥匙，而是遗嘱。远处升起蓝光，墙上的金徽章一闪而过。
+    """
+).strip()
+
 
 class RawNarrativeExtractionTest(unittest.TestCase):
     def test_raw_chinese_narrative_builds_story_atlas(self) -> None:
@@ -73,6 +85,54 @@ class RawNarrativeExtractionTest(unittest.TestCase):
             self.assertFalse(any(asset["status"] == "placeholder" for asset in manifest["assets"]))
             self.assertIn("relationship-atlas", html)
             self.assertIn("fallback-character", html)
+
+    def test_raw_chinese_narrative_filters_boundary_false_positives(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "boundary-regression.txt"
+            out = tmp_path / "out"
+            input_path.write_text(BOUNDARY_REGRESSION_TEXT, encoding="utf-8")
+
+            build = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "storyvista.py"), "build", str(input_path), "--out", str(out), "--ui-language", "zh-CN"],
+                cwd=ROOT, capture_output=True, text=True,
+            )
+            self.assertEqual(build.returncode, 0, build.stderr)
+
+            atlas = json.loads((out / "story-atlas.json").read_text(encoding="utf-8"))
+            plan = json.loads((out / "visual-asset-plan.json").read_text(encoding="utf-8"))
+            validate = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "storyvista.py"), "validate", str(out)],
+                cwd=ROOT, capture_output=True, text=True,
+            )
+            self.assertEqual(validate.returncode, 0, validate.stderr)
+
+            names = {item["canonical_name"] for item in atlas["entities"]["characters"]}
+            locations = {item["canonical_name"] for item in atlas["entities"]["locations"]}
+            objects = {item["canonical_name"] for item in atlas["entities"]["objects"]}
+            organizations = {item["canonical_name"] for item in atlas["entities"]["organizations"]}
+            pseudo_people = {"冷光", "通道走", "解释", "车经过", "封存", "明白", "蓝光"}
+
+            self.assertTrue({"林岑", "沈砚", "林鹤"}.issubset(names), names)
+            self.assertFalse((pseudo_people | {"金徽章", "东西"}) & names, names)
+            self.assertTrue(any("男人" in name for name in names), names)
+            self.assertTrue(any("黑衣人" in name for name in names), names)
+            self.assertTrue({"渡线车站", "第七码头", "潮汐档案馆", "地下换乘层", "地下库"}.issubset(locations), locations)
+            self.assertFalse({"铁门", "门", "库门", "柜门", "是为了打开船", "潮汐会一座城"} & locations, locations)
+            self.assertTrue({"潮汐会", "巡城署", "城防议会"}.issubset(organizations), organizations)
+            self.assertFalse({"门", "渡线车站的铁门", "议会"} & organizations, organizations)
+            self.assertTrue(any("罗盘" in item for item in objects), objects)
+            self.assertTrue(any("蓝晶芯片" in item for item in objects), objects)
+            self.assertTrue(any("航图" in item for item in objects), objects)
+            self.assertTrue(any("信" in item for item in objects), objects)
+            self.assertTrue(any("警徽" in item for item in objects), objects)
+            self.assertTrue(any("黑伞" in item for item in objects), objects)
+            self.assertFalse({"别相信", "整座霜灯", "座沉睡多年的灯", "刀"} & objects, objects)
+            self.assertGreaterEqual(len(atlas["events"]), 3)
+            for relation in atlas["relations"]:
+                self.assertNotIn(relation["source_name"], pseudo_people)
+                self.assertNotIn(relation["target_name"], pseudo_people)
+            self.assertLess(len(plan["assets"]), 60)
 
 
 if __name__ == "__main__":
