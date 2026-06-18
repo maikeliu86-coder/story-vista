@@ -9,6 +9,28 @@ The current product experience reference is documented in:
 
 The Markdown below is not the target user experience. It is a source checklist for what the rendered atlas should visualize with cards, relationship surfaces, timelines, maps, and prompt-ready image slots.
 
+## Raw Narrative Mode Example
+
+StoryVista should also work when the user gives ordinary prose without labels. For example:
+
+```text
+雨水从渡口客栈的檐角落下，林砚推开木门时，柜台后的油灯已经快灭了。苏晚正把一块青铜令牌藏进袖中，她说这东西不是陆家的货，而是青鸦帮昨夜从北仓抢来的凭证。
+
+黑衣人撞开后窗，几名捕快挤进客栈。王捕头命令众人放下刀，又盯着苏晚袖口的暗纹，问她是不是替青鸦帮送信。林砚把掌柜护到柱后，听见后巷传来马蹄声。
+
+老者从灶房里走出来，递给林砚一封密信。信上写着雾桥码头三更换船。苏晚低声说，如果王捕头真的效忠巡检司，就该先查青鸦帮，而不是抓她。
+```
+
+Expected atlas behavior:
+
+- Characters: named people such as 林砚、苏晚、王捕头, plus unnamed figures such as 黑衣人 A、捕快 A、老者 A.
+- Locations: 渡口客栈、北仓、后巷、雾桥码头.
+- Objects and lore: 青铜令牌、密信、刀 or short weapon cues when present.
+- Organizations: 青鸦帮、巡检司、陆家 when the text supports them.
+- Events and relationships: arrival, confrontation, delivery, protection, pursuit, and suspicion should become timeline and relationship-web entries.
+- Spoiler safety: only facts inside the pasted prose are visible; suspected motives remain unresolved.
+- Image workflow: if no callable image provider is available, the atlas should keep the immersive semantic fallback cards and export prompt task rows instead of blank images.
+
 ## Source Excerpt
 
 ```text
