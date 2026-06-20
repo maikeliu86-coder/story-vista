@@ -29,6 +29,10 @@ def _asset(
     }
 
 
+def _joined(values: list[str] | None) -> str:
+    return ", ".join(item for item in (values or []) if item)
+
+
 def build_visual_asset_plan(atlas: dict, language_profile: dict | None = None, provider_state: dict | None = None, theme_profile: dict | None = None) -> dict:
     language_profile = language_profile or {"input_language": "unknown", "ui_language": "en"}
     provider_state = provider_state or {"recommended_provider": "prompt-pack", "fallback_provider": "placeholder-svg", "prompt_only": True, "status": "prompt-workflow-ready"}
@@ -52,10 +56,11 @@ def build_visual_asset_plan(atlas: dict, language_profile: dict | None = None, p
                 generation_notes="Creative-balanced mode permits contextual costume, lighting, and composition choices while keeping unsupported physical traits visibly interpretive.",
             ))
     for location in atlas["entities"]["locations"]:
+        location_keywords = _joined(location.get("visual_keywords", []))
         assets.append(_asset(
             asset_id=f"asset_{location['entity_id']}_keyart", asset_type="location_keyart",
             entity_id=location["entity_id"], location_id=location["entity_id"], entity_name=location["canonical_name"],
-            prompt=f"Immersive location key art of {location['canonical_name']}, a {location['location_type']}; atmosphere: {', '.join(location['mood'])}; visual motifs: {', '.join(location['visual_keywords'])}. Choose a cinematic viewpoint and enrich plausible environmental details without inventing exact geography.",
+            prompt=f"Immersive location key art of {location['canonical_name']}, a {location['location_type']}; atmosphere: {', '.join(location['mood'])}; visual motifs: {location_keywords}. Scene role: {location.get('scene_role', 'source-mentioned')}. Choose a cinematic viewpoint and enrich plausible environmental details without inventing exact geography.",
             negative_prompt="watermark, text labels, spoiler event, false map precision",
             aspect_ratio="16:9", priority="medium", language_profile=language_profile,
             provider_state=provider_state, theme_profile=theme_profile,
@@ -63,10 +68,12 @@ def build_visual_asset_plan(atlas: dict, language_profile: dict | None = None, p
             generation_notes="Environmental materials and lighting may be completed creatively when consistent with the stated mood.",
         ))
     for item in [*atlas["entities"].get("objects", []), *atlas["entities"].get("concepts", [])]:
+        visual_keywords = _joined(item.get("visual_keywords", []))
+        visual_clause = f" Preserve source visual attributes: {visual_keywords}." if visual_keywords else ""
         assets.append(_asset(
             asset_id=f"asset_{item['entity_id']}_codex", asset_type="object_lore_keyart",
             entity_id=item["entity_id"], location_id=None, entity_name=item["canonical_name"],
-            prompt=f"Detailed game-codex visual study of {item['canonical_name']}: {item.get('description', '')}. Show materials, energy, scale cues, and a compelling three-quarter or diagrammatic view as appropriate.",
+            prompt=f"Detailed game-codex visual study of {item['canonical_name']}: {item.get('description', '')}.{visual_clause} Show materials, energy, scale cues, and a compelling three-quarter or diagrammatic view as appropriate.",
             negative_prompt="watermark, text labels, unrelated object, invented plot revelation",
             aspect_ratio="1:1", priority="medium", language_profile=language_profile,
             provider_state=provider_state, theme_profile=theme_profile,

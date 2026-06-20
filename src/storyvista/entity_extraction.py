@@ -45,10 +45,14 @@ ZH_SURNAME = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕
 NAME_RE = re.compile(rf"([{ZH_SURNAME}][\u4e00-\u9fff]{{1,2}})(?=(?:说|问|道|把|看|听|推|走|拔|递|接|低声|抬|护|挡|跟|带|命|站|坐|闯|转|皱|停|握|藏|穿|回|拉|踢|潜|找到|知道|没有|假装|取|露|奔|冲|指))")
 KINSHIP_NAME_RE = re.compile(rf"(?:父亲|母亲|兄长|姐姐|妹妹|弟弟|师父|师兄|师姐|旧友|朋友)([{ZH_SURNAME}][\u4e00-\u9fff]{{1,2}})(?=(?:失踪|就是|已经|曾经|，|。|、|的|在|从|向|把|说|问|道|$))")
 ROLE_NAME_RE = re.compile(rf"([{ZH_SURNAME}](?:捕头|掌柜|将军|先生|姑娘|师父|大师|大人|夫人|公子|少爷|小姐|王爷|寨主|帮主|长老|校尉|统领|管事|郎中|侍卫|队长|船长))")
-UNNAMED_RE = re.compile(r"(捕快甲|捕快乙|士兵甲|士兵乙|黑衣人|白衣人|灰袍人|老者|老人|老妪|老妇|少年|少女|孩子|小贩|掌柜|捕快|士兵|护卫|车夫|书生|和尚|道士|侍女|丫鬟|店小二|船夫|军官|仆人|男人|女人)(们|群)?")
+UNNAMED_RE = re.compile(r"(捕快甲|捕快乙|士兵甲|士兵乙|黑衣人|白衣人|灰袍人|老守门人|守门人|老者|老人|老妪|老妇|少年|少女|孩子|小贩|掌柜|捕快|士兵|护卫|车夫|书生|和尚|道士|侍女|丫鬟|店小二|船夫|军官|仆人|男人|女人)(们|群)?")
 LOCATION_RE = re.compile(r"([\u4e00-\u9fff]{1,6}(?:档案馆|车站|观测站|客栈|茶馆|酒楼|码头|城门|山道|山谷|地牢|密室|书房|大殿|祠堂|换乘层|地下库|海关楼|能源舱|后巷|长廊|大厅|门廊|仓库|北仓|南仓|城|镇|村|庄|巷|楼|阁|堂|殿|寺|观|庙|府|宅|院|山|谷|河|湖|江|桥|渡|港|关|营|飞船|船舱|舱|店|井))")
 OBJECT_RE = re.compile(r"([\u4e00-\u9fff]{0,6}(?:蓝晶芯片|长刀|短刀|匕首|弓弩|书信|密信|药瓶|药丸|丹药|地图|航图|卷轴|警徽|黑伞|灯笼|火折子|玉佩|令牌|钥匙|铜镜|罗盘|芯片|符纸|铃铛|佩剑|木匣|账册|银票|印信|伞|刀|剑|信|药|灯))")
 ORG_RE = re.compile(r"([\u4e00-\u9fff]{1,8}(?:城防议会|巡城署|巡检司|镖局|商会|书院|家族|门派|帮派|卫所|王府|衙门|宗门|教团|公司|学院|议会|军营|军|营|司|署|局|盟|阁|帮|派|会|队|族))")
+VISUAL_OBJECT_RE = re.compile(
+    r"((?:暗红色|红色|蓝色|金色|黑色|银色|青铜|铜质|破旧|碎裂|裂纹|燃烧|烧黑|透明|旧式|旧|木质|木制|木){1,4}的?"
+    r"(?:木门|木桥|城门|门|火焰|徽章|雨伞|罗盘|芯片|航图|伞|桥|灯))"
+)
 
 NAME_STOPWORDS = {"他们", "我们", "你们", "这个", "那个", "有人", "没有", "只是", "已经", "忽然", "然后", "自己", "这里", "那里", "后窗", "后巷", "木门"}
 PERSON_FALSE_POSITIVES = {
@@ -56,7 +60,7 @@ PERSON_FALSE_POSITIVES = {
 }
 PERSON_BAD_FRAGMENTS = ("通道", "经过", "封存", "解释", "明白", "徽章", "罗盘", "石砖", "冷光", "蓝光", "东西", "坐标")
 LOCATION_STOPWORDS = {"他们", "我们", "你们", "门", "掌柜", "黑衣人", "白衣人"}
-LOCATION_FALSE_POSITIVES = {"铁门", "柜门", "库门", "街", "街灯", "木门", "后窗", "前门", "了城", "巡城", "档案馆由城", "潮汐会一座城"}
+LOCATION_FALSE_POSITIVES = {"铁门", "柜门", "库门", "街", "街灯", "木门", "木桥", "后窗", "前门", "了城", "巡城", "档案馆由城", "潮汐会一座城"}
 LOCATION_BAD_PREFIXES = ("他穿着", "她被", "反复念着", "远处的", "男人不知", "银色面罩", "是为了", "父亲欠", "照亮了", "露出", "整座")
 OBJECT_STOPWORDS = {"信号", "相信", "听信", "不信", "信息", "眼神", "心事", "事情"}
 OBJECT_FALSE_POSITIVES = {"别相信", "整座霜灯", "座沉睡多年的灯", "霜灯", "没有刀", "街灯"}
@@ -70,6 +74,20 @@ EVENT_VERBS = (
 )
 NEGATIVE_VERBS = ("追", "追杀", "围", "杀", "逼", "威胁", "怀疑", "监视", "封锁", "堵住", "抓")
 POSITIVE_VERBS = ("救", "护", "扶", "递", "递给", "交给", "掩护", "相信", "塞进")
+LOW_VALUE_LOCATION_TERMS = ("门", "窗边", "桌面", "角落", "门口", "前门", "后窗", "闸机上", "伞柄末端")
+BACKGROUND_MENTION_TERMS = ("听说", "提到", "传闻", "梦见", "记得", "想起", "报告说", "台词", "说过")
+VISUAL_TRANSLATIONS = (
+    ("暗红色", "dark red"), ("红色", "red-painted"), ("蓝色", "blue"), ("金色", "golden"),
+    ("黑色", "black"), ("银色", "silver"), ("青铜", "bronze"), ("铜质", "bronze"),
+    ("破旧", "weathered"), ("残缺", "damaged"), ("碎裂", "cracked"), ("裂纹", "cracked"), ("燃烧", "burning"),
+    ("烧黑", "charred"), ("透明", "transparent"), ("旧式", "old-fashioned"), ("旧", "old"),
+    ("木质", "wooden"), ("木制", "wooden"), ("木", "wooden"),
+)
+VISUAL_NOUN_TRANSLATIONS = (
+    ("木门", "wooden door"), ("木桥", "wooden bridge"), ("城门", "city gate"), ("门", "door"),
+    ("火焰", "flame"), ("金徽章", "golden badge"), ("警徽", "badge"), ("徽章", "badge"), ("雨伞", "umbrella"), ("罗盘", "compass"),
+    ("芯片", "chip"), ("航图", "star chart"), ("伞", "umbrella"), ("桥", "bridge"), ("灯", "lamp"),
+)
 
 
 def _has_directives(parsed: dict[str, list[list[str]]]) -> bool:
@@ -81,11 +99,14 @@ def _clean_candidate(value: str, stopwords: set[str]) -> str:
     if stopwords is ORG_STOPWORDS:
         value = re.sub(r"(?:却|仍然|暗中|派人|派).*$", "", value)
         value = re.split(r"(?:屏幕上的|上的|标记|穿着|逐出|露出|由|欠|是)", value)[-1]
-    value = re.split(r"(?:在|到|进|向|从|给|说|把|见|看|推开|递给|带着|冲向|挤进|放下|拔|送|要买|买|写着|知道|效忠|守住|剩|而是|不是|替|查|未必是|握紧|寻找|打开|没有|穿过|印着|潜入|堵住|穿着|逐出|露出|欠|由|是|和|里的|后的|北的|底的)", value)[-1]
-    classifier_match = re.search(r"(?:一封|一把|一柄|一块|一枚|一张|一只|旧|这块|那块)(.+)", value)
-    if classifier_match:
+    value = re.split(r"(?:在|到|进|向|从|给|说|把|见|看|推开|递给|带着|冲向|挤进|放下|拔|送|要买|买|写着|知道|记住|提过|效忠|守住|剩|而是|不是|替|查|未必是|握紧|寻找|打开|没有|穿过|印着|潜入|堵住|穿着|逐出|露出|欠|由|是|和|那座|这座|里的|后的|北的|底的)", value)[-1]
+    classifier_match = re.search(r"(?:一封|一把|一柄|一块|一枚|一张|一只|一幅|一盏|这块|那块)(.+)$", value)
+    if classifier_match and stopwords is not LOCATION_STOPWORDS:
         value = classifier_match.group(1)
-    value = re.sub(r"^(?:正|一封|一把|一柄|一块|一枚|一张|一只|旧|这块|那块|几名|数名|众人|刃的)", "", value)
+    leading_units = r"^(?:正|一封|一把|一柄|一块|一枚|一张|一只|一幅|一盏|幅|这块|那块|几名|数名|众人|刃的)"
+    if stopwords is not LOCATION_STOPWORDS:
+        leading_units = r"^(?:正|一封|一把|一柄|一块|一枚|一张|一只|一幅|一盏|幅|旧|这块|那块|几名|数名|众人|刃的)"
+    value = re.sub(leading_units, "", value)
     value = re.sub(r"(?:正|已经|忽然)$", "", value)
     if stopwords is NAME_STOPWORDS:
         value = re.sub(r"(?:就|是|也|已)$", "", value)
@@ -119,9 +140,11 @@ def _is_plausible_location(name: str) -> bool:
         return False
     if any(name.startswith(prefix) for prefix in LOCATION_BAD_PREFIXES):
         return False
-    if name.endswith(("铁门", "柜门", "库门", "木门", "街灯")):
+    if name in LOW_VALUE_LOCATION_TERMS or name.endswith(("窗边", "桌面", "角落", "门口")):
         return False
-    if any(term in name for term in ("为了", "欠", "男人", "面罩", "穿着", "逐出", "会一座城")):
+    if name.endswith(("铁门", "柜门", "库门", "木门", "木桥", "旧桥", "街灯")):
+        return False
+    if any(term in name for term in ("为了", "欠", "男人", "面罩", "穿着", "逐出", "会一座城", "的")):
         return False
     return True
 
@@ -180,6 +203,57 @@ def _sentences_from_chunk(chunk: dict) -> list[str]:
     return [sentence for sentence in sentences if len(sentence) >= 8]
 
 
+def _sentence_for_span(text: str, start: int, end: int) -> str:
+    left = max(text.rfind(mark, 0, start) for mark in "。！？!?\n")
+    right_candidates = [pos for mark in "。！？!?\n" if (pos := text.find(mark, end)) != -1]
+    right = min(right_candidates) if right_candidates else len(text)
+    return text[left + 1:right].strip()
+
+
+def _location_scene_score(name: str, sentence: str) -> int:
+    score = 1
+    if any(verb in sentence for verb in EVENT_VERBS):
+        score += 2
+    if NAME_RE.search(sentence) or ROLE_NAME_RE.search(sentence) or any(token in sentence for token in ("他", "她", "两人", "众人")):
+        score += 1
+    if OBJECT_RE.search(sentence) or VISUAL_OBJECT_RE.search(sentence) or ORG_RE.search(sentence):
+        score += 1
+    if len(sentence) >= 28:
+        score += 1
+    if any(term in sentence for term in BACKGROUND_MENTION_TERMS):
+        score -= 2
+    if name in LOW_VALUE_LOCATION_TERMS or name.endswith(("门口", "窗边", "桌面", "角落")):
+        score -= 4
+    return max(score, 0)
+
+
+def _english_visual_phrase(source_phrase: str) -> str:
+    modifiers: list[str] = []
+    for zh, en in VISUAL_TRANSLATIONS:
+        if zh in source_phrase and en not in modifiers:
+            modifiers.append(en)
+    noun = next((en for zh, en in VISUAL_NOUN_TRANSLATIONS if zh in source_phrase), source_phrase)
+    if "red-painted" in modifiers and noun == "door":
+        return "red-painted door"
+    if noun.startswith("wooden ") and "wooden" in modifiers:
+        modifiers = [item for item in modifiers if item != "wooden"]
+    if "weathered" in modifiers and "old" in modifiers:
+        modifiers = [item for item in modifiers if item != "old"]
+    return " ".join([*modifiers, noun]).strip()
+
+
+def _visual_metadata(name: str, source_phrase: str | None = None) -> dict[str, object]:
+    phrase = source_phrase or name
+    english_phrase = _english_visual_phrase(phrase)
+    attrs = [zh for zh, _ in VISUAL_TRANSLATIONS if zh in phrase]
+    keywords = []
+    for value in [phrase, name, *attrs, english_phrase]:
+        if value and value not in keywords:
+            keywords.append(value)
+    description = f"Source visual phrase: {phrase}; preserve visual attributes as {english_phrase}."
+    return {"source_phrase": phrase, "english_phrase": english_phrase, "visual_keywords": keywords, "description": description}
+
+
 def _event_title(sentence: str) -> str:
     sentence = re.sub(r"^[“”\"'‘’]+", "", sentence.strip())
     return sentence[:32] or "Raw narrative event"
@@ -188,6 +262,7 @@ def _event_title(sentence: str) -> str:
 def _remember(store: dict[str, dict], name: str, chunk: dict, **values: object) -> None:
     if not name:
         return
+    scene_score = int(values.pop("scene_score", 0) or 0)
     item = store.setdefault(name, {"name": name, "chunks": [], "mentions": 0, **values})
     item["mentions"] += 1
     if chunk["chunk_id"] not in item["chunks"]:
@@ -195,6 +270,8 @@ def _remember(store: dict[str, dict], name: str, chunk: dict, **values: object) 
     for key, value in values.items():
         if value and not item.get(key):
             item[key] = value
+    if scene_score:
+        item["scene_score"] = item.get("scene_score", 0) + scene_score
 
 
 def _drop_contained_candidates(store: dict[str, dict]) -> dict[str, dict]:
@@ -228,7 +305,7 @@ def _extract_raw_narrative(text: str, chunks: list[dict]) -> dict:
     unnamed_counts: defaultdict[str, int] = defaultdict(int)
     unnamed_names: dict[str, str] = {}
     for chunk in chunks:
-        chunk_text = chunk["text"]
+        chunk_text = re.sub(r"^#.+?(?:\n+|$)", "", chunk["text"], flags=re.S)
         for regex in (ROLE_NAME_RE, KINSHIP_NAME_RE, NAME_RE):
             for match in regex.finditer(chunk_text):
                 name, role, aliases = _raw_character_name(match)
@@ -249,13 +326,38 @@ def _extract_raw_narrative(text: str, chunks: list[dict]) -> dict:
         for match in LOCATION_RE.finditer(chunk_text):
             name = _clean_candidate(match.group(1), LOCATION_STOPWORDS)
             if name and _is_plausible_location(name):
-                _remember(location_candidates, name, chunk, location_type="narrative location", confidence="medium")
+                sentence = _sentence_for_span(chunk_text, match.start(), match.end())
+                _remember(
+                    location_candidates, name, chunk,
+                    location_type="narrative location", confidence="medium",
+                    scene_score=_location_scene_score(name, sentence),
+                )
+
+        for match in VISUAL_OBJECT_RE.finditer(chunk_text):
+            source_phrase = match.group(1).strip(" \t，。、“”‘’：:；;（）()《》[]")
+            name = _clean_candidate(source_phrase, OBJECT_STOPWORDS)
+            context = chunk_text[max(0, match.start() - 16): match.end() + 16]
+            if name and not name.startswith("的") and _is_plausible_object(name, context):
+                visual = _visual_metadata(name, source_phrase)
+                _remember(
+                    object_candidates, name, chunk,
+                    category="prop", confidence="high",
+                    description=visual["description"], visual_keywords=visual["visual_keywords"],
+                    source_phrase=visual["source_phrase"], english_phrase=visual["english_phrase"],
+                )
 
         for match in OBJECT_RE.finditer(chunk_text):
+            if match.end() < len(chunk_text) and chunk_text[match.end()] in {"馆", "长"}:
+                continue
             name = _clean_candidate(match.group(1), OBJECT_STOPWORDS)
             context = chunk_text[max(0, match.start() - 16): match.end() + 16]
             if name and _is_plausible_object(name, context):
-                _remember(object_candidates, name, chunk, category="prop", confidence="medium")
+                visual = _visual_metadata(name, name)
+                _remember(
+                    object_candidates, name, chunk, category="prop", confidence="medium",
+                    description=visual["description"] if any(term in name for term, _ in VISUAL_TRANSLATIONS) else "Extracted from raw narrative context; details are evidence-limited.",
+                    visual_keywords=visual["visual_keywords"],
+                )
 
         for match in ORG_RE.finditer(chunk_text):
             name = _clean_candidate(match.group(1), ORG_STOPWORDS)
@@ -292,14 +394,22 @@ def _extract_raw_narrative(text: str, chunks: list[dict]) -> dict:
 
     locations = []
     location_to_id: dict[str, str] = {}
-    for index, item in enumerate(location_candidates.values(), 1):
+    ranked_locations = sorted(
+        location_candidates.values(),
+        key=lambda item: (-int(item.get("scene_score", 0)), -int(item.get("mentions", 0)), item["name"]),
+    )
+    for index, item in enumerate(ranked_locations, 1):
         chunk = _first_chunk(chunks, item["chunks"][0] if item["chunks"] else None)
         entity_id = _id("loc", index)
         location_to_id[item["name"]] = entity_id
+        scene_score = int(item.get("scene_score", 0))
         locations.append({
             "entity_id": entity_id, "entity_type": "location",
             "canonical_name": item["name"], "name": item["name"], "localized_names": {},
             "location_type": item.get("location_type", "narrative location"),
+            "importance": "major" if scene_score >= 4 and index <= 5 else "supporting",
+            "scene_role": "primary" if scene_score >= 4 else ("transition" if scene_score >= 2 else "mentioned"),
+            "scene_importance_score": scene_score,
             "mood": ["source-derived"],
             "visual_keywords": [item["name"]],
             "spatial_notes": "Mentioned in raw narrative; exact geography remains unresolved.",
@@ -318,8 +428,8 @@ def _extract_raw_narrative(text: str, chunks: list[dict]) -> dict:
                 "entity_id": _id(prefix, index), "entity_type": entity_type,
                 "canonical_name": item["name"], "name": item["name"], "localized_names": {},
                 "category": item.get("category", entity_type),
-                "description": "Extracted from raw narrative context; details are evidence-limited.",
-                "visual_keywords": [item["name"]],
+                "description": item.get("description", "Extracted from raw narrative context; details are evidence-limited."),
+                "visual_keywords": item.get("visual_keywords", [item["name"]]),
                 "confidence": item.get("confidence", "medium"),
                 "evidence": _evidence_from_chunk(chunk, [item["name"]]),
             })

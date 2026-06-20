@@ -38,6 +38,18 @@ BOUNDARY_REGRESSION_TEXT = textwrap.dedent(
     """
 ).strip()
 
+VISUAL_MODIFIER_REGRESSION_TEXT = textwrap.dedent(
+    """
+    # 雨夜旧桥
+
+    沈砚陪林小姐推开红色的门时，蓝色火焰从门缝里卷出来。渡口客栈里，苏晚把黑色雨伞放在桌边，王捕头的金色徽章在灯下晃了一下。黑衣人从窗边闪过，老守门人守着角落，没有人把窗边、桌面或角落当成真正的去处。
+
+    王捕头说，京城的城防议会只是在信里提过旧码头，今晚真正出事的是渡口客栈。沈砚没有理会，他把银色罗盘递给林小姐，又让苏晚记住那座破旧木桥的位置。
+
+    三人穿过青石后巷，只停了一息。追兵没有在后巷交手，只留下脚步声。等他们赶到旧码头，蓝色火焰再次升起，黑衣人拔刀逼近，老守门人从破旧木桥下递出一封密信。
+    """
+).strip()
+
 
 class RawNarrativeExtractionTest(unittest.TestCase):
     def test_raw_chinese_narrative_builds_story_atlas(self) -> None:
@@ -133,6 +145,56 @@ class RawNarrativeExtractionTest(unittest.TestCase):
                 self.assertNotIn(relation["source_name"], pseudo_people)
                 self.assertNotIn(relation["target_name"], pseudo_people)
             self.assertLess(len(plan["assets"]), 60)
+
+    def test_visual_modifiers_survive_extraction_and_prompts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "visual-modifier-regression.txt"
+            out = tmp_path / "out"
+            input_path.write_text(VISUAL_MODIFIER_REGRESSION_TEXT, encoding="utf-8")
+
+            build = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "storyvista.py"), "build", str(input_path), "--out", str(out), "--ui-language", "zh-CN"],
+                cwd=ROOT, capture_output=True, text=True,
+            )
+            self.assertEqual(build.returncode, 0, build.stderr)
+
+            atlas = json.loads((out / "story-atlas.json").read_text(encoding="utf-8"))
+            plan = json.loads((out / "visual-asset-plan.json").read_text(encoding="utf-8"))
+            validate = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "storyvista.py"), "validate", str(out)],
+                cwd=ROOT, capture_output=True, text=True,
+            )
+            self.assertEqual(validate.returncode, 0, validate.stderr)
+
+            names = {item["canonical_name"] for item in atlas["entities"]["characters"]}
+            locations = [item["canonical_name"] for item in atlas["entities"]["locations"]]
+            objects = {item["canonical_name"]: item for item in atlas["entities"]["objects"]}
+            prompts = "\n".join(asset["prompt"] for asset in plan["assets"])
+
+            self.assertTrue({"沈砚", "林小姐", "王捕头", "苏晚"}.issubset(names), names)
+            self.assertTrue(any("黑衣人" in name for name in names), names)
+            self.assertTrue(any("老守门人" in name or "守门人" in name for name in names), names)
+            self.assertFalse({"窗边", "桌面", "角落", "火焰", "徽章", "雨伞"} & names, names)
+
+            self.assertIn("渡口客栈", locations)
+            self.assertIn("旧码头", locations)
+            self.assertLess(locations.index("渡口客栈"), locations.index("青石后巷"), locations)
+            self.assertLess(locations.index("旧码头"), locations.index("青石后巷"), locations)
+            self.assertFalse({"门", "红色的门", "窗边", "桌面", "角落"} & set(locations), locations)
+
+            for expected in ("红色的门", "蓝色火焰", "金色徽章", "黑色雨伞", "银色罗盘", "破旧木桥"):
+                self.assertIn(expected, objects, objects)
+                self.assertNotEqual(objects[expected]["canonical_name"], "的门")
+                self.assertTrue(objects[expected]["visual_keywords"], objects[expected])
+
+            self.assertIn("red-painted door", prompts)
+            self.assertIn("blue flame", prompts)
+            self.assertIn("golden badge", prompts)
+            self.assertIn("black umbrella", prompts)
+            self.assertIn("silver compass", prompts)
+            self.assertIn("weathered wooden bridge", prompts)
+            self.assertNotIn("visual study of 的门", prompts)
 
 
 if __name__ == "__main__":
