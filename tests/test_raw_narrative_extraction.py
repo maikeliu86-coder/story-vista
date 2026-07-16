@@ -50,8 +50,54 @@ VISUAL_MODIFIER_REGRESSION_TEXT = textwrap.dedent(
     """
 ).strip()
 
+MIXED_DIRECTIVE_NARRATIVE_TEXT = textwrap.dedent(
+    """
+    # 灰港密令
+
+    人物：林砚｜调查者｜巡城署｜主角
+    地点：灰港档案馆｜地下档案馆｜潮湿，昏暗｜铁架，旧卷宗｜灰港北侧
+
+    苏晚推开渡口客栈的木门时，林砚把裂纹罗盘递给她。黑衣人撞开后窗，潮汐会的人随即封锁了旧码头。苏晚带着林砚穿过后巷，又在灰港档案馆门前交出一封密信。
+    """
+).strip()
+
 
 class RawNarrativeExtractionTest(unittest.TestCase):
+    def test_structured_directives_overlay_raw_narrative(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "mixed-input.txt"
+            out = tmp_path / "out"
+            input_path.write_text(MIXED_DIRECTIVE_NARRATIVE_TEXT, encoding="utf-8")
+
+            build = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "storyvista.py"), "build", str(input_path), "--out", str(out), "--ui-language", "zh-CN"],
+                cwd=ROOT, capture_output=True, text=True,
+            )
+            self.assertEqual(build.returncode, 0, build.stderr)
+
+            atlas = json.loads((out / "story-atlas.json").read_text(encoding="utf-8"))
+            characters = atlas["entities"]["characters"]
+            names = [item["canonical_name"] for item in characters]
+            locations = {item["canonical_name"] for item in atlas["entities"]["locations"]}
+            objects = {item["canonical_name"] for item in atlas["entities"]["objects"]}
+            organizations = {item["canonical_name"] for item in atlas["entities"]["organizations"]}
+            entity_ids = {item["entity_id"] for group in atlas["entities"].values() for item in group}
+
+            self.assertEqual(names.count("林砚"), 1, names)
+            self.assertIn("苏晚", names)
+            self.assertTrue(any("黑衣人" in name for name in names), names)
+            self.assertEqual(next(item for item in characters if item["canonical_name"] == "林砚")["role_name"], "调查者")
+            self.assertTrue({"灰港档案馆", "渡口客栈", "旧码头"}.issubset(locations), locations)
+            self.assertTrue(any("罗盘" in item for item in objects), objects)
+            self.assertTrue(any("密信" in item for item in objects), objects)
+            self.assertTrue({"巡城署", "潮汐会"}.issubset(organizations), organizations)
+            self.assertTrue(atlas["events"])
+            self.assertTrue(atlas["relations"])
+            for relation in atlas["relations"]:
+                self.assertIn(relation["source_entity_id"], entity_ids)
+                self.assertIn(relation["target_entity_id"], entity_ids)
+
     def test_raw_chinese_narrative_builds_story_atlas(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)

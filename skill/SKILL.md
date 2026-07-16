@@ -17,9 +17,20 @@ Turn complex novels into multilingual visual reading companions: characters, ali
 - optional `--spoiler-mode safe|full`
 - optional explicit visual provider or manual assets
 
+## Install
+
+From a cloned StoryVista repository, create a self-contained Skill directory:
+
+```bash
+python3 scripts/install_skill.py --target ~/.codex/skills/story-vista
+```
+
+The target must not already exist. The installer copies the Skill instructions, Python runtime, templates, locales, and referenced docs without copying local outputs or credentials. For another Agent, replace the target with that Agent's Skill directory.
+
 ## Run
 
 ```bash
+# From the repository or the installed Skill directory:
 python scripts/storyvista.py build input.txt --out output/story --ui-language auto
 python scripts/storyvista.py export-prompts output/story --provider jimeng
 python scripts/storyvista.py bind-images output/story --assets output/story/assets/generated

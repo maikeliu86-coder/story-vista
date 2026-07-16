@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import re
 from collections import defaultdict
 
@@ -15,6 +16,7 @@ LABELS = {
     "relation": "relations", "relationship": "relations", "关系": "relations",
     "event": "events", "事件": "events",
 }
+SUPPORT_DIRECTIVE_LABELS = {"performance", "acting", "表演", "演员"}
 
 
 def _parts(value: str) -> list[str]:
@@ -58,7 +60,7 @@ NAME_STOPWORDS = {"他们", "我们", "你们", "这个", "那个", "有人", "�
 PERSON_FALSE_POSITIVES = {
     "冷光", "通道走", "解释", "车经过", "封存", "何时", "成一串", "罗盘", "石砖", "明白", "金徽章", "东西", "蓝光",
 }
-PERSON_BAD_FRAGMENTS = ("通道", "经过", "封存", "解释", "明白", "徽章", "罗盘", "石砖", "冷光", "蓝光", "东西", "坐标")
+PERSON_BAD_FRAGMENTS = ("通道", "经过", "封存", "解释", "明白", "徽章", "罗盘", "石砖", "冷光", "蓝光", "东西", "坐标", "谋反")
 LOCATION_STOPWORDS = {"他们", "我们", "你们", "门", "掌柜", "黑衣人", "白衣人"}
 LOCATION_FALSE_POSITIVES = {"铁门", "柜门", "库门", "街", "街灯", "木门", "木桥", "后窗", "前门", "了城", "巡城", "档案馆由城", "潮汐会一座城"}
 LOCATION_BAD_PREFIXES = ("他穿着", "她被", "反复念着", "远处的", "男人不知", "银色面罩", "是为了", "父亲欠", "照亮了", "露出", "整座")
@@ -99,7 +101,8 @@ def _clean_candidate(value: str, stopwords: set[str]) -> str:
     if stopwords is ORG_STOPWORDS:
         value = re.sub(r"(?:却|仍然|暗中|派人|派).*$", "", value)
         value = re.split(r"(?:屏幕上的|上的|标记|穿着|逐出|露出|由|欠|是)", value)[-1]
-    value = re.split(r"(?:在|到|进|向|从|给|说|把|见|看|推开|递给|带着|冲向|挤进|放下|拔|送|要买|买|写着|知道|记住|提过|效忠|守住|剩|而是|不是|替|查|未必是|握紧|寻找|打开|没有|穿过|印着|潜入|堵住|穿着|逐出|露出|欠|由|是|和|那座|这座|里的|后的|北的|底的)", value)[-1]
+    value = re.split(r"(?:在|到|进|向|从|给|说|把|见|看|推开|递给|带着|冲向|挤进|放下|拔|送|要买|买|写着|知道|记住|提过|效忠|守住|封锁|剩|而是|不是|替|查|未必是|握紧|寻找|打开|没有|穿过|印着|潜入|堵住|穿着|逐出|露出|欠|由|是|和|那座|这座|里的|后的|北的|底的)", value)[-1]
+    value = re.sub(r"^[的了着]+", "", value)
     classifier_match = re.search(r"(?:一封|一把|一柄|一块|一枚|一张|一只|一幅|一盏|这块|那块)(.+)$", value)
     if classifier_match and stopwords is not LOCATION_STOPWORDS:
         value = classifier_match.group(1)
@@ -130,7 +133,7 @@ def _is_plausible_person_name(name: str) -> bool:
         return False
     if name.endswith(("光", "门", "灯", "刀", "剑", "信", "石", "砖", "徽章", "坐标", "东西")):
         return False
-    if name[-1:] in {"着", "过", "了", "是", "在", "向", "从"}:
+    if name[-1:] in {"着", "过", "了", "是", "在", "向", "从", "暂"}:
         return False
     return bool(re.fullmatch(rf"[{ZH_SURNAME}][\u4e00-\u9fff]{{1,2}}", name))
 
@@ -508,11 +511,164 @@ def _extract_raw_narrative(text: str, chunks: list[dict]) -> dict:
     return {"characters": characters, "locations": locations, **groups, "relations": relations, "events": events}
 
 
+ENTITY_GROUPS = (
+    ("characters", "char", "character"),
+    ("locations", "loc", "location"),
+    ("organizations", "org", "organization"),
+    ("objects", "obj", "object"),
+    ("concepts", "lore", "concept"),
+)
+
+
+def _normalized_name(value: object) -> str:
+    return re.sub(r"[\s·・._\-—，,。:：;；]+", "", str(value or "").casefold())
+
+
+def _merge_evidence_records(current: list[dict], incoming: list[dict]) -> list[dict]:
+    merged = list(current)
+    seen = {
+        (item.get("source_id"), item.get("chunk_id"), item.get("quote"), item.get("status"))
+        for item in merged
+    }
+    for item in incoming:
+        key = (item.get("source_id"), item.get("chunk_id"), item.get("quote"), item.get("status"))
+        if key not in seen:
+            merged.append(deepcopy(item))
+            seen.add(key)
+    return merged
+
+
+def _missing_value(value: object) -> bool:
+    if value is None or value == "" or value == [] or value == {}:
+        return True
+    return isinstance(value, str) and value in {"unresolved", "unknown"}
+
+
+def _without_directives(value: str) -> str:
+    kept = []
+    for line in value.splitlines():
+        match = re.match(r"^\s*([^:：]+)\s*[:：]\s*(.+)$", line)
+        label = match.group(1).strip() if match else ""
+        if match and (LABELS.get(label.lower()) or LABELS.get(label) or label.lower() in SUPPORT_DIRECTIVE_LABELS):
+            continue
+        kept.append(line)
+    return "\n".join(kept)
+
+
+def _merge_story_extractions(explicit: dict, supplemental: dict) -> dict:
+    merged: dict[str, list[dict]] = {}
+    id_maps: dict[str, dict[str, str]] = {"explicit": {}, "supplemental": {}}
+
+    for group, prefix, entity_type in ENTITY_GROUPS:
+        values: list[dict] = []
+        lookup: dict[str, dict] = {}
+        for origin, payload in (("explicit", explicit), ("supplemental", supplemental)):
+            for source_item in payload.get(group, []):
+                item = deepcopy(source_item)
+                candidate_names = [item.get("canonical_name"), item.get("name"), *item.get("aliases", [])]
+                existing = next((lookup[key] for key in map(_normalized_name, candidate_names) if key in lookup), None)
+                old_id = item.get("entity_id")
+                if existing is None:
+                    item["entity_id"] = _id(prefix, len(values) + 1)
+                    item["entity_type"] = entity_type
+                    item.setdefault("evidence", [])
+                    values.append(item)
+                    existing = item
+                else:
+                    aliases = list(existing.get("aliases", []))
+                    for alias in [item.get("canonical_name"), *item.get("aliases", [])]:
+                        if alias and alias != existing.get("canonical_name") and alias not in aliases:
+                            aliases.append(alias)
+                    if aliases or "aliases" in existing:
+                        existing["aliases"] = aliases
+                    existing["evidence"] = _merge_evidence_records(existing.get("evidence", []), item.get("evidence", []))
+                    for key, value in item.items():
+                        if key not in {"entity_id", "entity_type", "canonical_name", "name", "aliases", "evidence"} and _missing_value(existing.get(key)) and not _missing_value(value):
+                            existing[key] = deepcopy(value)
+                if old_id:
+                    id_maps[origin][old_id] = existing["entity_id"]
+                for value in [existing.get("canonical_name"), existing.get("name"), *existing.get("aliases", [])]:
+                    key = _normalized_name(value)
+                    if key:
+                        lookup[key] = existing
+        merged[group] = values
+
+    name_to_id: dict[str, str] = {}
+    id_to_name: dict[str, str] = {}
+    for group, _, _ in ENTITY_GROUPS:
+        for item in merged[group]:
+            entity_id = item["entity_id"]
+            id_to_name[entity_id] = item["canonical_name"]
+            for value in [item.get("canonical_name"), item.get("name"), *item.get("aliases", [])]:
+                key = _normalized_name(value)
+                if key and key not in name_to_id:
+                    name_to_id[key] = entity_id
+
+    relations: list[dict] = []
+    relation_lookup: dict[tuple[str, str, str, str], dict] = {}
+    for origin, payload in (("explicit", explicit), ("supplemental", supplemental)):
+        for source_relation in payload.get("relations", []):
+            relation = deepcopy(source_relation)
+            source_id = id_maps[origin].get(relation.get("source_entity_id")) or name_to_id.get(_normalized_name(relation.get("source_name")))
+            target_id = id_maps[origin].get(relation.get("target_entity_id")) or name_to_id.get(_normalized_name(relation.get("target_name")))
+            relation["source_entity_id"] = source_id
+            relation["target_entity_id"] = target_id
+            if source_id:
+                relation["source_name"] = id_to_name[source_id]
+            if target_id:
+                relation["target_name"] = id_to_name[target_id]
+            key = (
+                source_id or _normalized_name(relation.get("source_name")),
+                target_id or _normalized_name(relation.get("target_name")),
+                _normalized_name(relation.get("relation_type")),
+                _normalized_name(relation.get("stage")),
+            )
+            if key in relation_lookup:
+                current = relation_lookup[key]
+                current["evidence"] = _merge_evidence_records(current.get("evidence", []), relation.get("evidence", []))
+                continue
+            relation["relation_id"] = _id("rel", len(relations) + 1)
+            relations.append(relation)
+            relation_lookup[key] = relation
+    merged["relations"] = relations
+
+    events: list[dict] = []
+    event_lookup: dict[str, dict] = {}
+    for origin, payload in (("explicit", explicit), ("supplemental", supplemental)):
+        for source_event in payload.get("events", []):
+            event = deepcopy(source_event)
+            participant_ids = [id_maps[origin].get(value, value) for value in event.get("participants", [])]
+            participant_ids.extend(
+                name_to_id[key]
+                for key in map(_normalized_name, event.pop("_participant_names", []))
+                if key in name_to_id
+            )
+            event["participants"] = list(dict.fromkeys(value for value in participant_ids if value in id_to_name))
+            location_id = id_maps[origin].get(event.get("location_id"), event.get("location_id"))
+            location_name = event.pop("_location_name", None)
+            event["location_id"] = location_id if location_id in id_to_name else name_to_id.get(_normalized_name(location_name))
+            key = _normalized_name(event.get("title") or event.get("summary"))
+            if key and key in event_lookup:
+                current = event_lookup[key]
+                current["participants"] = list(dict.fromkeys([*current.get("participants", []), *event.get("participants", [])]))
+                current["evidence"] = _merge_evidence_records(current.get("evidence", []), event.get("evidence", []))
+                continue
+            event["event_id"] = _id("evt", len(events) + 1)
+            event["timeline_order"] = len(events) + 1
+            events.append(event)
+            if key:
+                event_lookup[key] = event
+    merged["events"] = events
+    return merged
+
+
 def extract_story_entities(text: str, chunks_doc: dict) -> dict:
     parsed = parse_directives(text)
     chunks = chunks_doc["chunks"]
     if not _has_directives(parsed):
         return _extract_raw_narrative(text, chunks)
+    supplemental_chunks = [{**chunk, "text": _without_directives(chunk["text"])} for chunk in chunks]
+    supplemental = _extract_raw_narrative(_without_directives(text), supplemental_chunks)
 
     characters = []
     for index, row in enumerate(parsed["characters"], 1):
@@ -562,6 +718,23 @@ def extract_story_entities(text: str, chunks_doc: dict) -> dict:
             })
         groups[key] = values
 
+    organization_names = {item["canonical_name"] for item in groups["organizations"]}
+    for character in characters:
+        faction = character.get("faction", "")
+        if faction not in organization_names and _is_plausible_organization(faction):
+            groups["organizations"].append({
+                "entity_id": _id("org", len(groups["organizations"]) + 1),
+                "entity_type": "organization",
+                "canonical_name": faction,
+                "name": faction,
+                "localized_names": {},
+                "category": "faction",
+                "description": f"Explicit faction affiliation for {character['canonical_name']}.",
+                "visual_keywords": [faction],
+                "evidence": build_evidence(chunks, [faction]),
+            })
+            organization_names.add(faction)
+
     relations = []
     for index, row in enumerate(parsed["relations"], 1):
         pair = re.split(r"\s*(?:->|→)\s*", row[0])
@@ -590,9 +763,12 @@ def extract_story_entities(text: str, chunks_doc: dict) -> dict:
             "event_id": _id("evt", index), "title": row[0],
             "participants": [name_to_id[name.casefold()] for name in participants if name.casefold() in name_to_id],
             "location_id": location_ids.get(row[2]) if len(row) > 2 else None,
+            "_participant_names": participants,
+            "_location_name": row[2] if len(row) > 2 else None,
             "summary": row[3] if len(row) > 3 else row[0], "timeline_order": index,
             "spoiler_status": "locked" if len(row) > 4 and ("lock" in row[4].lower() or "隐藏" in row[4]) else "visible",
             "status": "explicit" if event_evidence else "unresolved",
             "evidence": event_evidence,
         })
-    return {"characters": characters, "locations": locations, **groups, "relations": relations, "events": events}
+    explicit = {"characters": characters, "locations": locations, **groups, "relations": relations, "events": events}
+    return _merge_story_extractions(explicit, supplemental)

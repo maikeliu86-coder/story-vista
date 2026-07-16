@@ -9,7 +9,13 @@ This is the root entry point for the StoryVista skill documentation.
 - Provider workflow: [docs/provider-workflow.md](docs/provider-workflow.md)
 - Image provider guide: [docs/image-provider-guide.md](docs/image-provider-guide.md)
 
-Install or inspect the `skill/` directory when using StoryVista as an agent skill.
+Do not install the `skill/` subdirectory by itself because the runnable Python modules, locales, and supporting docs live elsewhere in the repository. Create a self-contained installation instead:
+
+```bash
+python3 scripts/install_skill.py --target ~/.codex/skills/story-vista
+```
+
+For another Agent, replace the target with that Agent's Skill directory. The installed entry point is `SKILL.md`, and its CLI is `scripts/storyvista.py` inside the installed directory.
 
 ## Core Execution Rules
 
