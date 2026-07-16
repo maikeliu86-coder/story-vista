@@ -34,6 +34,7 @@ class SafetyValidationTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "provider"):
                 export_prompts(out, "../../escaped")
             self.assertFalse((Path(tmp) / "escaped-prompts.md").exists())
+            self.assertFalse((out / "prompts").exists())
 
     def test_image_binding_rejects_path_traversal_asset_id(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import uuid
 from pathlib import Path
 
 
@@ -15,6 +16,16 @@ EXPORT_PROVIDERS = {
     "comfyui": "comfyui-prompts.md",
 }
 SAFE_PROVIDER_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
+INSTRUCTIONS = """# External Image Generation Instructions
+
+1. Choose a provider prompt file under `prompts/`.
+2. Generate each image using its expected filename.
+3. Save PNG, JPG, JPEG, or WEBP files in `assets/generated/`.
+4. Run `python scripts/storyvista.py bind-images OUTPUT --assets OUTPUT/assets/generated`.
+5. Run `python scripts/storyvista.py rebuild-atlas OUTPUT` if needed.
+
+Do not upload private manuscripts to an external provider without checking its privacy terms.
+"""
 
 
 def _translate(item: dict, provider_id: str) -> str:
@@ -54,44 +65,89 @@ def _asset_section(item: dict, provider_id: str) -> str:
     ])
 
 
+def _replace_file(source: Path, target: Path) -> None:
+    source.replace(target)
+
+
+def _remove_file(path: Path) -> None:
+    try:
+        path.unlink()
+    except FileNotFoundError:
+        pass
+
+
+def _publish_prompt_files(files: list[tuple[Path, str]]) -> list[Path]:
+    token = uuid.uuid4().hex
+    staged: list[tuple[Path, Path]] = []
+    backups: list[tuple[Path, Path]] = []
+    published: list[Path] = []
+    created_dirs: list[Path] = []
+    for target, _content in files:
+        if target.exists() and not target.is_file():
+            raise IsADirectoryError(f"Prompt output path is not a file: {target}")
+    try:
+        for target, content in files:
+            if not target.parent.exists():
+                target.parent.mkdir(parents=True)
+                created_dirs.append(target.parent)
+            temporary = target.parent / f".{target.name}.storyvista-prompt-{token}.tmp"
+            temporary.write_text(content, encoding="utf-8")
+            staged.append((target, temporary))
+
+        for target, _temporary in staged:
+            if target.exists():
+                backup = target.parent / f".{target.name}.storyvista-prompt-{token}.bak"
+                _replace_file(target, backup)
+                backups.append((target, backup))
+        for target, temporary in staged:
+            _replace_file(temporary, target)
+            published.append(target)
+    except BaseException:
+        for target in published:
+            _remove_file(target)
+        for target, backup in reversed(backups):
+            if backup.exists():
+                _replace_file(backup, target)
+        raise
+    finally:
+        for _target, temporary in staged:
+            _remove_file(temporary)
+        for target, backup in backups:
+            if target.exists():
+                _remove_file(backup)
+        for directory in reversed(created_dirs):
+            try:
+                directory.rmdir()
+            except OSError:
+                pass
+    return [target for target, _content in files]
+
+
 def export_prompts(output_dir: str | Path, provider_id: str | None = None) -> list[Path]:
     root = Path(output_dir).resolve()
     plan = json.loads((root / "visual-asset-plan.json").read_text(encoding="utf-8"))
-    prompt_dir = root / "prompts"
-    prompt_dir.mkdir(parents=True, exist_ok=True)
     provider_ids = [provider_id] if provider_id else list(EXPORT_PROVIDERS)
-    written = []
     for current in provider_ids:
         if not SAFE_PROVIDER_ID.fullmatch(current):
             raise ValueError(f"Unsafe provider id: {current!r}")
+
+    prompt_dir = root / "prompts"
+    files: list[tuple[Path, str]] = []
+    for current in provider_ids:
         filename = EXPORT_PROVIDERS.get(current, f"{current}-prompts.md")
         path = (prompt_dir / filename).resolve()
         try:
-            path.relative_to(prompt_dir.resolve())
+            path.relative_to(root)
         except ValueError as exc:
             raise ValueError(f"Provider prompt path escapes output directory: {path}") from exc
         body = [f"# StoryVista Prompts: {current}", "", "Generated for external image creation. Review inferred details before use.", ""]
         body.extend(_asset_section(item, current) for item in plan["assets"])
-        path.write_text("\n".join(body), encoding="utf-8")
-        written.append(path)
+        files.append((path, "\n".join(body)))
 
     recommended = plan.get("selected_provider", "prompt-pack")
     pack = ["# StoryVista Prompt Pack", "", f"- Visual generation mode: `{plan.get('style_mode', 'creative-balanced')}`", f"- Recommended provider: `{recommended}`", "- Placeholder SVG files are display fallbacks, not final generated images.", ""]
     pack.extend(_asset_section(item, recommended) for item in plan["assets"])
     pack_path = root / "prompt-pack.md"
-    pack_path.write_text("\n".join(pack), encoding="utf-8")
-    written.append(pack_path)
-
     instructions = root / "manual-generation-instructions.md"
-    instructions.write_text("""# External Image Generation Instructions
-
-1. Choose a provider prompt file under `prompts/`.
-2. Generate each image using its expected filename.
-3. Save PNG, JPG, JPEG, or WEBP files in `assets/generated/`.
-4. Run `python scripts/storyvista.py bind-images OUTPUT --assets OUTPUT/assets/generated`.
-5. Run `python scripts/storyvista.py rebuild-atlas OUTPUT` if needed.
-
-Do not upload private manuscripts to an external provider without checking its privacy terms.
-""", encoding="utf-8")
-    written.append(instructions)
-    return written
+    files.extend([(pack_path, "\n".join(pack)), (instructions, INSTRUCTIONS)])
+    return _publish_prompt_files(files)
