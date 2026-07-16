@@ -20,7 +20,7 @@ from .prompt_export import export_prompts
 from .provider_preflight import build_provider_choice_state
 from .reader_text import build_reader_text
 from .relationship_web import build_relationship_web
-from .spoiler import build_spoiler_state
+from .spoiler import apply_spoiler_mode, build_spoiler_state, redact_locked_directives
 from .theme_engine import build_theme_profile
 from .validators import validate_output, write_verification_report
 from .visual_asset_plan import build_visual_asset_plan
@@ -72,11 +72,15 @@ def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = 
     out.mkdir(parents=True, exist_ok=True)
     language_profile = detect_language_profile(text, ui_language)
     source_index, text = ingest_source(input_path, language_profile["input_language"])
-    chunks = chunk_text(text)
-    extracted = extract_story_entities(text, chunks)
+    extraction_chunks = chunk_text(text)
+    extracted = extract_story_entities(text, extraction_chunks)
     characters, ambiguous_aliases = resolve_aliases(extracted["characters"], language_profile)
     extracted["characters"] = attach_visual_profiles(characters)
-    reader_text = build_reader_text(text, chunks)
+    spoiler_state = build_spoiler_state(extracted["relations"], extracted["events"], spoiler_mode)
+    public_text = redact_locked_directives(text, spoiler_mode)
+    chunks = chunk_text(public_text)
+    extracted = apply_spoiler_mode(extracted, chunks["chunks"], spoiler_mode)
+    reader_text = build_reader_text(public_text, chunks)
     all_entities = [*extracted["characters"], *extracted["locations"], *extracted["organizations"], *extracted["objects"], *extracted["concepts"]]
     entity_linking = build_entity_linking(reader_text, all_entities, ambiguous_aliases)
     relationship_web = build_relationship_web(extracted["relations"], extracted["characters"])
@@ -84,9 +88,8 @@ def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = 
     map_plan = build_map_plan(extracted["locations"])
     object_lore_codex = build_object_lore_codex(extracted["objects"], extracted["concepts"])
     visual_evidence = build_visual_evidence([extracted["characters"]])
-    spoiler_state = build_spoiler_state(extracted["relations"], extracted["events"], spoiler_mode)
     provider_state = build_provider_choice_state(language_profile["input_language"])
-    theme_profile = build_theme_profile(text)
+    theme_profile = build_theme_profile(public_text)
     atlas = {
         "schema_version": "0.3.0",
         "metadata": {"title": source_index["sources"][0]["title"], "mode": "reader-visual-codex", "status": "runnable-minimum"},

@@ -114,6 +114,20 @@ class SafetyValidationTest(unittest.TestCase):
 
             self.assertTrue(any("Schema story-atlas.json" in item and "schema_version" in item for item in warnings))
 
+    def test_validate_rejects_locked_details_in_safe_atlas(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "demo"
+            result = build(str(INPUT), str(out), ROOT)
+            self.assertFalse(result["warnings"])
+            atlas_path = out / "story-atlas.json"
+            atlas = json.loads(atlas_path.read_text(encoding="utf-8"))
+            atlas["relations"][0]["spoiler_status"] = "locked"
+            atlas_path.write_text(json.dumps(atlas), encoding="utf-8")
+
+            _, warnings = validate_output(out)
+
+            self.assertTrue(any("Spoiler-safe atlas exposes locked items" in item for item in warnings))
+
     def test_validate_rejects_invalid_bound_image(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "demo"

@@ -136,6 +136,7 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
             passed.append(f"Schema valid: {data_name}")
 
     atlas = data.get("story-atlas.json", {})
+    spoiler_state = data.get("spoiler-state.json", {})
     manifest = data.get("image-manifest.json", {})
     plan = data.get("visual-asset-plan.json", {})
     entities = atlas.get("entities", {})
@@ -149,6 +150,17 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
         passed.append("Story atlas contains extracted content")
     elif atlas:
         warnings.append("Story atlas contains no extracted entities, relations, or events")
+
+    if spoiler_state.get("enabled"):
+        exposed_locked = [
+            item.get("relation_id") or item.get("event_id")
+            for item in [*atlas.get("relations", []), *atlas.get("events", [])]
+            if item.get("spoiler_status") == "locked"
+        ]
+        if exposed_locked:
+            warnings.append(f"Spoiler-safe atlas exposes locked items: {exposed_locked}")
+        else:
+            passed.append("Spoiler-safe atlas excludes locked relation and event details")
 
     for character in characters:
         if character.get("importance") == "major" and character.get("entity_id"):
