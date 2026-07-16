@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import json
+import shutil
+import tempfile
+import uuid
 from pathlib import Path
 
 from .atlas_renderer import render_atlas
@@ -8,6 +11,7 @@ from .alias_resolver import resolve_aliases
 from .chunking import chunk_text
 from .entity_extraction import extract_story_entities
 from .entity_linking import build_entity_linking
+from .image_binding import bind_images
 from .image_manifest import build_image_manifest
 from .ingest import ingest_source
 from .i18n import load_all_locales, load_locale
@@ -22,14 +26,131 @@ from .reader_text import build_reader_text
 from .relationship_web import build_relationship_web
 from .spoiler import apply_spoiler_mode, build_spoiler_state, redact_locked_directives
 from .theme_engine import build_theme_profile
-from .validators import validate_output, write_verification_report
+from .validators import REQUIRED_FILES, validate_output, write_verification_report
 from .visual_asset_plan import build_visual_asset_plan
 from .visual_evidence import build_visual_evidence
 from .visual_profile import attach_visual_profiles
 
 
+MANAGED_OUTPUT_NAMES = set(REQUIRED_FILES) | {
+    "assets",
+    "binding-report.json",
+    "prompts",
+    "verification-report.md",
+}
+OUTPUT_MARKERS = {"source-index.json", "story-atlas.json", "image-manifest.json"}
+
+
 def write_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _asset_identity(asset: dict) -> tuple[str, str, str]:
+    return (
+        str(asset.get("asset_id", "")),
+        str(asset.get("asset_type", "")),
+        str(asset.get("entity_name", "")),
+    )
+
+
+def _preserve_bound_images(existing_out: Path, staging_out: Path) -> int:
+    old_manifest_path = existing_out / "image-manifest.json"
+    old_plan_path = existing_out / "visual-asset-plan.json"
+    new_plan_path = staging_out / "visual-asset-plan.json"
+    if not old_manifest_path.exists() or not old_plan_path.exists():
+        return 0
+
+    try:
+        old_manifest = json.loads(old_manifest_path.read_text(encoding="utf-8"))
+        old_plan = json.loads(old_plan_path.read_text(encoding="utf-8"))
+        new_plan = json.loads(new_plan_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, TypeError):
+        return 0
+
+    old_manifest_assets = old_manifest.get("assets", [])
+    old_plan_assets = old_plan.get("assets", [])
+    new_plan_assets = new_plan.get("assets", [])
+    if not all(isinstance(items, list) for items in (old_manifest_assets, old_plan_assets, new_plan_assets)):
+        return 0
+    old_identities = {
+        item.get("asset_id"): _asset_identity(item)
+        for item in old_plan_assets
+        if isinstance(item, dict)
+    }
+    new_identities = {
+        item.get("asset_id"): _asset_identity(item)
+        for item in new_plan_assets
+        if isinstance(item, dict)
+    }
+    generated_dir = (existing_out / "assets" / "generated").resolve()
+    selected: list[Path] = []
+    for asset in old_manifest_assets:
+        if not isinstance(asset, dict) or asset.get("status") not in {"generated_external", "user_provided"}:
+            continue
+        asset_id = asset.get("asset_id")
+        if not asset_id or old_identities.get(asset_id) != new_identities.get(asset_id):
+            continue
+        source = (existing_out / str(asset.get("file_path", ""))).resolve()
+        try:
+            source.relative_to(generated_dir)
+        except ValueError:
+            continue
+        if source.is_file():
+            selected.append(source)
+
+    if not selected:
+        return 0
+
+    preserve_dir = staging_out / ".preserved-generated"
+    preserve_dir.mkdir()
+    try:
+        for source in selected:
+            shutil.copy2(source, preserve_dir / source.name)
+        binding = bind_images(staging_out, preserve_dir)
+    finally:
+        shutil.rmtree(preserve_dir, ignore_errors=True)
+    if binding["matched_count"]:
+        binding["preserved_from_previous_build"] = True
+        write_json(staging_out / "binding-report.json", binding)
+    return binding["matched_count"]
+
+
+def _copy_preserved_path(source: Path, target: Path) -> None:
+    if source.is_symlink():
+        return
+    if source.is_dir():
+        shutil.copytree(source, target, dirs_exist_ok=True, symlinks=True)
+    elif source.is_file():
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+
+
+def _preserve_user_files(existing_out: Path, staging_out: Path) -> None:
+    for source in existing_out.iterdir():
+        if source.name not in MANAGED_OUTPUT_NAMES:
+            _copy_preserved_path(source, staging_out / source.name)
+
+    old_assets = existing_out / "assets"
+    if not old_assets.is_dir():
+        return
+    for source in old_assets.iterdir():
+        if source.name != "placeholders":
+            _copy_preserved_path(source, staging_out / "assets" / source.name)
+
+
+def _publish_build(staging_out: Path, final_out: Path) -> None:
+    if not final_out.exists():
+        staging_out.replace(final_out)
+        return
+
+    backup = final_out.parent / f".{final_out.name}-backup-{uuid.uuid4().hex}"
+    final_out.replace(backup)
+    try:
+        staging_out.replace(final_out)
+    except BaseException:
+        backup.replace(final_out)
+        raise
+    shutil.rmtree(backup, ignore_errors=True)
 
 
 def _render_payload(out: Path, repo_root: Path) -> None:
@@ -64,12 +185,15 @@ def rebuild_atlas(output_dir: str, repo_root: Path) -> dict:
     return {"output_dir": str(out), "passed": len(passed), "warnings": warnings}
 
 
-def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = "auto", spoiler_mode: str = "safe") -> dict:
-    text = Path(input_path).read_text(encoding="utf-8")
-    if not text.strip():
-        raise ValueError("Input text is empty; StoryVista needs narrative or structured source content.")
-    out = Path(output_dir).resolve()
-    out.mkdir(parents=True, exist_ok=True)
+def _build_into(
+    input_path: str,
+    text: str,
+    out: Path,
+    repo_root: Path,
+    ui_language: str,
+    spoiler_mode: str,
+    existing_out: Path | None,
+) -> dict:
     language_profile = detect_language_profile(text, ui_language)
     source_index, text = ingest_source(input_path, language_profile["input_language"])
     extraction_chunks = chunk_text(text)
@@ -123,8 +247,46 @@ def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = 
     write_json(out / "provider-choice-state.json", provider_state)
     write_json(out / "theme-profile.json", theme_profile)
     generate_placeholders(atlas, manifest, out)
+    preserved_images = _preserve_bound_images(existing_out, out) if existing_out else 0
+    if existing_out:
+        _preserve_user_files(existing_out, out)
     export_prompts(out)
     _render_payload(out, repo_root)
     passed, warnings = validate_output(out)
     write_verification_report(out, passed, warnings, atlas, language_profile, entity_linking, provider_state, theme_profile)
-    return {"output_dir": str(out), "passed": len(passed), "warnings": warnings}
+    return {
+        "output_dir": str(out),
+        "passed": len(passed),
+        "warnings": warnings,
+        "preserved_images": preserved_images,
+    }
+
+
+def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = "auto", spoiler_mode: str = "safe") -> dict:
+    text = Path(input_path).read_text(encoding="utf-8")
+    if not text.strip():
+        raise ValueError("Input text is empty; StoryVista needs narrative or structured source content.")
+    out = Path(output_dir).resolve()
+    out.parent.mkdir(parents=True, exist_ok=True)
+    if out.exists() and not out.is_dir():
+        raise NotADirectoryError(f"Output path is not a directory: {out}")
+    if out.exists() and any(out.iterdir()) and not any((out / marker).exists() for marker in OUTPUT_MARKERS):
+        raise ValueError(f"Refusing to replace non-StoryVista directory: {out}")
+
+    staging = Path(tempfile.mkdtemp(prefix=f".{out.name}-build-", dir=out.parent))
+    try:
+        result = _build_into(
+            input_path,
+            text,
+            staging,
+            repo_root,
+            ui_language,
+            spoiler_mode,
+            out if out.exists() else None,
+        )
+        _publish_build(staging, out)
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
+    result["output_dir"] = str(out)
+    result["published"] = True
+    return result
