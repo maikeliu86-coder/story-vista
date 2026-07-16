@@ -80,7 +80,7 @@
     },
     "event": {
       "type": "object",
-      "required": ["event_id", "title", "summary", "participants", "timeline_order", "status", "evidence"],
+      "required": ["event_id", "title", "summary", "participants", "timeline_order", "spoiler_status", "status", "evidence"],
       "properties": {
         "event_id": { "type": "string" },
         "title": { "type": "string", "minLength": 1 },
@@ -88,7 +88,9 @@
         "participants": { "type": "array", "items": { "type": "string" } },
         "location_id": { "type": ["string", "null"] },
         "timeline_order": { "type": "integer", "minimum": 1 },
+        "spoiler_status": { "enum": ["visible", "locked"] },
         "status": { "enum": ["explicit", "inferred", "ambiguous", "contradictory", "unresolved"] },
+        "confidence": { "enum": ["high", "medium", "low"] },
         "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
       },
       "additionalProperties": false

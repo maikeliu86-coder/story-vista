@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
+
+from .image_validation import inspect_raster_image
 
 
 REQUIRED_FILES = [
@@ -11,10 +14,97 @@ REQUIRED_FILES = [
     "image-manifest.json", "spoiler-state.json", "provider-choice-state.json", "theme-profile.json",
     "prompt-pack.md", "manual-generation-instructions.md", "atlas.html",
 ]
+SCHEMA_FILES = {
+    "story-atlas.json": "story-atlas.schema.json",
+    "image-manifest.json": "image-manifest.schema.json",
+}
+SCHEMA_DIR = Path(__file__).resolve().parents[2] / "skill" / "templates"
+RASTER_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
+
+
+def _schema_ref(root_schema: dict, reference: str) -> dict:
+    if not reference.startswith("#/"):
+        raise ValueError(f"Unsupported schema reference: {reference}")
+    current = root_schema
+    for part in reference[2:].split("/"):
+        current = current[part.replace("~1", "/").replace("~0", "~")]
+    return current
+
+
+def _matches_type(value: object, expected: str) -> bool:
+    if expected == "object":
+        return isinstance(value, dict)
+    if expected == "array":
+        return isinstance(value, list)
+    if expected == "string":
+        return isinstance(value, str)
+    if expected == "number":
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    if expected == "integer":
+        return isinstance(value, int) and not isinstance(value, bool)
+    if expected == "boolean":
+        return isinstance(value, bool)
+    if expected == "null":
+        return value is None
+    return True
+
+
+def _validate_schema(value: object, schema: dict, root_schema: dict, path: str = "$") -> list[str]:
+    if "$ref" in schema:
+        return _validate_schema(value, _schema_ref(root_schema, schema["$ref"]), root_schema, path)
+
+    errors: list[str] = []
+    expected_types = schema.get("type")
+    if expected_types:
+        allowed = [expected_types] if isinstance(expected_types, str) else expected_types
+        if not any(_matches_type(value, item) for item in allowed):
+            return [f"{path} must be {' or '.join(allowed)}"]
+    if "const" in schema and value != schema["const"]:
+        errors.append(f"{path} must equal {schema['const']!r}")
+    if "enum" in schema and value not in schema["enum"]:
+        errors.append(f"{path} must be one of {schema['enum']!r}")
+
+    if isinstance(value, str):
+        if len(value) < schema.get("minLength", 0):
+            errors.append(f"{path} is shorter than minLength {schema['minLength']}")
+        if schema.get("pattern") and not re.search(schema["pattern"], value):
+            errors.append(f"{path} does not match {schema['pattern']!r}")
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if "minimum" in schema and value < schema["minimum"]:
+            errors.append(f"{path} is below minimum {schema['minimum']}")
+        if "maximum" in schema and value > schema["maximum"]:
+            errors.append(f"{path} is above maximum {schema['maximum']}")
+    if isinstance(value, list) and isinstance(schema.get("items"), dict):
+        for index, item in enumerate(value):
+            errors.extend(_validate_schema(item, schema["items"], root_schema, f"{path}[{index}]"))
+    if isinstance(value, dict):
+        properties = schema.get("properties", {})
+        for required in schema.get("required", []):
+            if required not in value:
+                errors.append(f"{path}.{required} is required")
+        for key, item in value.items():
+            if key in properties:
+                errors.extend(_validate_schema(item, properties[key], root_schema, f"{path}.{key}"))
+            elif schema.get("additionalProperties") is False:
+                errors.append(f"{path}.{key} is not allowed")
+            elif isinstance(schema.get("additionalProperties"), dict):
+                errors.extend(_validate_schema(item, schema["additionalProperties"], root_schema, f"{path}.{key}"))
+    return errors
+
+
+def _path_within(root: Path, relative_path: object) -> Path | None:
+    if not isinstance(relative_path, str) or not relative_path:
+        return None
+    candidate = (root / relative_path).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError:
+        return None
+    return candidate
 
 
 def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
-    root = Path(out_dir)
+    root = Path(out_dir).resolve()
     passed: list[str] = []
     warnings: list[str] = []
     data = {}
@@ -31,6 +121,20 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
             except json.JSONDecodeError as exc:
                 warnings.append(f"Invalid JSON {name}: {exc}")
 
+    for data_name, schema_name in SCHEMA_FILES.items():
+        if data_name not in data:
+            continue
+        schema_path = SCHEMA_DIR / schema_name
+        if not schema_path.exists():
+            warnings.append(f"Missing schema file: {schema_name}")
+            continue
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        schema_errors = _validate_schema(data[data_name], schema, schema)
+        if schema_errors:
+            warnings.extend(f"Schema {data_name}: {item}" for item in schema_errors)
+        else:
+            passed.append(f"Schema valid: {data_name}")
+
     atlas = data.get("story-atlas.json", {})
     manifest = data.get("image-manifest.json", {})
     plan = data.get("visual-asset-plan.json", {})
@@ -39,6 +143,12 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
     entity_ids = {item.get("entity_id") for group in entities.values() for item in group}
     event_ids = {item.get("event_id") for item in atlas.get("events", [])}
     valid_bindings = entity_ids | event_ids
+    content_count = sum(len(group) for group in entities.values() if isinstance(group, list))
+    content_count += len(atlas.get("relations", [])) + len(atlas.get("events", []))
+    if content_count:
+        passed.append("Story atlas contains extracted content")
+    elif atlas:
+        warnings.append("Story atlas contains no extracted entities, relations, or events")
 
     for character in characters:
         if character.get("importance") == "major" and character.get("entity_id"):
@@ -73,12 +183,20 @@ def validate_output(out_dir: str | Path) -> tuple[list[str], list[str]]:
     for asset in manifest.get("assets", []):
         if asset.get("bound_to") not in valid_bindings and not str(asset.get("bound_to", "")).startswith("asset_"):
             warnings.append(f"Manifest binding does not exist: {asset.get('asset_id')}")
-        display_file = root / asset.get("file_path", "")
-        fallback_file = root / asset.get("placeholder_path", asset.get("file_path", ""))
+        display_file = _path_within(root, asset.get("file_path", ""))
+        fallback_file = _path_within(root, asset.get("placeholder_path", asset.get("file_path", "")))
+        if display_file is None or fallback_file is None:
+            warnings.append(f"Unsafe display or fallback path: {asset.get('asset_id')}")
+            continue
         if display_file.exists() and fallback_file.exists():
             passed.append(f"Display and fallback assets exist: {asset.get('asset_id')}")
         else:
             warnings.append(f"Missing display or fallback asset: {asset.get('asset_id')}")
+        if display_file.suffix.lower() in RASTER_EXTENSIONS:
+            if inspect_raster_image(display_file):
+                passed.append(f"Valid raster image: {asset.get('asset_id')}")
+            else:
+                warnings.append(f"Invalid raster image: {asset.get('asset_id')}")
 
     major_ids = {item["entity_id"] for item in characters if item.get("importance") == "major"}
     portrait_ids = {item.get("entity_id") for item in plan.get("assets", []) if item.get("asset_type") == "character_portrait"}

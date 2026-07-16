@@ -38,20 +38,32 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.command == "build":
-        result = build(args.input, args.out, ROOT, ui_language=args.ui_language, spoiler_mode=args.spoiler_mode)
+        try:
+            result = build(args.input, args.out, ROOT, ui_language=args.ui_language, spoiler_mode=args.spoiler_mode)
+        except (OSError, UnicodeError, ValueError) as exc:
+            print(json.dumps({"error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+            return 2
         print(json.dumps(result, ensure_ascii=False, indent=2))
-        return 0 if not result["warnings"] else 0
+        return 0 if not result["warnings"] else 1
     if args.command == "export-prompts":
-        written = export_prompts(args.output, args.provider)
+        try:
+            written = export_prompts(args.output, args.provider)
+        except (OSError, ValueError) as exc:
+            print(json.dumps({"error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+            return 2
         print(json.dumps({"provider": args.provider, "written": [str(path) for path in written]}, ensure_ascii=False, indent=2))
         return 0
     if args.command == "bind-images":
-        result = bind_images(args.output, args.assets)
+        try:
+            result = bind_images(args.output, args.assets)
+        except (OSError, ValueError) as exc:
+            print(json.dumps({"error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+            return 2
         report_path = Path(args.output).resolve() / "binding-report.json"
         report_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         result["rebuild"] = rebuild_atlas(args.output, ROOT)
         print(json.dumps(result, ensure_ascii=False, indent=2))
-        return 0
+        return 0 if not result["invalid"] and not result["rebuild"]["warnings"] else 1
     if args.command == "rebuild-atlas":
         result = rebuild_atlas(args.output, ROOT)
         print(json.dumps(result, ensure_ascii=False, indent=2))

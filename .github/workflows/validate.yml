@@ -8,6 +8,28 @@ on:
   workflow_dispatch:
 
 jobs:
+  validate-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Compile Python sources
+        run: python -m compileall -q src scripts
+
+      - name: Build and validate the formal demo
+        run: |
+          python scripts/storyvista.py build examples/visual-atlas-demo/story.md --out "${RUNNER_TEMP}/storyvista-demo"
+          python scripts/storyvista.py validate "${RUNNER_TEMP}/storyvista-demo"
+
   validate-doc-contract:
     runs-on: ubuntu-latest
     steps:

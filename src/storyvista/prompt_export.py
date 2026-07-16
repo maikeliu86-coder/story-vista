@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 
@@ -13,6 +14,7 @@ EXPORT_PROVIDERS = {
     "minimax-image": "minimax-prompts.md",
     "comfyui": "comfyui-prompts.md",
 }
+SAFE_PROVIDER_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 
 
 def _translate(item: dict, provider_id: str) -> str:
@@ -60,8 +62,14 @@ def export_prompts(output_dir: str | Path, provider_id: str | None = None) -> li
     provider_ids = [provider_id] if provider_id else list(EXPORT_PROVIDERS)
     written = []
     for current in provider_ids:
+        if not SAFE_PROVIDER_ID.fullmatch(current):
+            raise ValueError(f"Unsafe provider id: {current!r}")
         filename = EXPORT_PROVIDERS.get(current, f"{current}-prompts.md")
-        path = prompt_dir / filename
+        path = (prompt_dir / filename).resolve()
+        try:
+            path.relative_to(prompt_dir.resolve())
+        except ValueError as exc:
+            raise ValueError(f"Provider prompt path escapes output directory: {path}") from exc
         body = [f"# StoryVista Prompts: {current}", "", "Generated for external image creation. Review inferred details before use.", ""]
         body.extend(_asset_section(item, current) for item in plan["assets"])
         path.write_text("\n".join(body), encoding="utf-8")

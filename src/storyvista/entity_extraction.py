@@ -548,7 +548,7 @@ def extract_story_entities(text: str, chunks_doc: dict) -> dict:
         })
 
     groups = {}
-    for key, prefix, entity_type in (("organizations", "org", "organization"), ("objects", "obj", "object"), ("concepts", "lore", "lore")):
+    for key, prefix, entity_type in (("organizations", "org", "organization"), ("objects", "obj", "object"), ("concepts", "lore", "concept")):
         values = []
         for index, row in enumerate(parsed[key], 1):
             name = row[0]
@@ -585,12 +585,14 @@ def extract_story_entities(text: str, chunks_doc: dict) -> dict:
     location_ids = {item["canonical_name"]: item["entity_id"] for item in locations}
     for index, row in enumerate(parsed["events"], 1):
         participants = _csv(row[1]) if len(row) > 1 else []
+        event_evidence = build_evidence(chunks, [row[0]]) or build_evidence(chunks, participants[:1])
         events.append({
             "event_id": _id("evt", index), "title": row[0],
             "participants": [name_to_id[name.casefold()] for name in participants if name.casefold() in name_to_id],
             "location_id": location_ids.get(row[2]) if len(row) > 2 else None,
             "summary": row[3] if len(row) > 3 else row[0], "timeline_order": index,
             "spoiler_status": "locked" if len(row) > 4 and ("lock" in row[4].lower() or "隐藏" in row[4]) else "visible",
-            "evidence": build_evidence(chunks, [row[0]]) or build_evidence(chunks, participants[:1]),
+            "status": "explicit" if event_evidence else "unresolved",
+            "evidence": event_evidence,
         })
     return {"characters": characters, "locations": locations, **groups, "relations": relations, "events": events}

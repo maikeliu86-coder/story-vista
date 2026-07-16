@@ -65,9 +65,11 @@ def rebuild_atlas(output_dir: str, repo_root: Path) -> dict:
 
 
 def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = "auto", spoiler_mode: str = "safe") -> dict:
+    text = Path(input_path).read_text(encoding="utf-8")
+    if not text.strip():
+        raise ValueError("Input text is empty; StoryVista needs narrative or structured source content.")
     out = Path(output_dir).resolve()
     out.mkdir(parents=True, exist_ok=True)
-    text = Path(input_path).read_text(encoding="utf-8")
     language_profile = detect_language_profile(text, ui_language)
     source_index, text = ingest_source(input_path, language_profile["input_language"])
     chunks = chunk_text(text)
