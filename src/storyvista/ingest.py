@@ -24,7 +24,7 @@ def ingest_source(input_path: str, language: str | None = None) -> tuple[dict, s
     text = path.read_text(encoding="utf-8")
     source = {
         "source_id": "src_001",
-        "path": str(path),
+        "path": path.name,
         "type": "text",
         "title": find_title(text, path.stem.replace("-", " ").title()),
         "language": language or detect_language(text),

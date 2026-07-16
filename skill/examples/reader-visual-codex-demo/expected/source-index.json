@@ -3,7 +3,7 @@
   "sources": [
     {
       "source_id": "src_001",
-      "path": "skill/examples/reader-visual-codex-demo/input.txt",
+      "path": "input.txt",
       "type": "text",
       "title": "The Glass Meridian",
       "language": "en",

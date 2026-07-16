@@ -3,7 +3,7 @@
   "sources": [
     {
       "source_id": "src_001",
-      "path": "skill/examples/minimal-novel-demo/input.txt",
+      "path": "input.txt",
       "type": "text",
       "title": "吴越夜雨",
       "language": "zh-CN",
