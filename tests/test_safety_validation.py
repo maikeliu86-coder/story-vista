@@ -182,6 +182,8 @@ class SafetyValidationTest(unittest.TestCase):
 
             self.assertEqual(cli.returncode, 1)
             self.assertIn(f'"invalid": [\n    "{asset_id}.png"', cli.stdout)
+            self.assertIn('"published": false', cli.stdout)
+            self.assertFalse((out / "binding-report.json").exists())
 
 
 if __name__ == "__main__":

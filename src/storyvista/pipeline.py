@@ -138,7 +138,22 @@ def _preserve_user_files(existing_out: Path, staging_out: Path) -> None:
             _copy_preserved_path(source, staging_out / "assets" / source.name)
 
 
-def _publish_build(staging_out: Path, final_out: Path) -> None:
+def _stage_existing_output(out: Path, operation: str) -> Path:
+    if not out.is_dir():
+        raise NotADirectoryError(f"StoryVista output directory does not exist: {out}")
+    if not any((out / marker).exists() for marker in OUTPUT_MARKERS):
+        raise ValueError(f"Not a StoryVista output directory: {out}")
+
+    staging = Path(tempfile.mkdtemp(prefix=f".{out.name}-{operation}-", dir=out.parent))
+    try:
+        shutil.copytree(out, staging, dirs_exist_ok=True, symlinks=True)
+    except BaseException:
+        shutil.rmtree(staging, ignore_errors=True)
+        raise
+    return staging
+
+
+def _publish_directory(staging_out: Path, final_out: Path) -> None:
     if not final_out.exists():
         staging_out.replace(final_out)
         return
@@ -171,8 +186,7 @@ def _render_payload(out: Path, repo_root: Path) -> None:
     }, repo_root / "skill" / "templates" / "atlas.html", out / "atlas.html")
 
 
-def rebuild_atlas(output_dir: str, repo_root: Path) -> dict:
-    out = Path(output_dir).resolve()
+def _rebuild_in_place(out: Path, repo_root: Path) -> dict:
     _render_payload(out, repo_root)
     passed, warnings = validate_output(out)
     write_verification_report(
@@ -183,6 +197,40 @@ def rebuild_atlas(output_dir: str, repo_root: Path) -> dict:
         json.loads((out / "theme-profile.json").read_text(encoding="utf-8")),
     )
     return {"output_dir": str(out), "passed": len(passed), "warnings": warnings}
+
+
+def rebuild_atlas(output_dir: str, repo_root: Path) -> dict:
+    out = Path(output_dir).resolve()
+    staging = _stage_existing_output(out, "rebuild")
+    try:
+        result = _rebuild_in_place(staging, repo_root)
+        published = not result["warnings"]
+        if published:
+            _publish_directory(staging, out)
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
+    result["output_dir"] = str(out)
+    result["published"] = published
+    return result
+
+
+def bind_images_and_rebuild(output_dir: str, assets_dir: str, repo_root: Path) -> dict:
+    out = Path(output_dir).resolve()
+    staging = _stage_existing_output(out, "bind")
+    try:
+        result = bind_images(staging, assets_dir)
+        write_json(staging / "binding-report.json", result)
+        rebuild = _rebuild_in_place(staging, repo_root)
+        published = not result["invalid"] and not rebuild["warnings"]
+        if published:
+            _publish_directory(staging, out)
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
+    rebuild["output_dir"] = str(out)
+    rebuild["published"] = published
+    result["rebuild"] = rebuild
+    result["published"] = published
+    return result
 
 
 def _build_into(
@@ -284,7 +332,7 @@ def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = 
             spoiler_mode,
             out if out.exists() else None,
         )
-        _publish_build(staging, out)
+        _publish_directory(staging, out)
     finally:
         shutil.rmtree(staging, ignore_errors=True)
     result["output_dir"] = str(out)

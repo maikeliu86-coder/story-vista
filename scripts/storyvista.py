@@ -11,8 +11,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from storyvista.image_binding import bind_images  # noqa: E402
-from storyvista.pipeline import build, rebuild_atlas  # noqa: E402
+from storyvista.pipeline import bind_images_and_rebuild, build, rebuild_atlas  # noqa: E402
 from storyvista.prompt_export import export_prompts  # noqa: E402
 from storyvista.validators import validate_output  # noqa: E402
 
@@ -55,17 +54,18 @@ def main() -> int:
         return 0
     if args.command == "bind-images":
         try:
-            result = bind_images(args.output, args.assets)
+            result = bind_images_and_rebuild(args.output, args.assets, ROOT)
         except (OSError, ValueError) as exc:
             print(json.dumps({"error": str(exc)}, ensure_ascii=False), file=sys.stderr)
             return 2
-        report_path = Path(args.output).resolve() / "binding-report.json"
-        report_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        result["rebuild"] = rebuild_atlas(args.output, ROOT)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if not result["invalid"] and not result["rebuild"]["warnings"] else 1
     if args.command == "rebuild-atlas":
-        result = rebuild_atlas(args.output, ROOT)
+        try:
+            result = rebuild_atlas(args.output, ROOT)
+        except (OSError, UnicodeError, ValueError) as exc:
+            print(json.dumps({"error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+            return 2
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if not result["warnings"] else 1
     passed, warnings = validate_output(args.output)
