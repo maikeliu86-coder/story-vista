@@ -5,6 +5,8 @@ import re
 import uuid
 from pathlib import Path
 
+from .output_lock import output_lock
+
 
 EXPORT_PROVIDERS = {
     "openai-image": "openai-image-prompts.md",
@@ -123,8 +125,7 @@ def _publish_prompt_files(files: list[tuple[Path, str]]) -> list[Path]:
     return [target for target, _content in files]
 
 
-def export_prompts(output_dir: str | Path, provider_id: str | None = None) -> list[Path]:
-    root = Path(output_dir).resolve()
+def _export_prompts_in_place(root: Path, provider_id: str | None = None) -> list[Path]:
     plan = json.loads((root / "visual-asset-plan.json").read_text(encoding="utf-8"))
     provider_ids = [provider_id] if provider_id else list(EXPORT_PROVIDERS)
     for current in provider_ids:
@@ -151,3 +152,9 @@ def export_prompts(output_dir: str | Path, provider_id: str | None = None) -> li
     instructions = root / "manual-generation-instructions.md"
     files.extend([(pack_path, "\n".join(pack)), (instructions, INSTRUCTIONS)])
     return _publish_prompt_files(files)
+
+
+def export_prompts(output_dir: str | Path, provider_id: str | None = None) -> list[Path]:
+    root = Path(output_dir).resolve()
+    with output_lock(root, "export-prompts"):
+        return _export_prompts_in_place(root, provider_id)

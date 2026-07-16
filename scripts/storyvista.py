@@ -12,6 +12,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from storyvista.pipeline import bind_images_and_rebuild, build, rebuild_atlas  # noqa: E402
+from storyvista.output_lock import output_lock  # noqa: E402
 from storyvista.prompt_export import export_prompts  # noqa: E402
 from storyvista.validators import validate_output  # noqa: E402
 
@@ -68,7 +69,12 @@ def main() -> int:
             return 2
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if not result["warnings"] else 1
-    passed, warnings = validate_output(args.output)
+    try:
+        with output_lock(args.output, "validate"):
+            passed, warnings = validate_output(args.output)
+    except OSError as exc:
+        print(json.dumps({"error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+        return 2
     print(json.dumps({"passed": passed, "warnings": warnings}, ensure_ascii=False, indent=2))
     return 0 if not warnings else 1
 

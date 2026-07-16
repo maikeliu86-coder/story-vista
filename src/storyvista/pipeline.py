@@ -19,8 +19,9 @@ from .language_detection import detect_language_profile
 from .location_atlas import build_location_atlas
 from .map_planner import build_map_plan
 from .object_lore_codex import build_object_lore_codex
+from .output_lock import output_lock
 from .placeholder_svg import generate_placeholders
-from .prompt_export import export_prompts
+from .prompt_export import _export_prompts_in_place
 from .provider_preflight import build_provider_choice_state
 from .reader_text import build_reader_text
 from .relationship_web import build_relationship_web
@@ -201,36 +202,38 @@ def _rebuild_in_place(out: Path, repo_root: Path) -> dict:
 
 def rebuild_atlas(output_dir: str, repo_root: Path) -> dict:
     out = Path(output_dir).resolve()
-    staging = _stage_existing_output(out, "rebuild")
-    try:
-        result = _rebuild_in_place(staging, repo_root)
-        published = not result["warnings"]
-        if published:
-            _publish_directory(staging, out)
-    finally:
-        shutil.rmtree(staging, ignore_errors=True)
-    result["output_dir"] = str(out)
-    result["published"] = published
-    return result
+    with output_lock(out, "rebuild-atlas"):
+        staging = _stage_existing_output(out, "rebuild")
+        try:
+            result = _rebuild_in_place(staging, repo_root)
+            published = not result["warnings"]
+            if published:
+                _publish_directory(staging, out)
+        finally:
+            shutil.rmtree(staging, ignore_errors=True)
+        result["output_dir"] = str(out)
+        result["published"] = published
+        return result
 
 
 def bind_images_and_rebuild(output_dir: str, assets_dir: str, repo_root: Path) -> dict:
     out = Path(output_dir).resolve()
-    staging = _stage_existing_output(out, "bind")
-    try:
-        result = bind_images(staging, assets_dir)
-        write_json(staging / "binding-report.json", result)
-        rebuild = _rebuild_in_place(staging, repo_root)
-        published = not result["invalid"] and not rebuild["warnings"]
-        if published:
-            _publish_directory(staging, out)
-    finally:
-        shutil.rmtree(staging, ignore_errors=True)
-    rebuild["output_dir"] = str(out)
-    rebuild["published"] = published
-    result["rebuild"] = rebuild
-    result["published"] = published
-    return result
+    with output_lock(out, "bind-images"):
+        staging = _stage_existing_output(out, "bind")
+        try:
+            result = bind_images(staging, assets_dir)
+            write_json(staging / "binding-report.json", result)
+            rebuild = _rebuild_in_place(staging, repo_root)
+            published = not result["invalid"] and not rebuild["warnings"]
+            if published:
+                _publish_directory(staging, out)
+        finally:
+            shutil.rmtree(staging, ignore_errors=True)
+        rebuild["output_dir"] = str(out)
+        rebuild["published"] = published
+        result["rebuild"] = rebuild
+        result["published"] = published
+        return result
 
 
 def _build_into(
@@ -298,7 +301,7 @@ def _build_into(
     preserved_images = _preserve_bound_images(existing_out, out) if existing_out else 0
     if existing_out:
         _preserve_user_files(existing_out, out)
-    export_prompts(out)
+    _export_prompts_in_place(out)
     _render_payload(out, repo_root)
     passed, warnings = validate_output(out)
     write_verification_report(out, passed, warnings, atlas, language_profile, entity_linking, provider_state, theme_profile)
@@ -311,30 +314,31 @@ def _build_into(
 
 
 def build(input_path: str, output_dir: str, repo_root: Path, ui_language: str = "auto", spoiler_mode: str = "safe") -> dict:
-    text = Path(input_path).read_text(encoding="utf-8")
-    if not text.strip():
-        raise ValueError("Input text is empty; StoryVista needs narrative or structured source content.")
     out = Path(output_dir).resolve()
-    out.parent.mkdir(parents=True, exist_ok=True)
-    if out.exists() and not out.is_dir():
-        raise NotADirectoryError(f"Output path is not a directory: {out}")
-    if out.exists() and any(out.iterdir()) and not any((out / marker).exists() for marker in OUTPUT_MARKERS):
-        raise ValueError(f"Refusing to replace non-StoryVista directory: {out}")
+    with output_lock(out, "build"):
+        text = Path(input_path).read_text(encoding="utf-8")
+        if not text.strip():
+            raise ValueError("Input text is empty; StoryVista needs narrative or structured source content.")
+        out.parent.mkdir(parents=True, exist_ok=True)
+        if out.exists() and not out.is_dir():
+            raise NotADirectoryError(f"Output path is not a directory: {out}")
+        if out.exists() and any(out.iterdir()) and not any((out / marker).exists() for marker in OUTPUT_MARKERS):
+            raise ValueError(f"Refusing to replace non-StoryVista directory: {out}")
 
-    staging = Path(tempfile.mkdtemp(prefix=f".{out.name}-build-", dir=out.parent))
-    try:
-        result = _build_into(
-            input_path,
-            text,
-            staging,
-            repo_root,
-            ui_language,
-            spoiler_mode,
-            out if out.exists() else None,
-        )
-        _publish_directory(staging, out)
-    finally:
-        shutil.rmtree(staging, ignore_errors=True)
-    result["output_dir"] = str(out)
-    result["published"] = True
-    return result
+        staging = Path(tempfile.mkdtemp(prefix=f".{out.name}-build-", dir=out.parent))
+        try:
+            result = _build_into(
+                input_path,
+                text,
+                staging,
+                repo_root,
+                ui_language,
+                spoiler_mode,
+                out if out.exists() else None,
+            )
+            _publish_directory(staging, out)
+        finally:
+            shutil.rmtree(staging, ignore_errors=True)
+        result["output_dir"] = str(out)
+        result["published"] = True
+        return result
